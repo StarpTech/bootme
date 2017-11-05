@@ -2,19 +2,22 @@
 
 const Bootme = require('./')
 
-const task = new Bootme.Task().setName('test').setConfig({})
+const task = new Bootme.Task().setName('foo').setConfig({})
 
 task.addHook('onBefore', async function() {})
 task.addHook('onAfter', async function() {})
 task.addHook('onFailure', async function() {})
-task.action(async function() {
-  console.log('Foo', this.config)
+task.action(async function(queue) {
+  console.log('Foo')
+  queue.add(async function() {
+    console.log('Boo')
+  })
 })
 
 const registry = new Bootme.Registry()
 registry.addTask(task)
-registry.addHook('test', 'onBefore', () => console.log('Before test'))
-registry.addHook('test', 'onAfter', () => console.log('After test'))
+registry.addHook('foo', 'onBefore', () => console.log('Before foo'))
+registry.addHook('foo', 'onAfter', () => console.log('After foo'))
 
 const pipeline = new Bootme.Pipeline(registry)
 pipeline.execute()
