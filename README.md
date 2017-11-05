@@ -21,6 +21,7 @@ npm install bootme
 - Define recover routine which is triggered as soon as a Hook or a Job fails.
 - Share configuration across all Tasks.
 - Access Task results in Hooks or Jobs.
+- Reference to Task results in other Tasks.
 
 ## Usage
 
