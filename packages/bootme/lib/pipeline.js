@@ -45,6 +45,7 @@ class Pipeline {
     for (let [name, task] of this.registry.tasks) {
       task.config.bootme = this.registry.sharedConfig
 
+      // onBefore
       this.queue.add(async child => {
         try {
           const state = new State(child, task, this)
@@ -59,16 +60,15 @@ class Pipeline {
           await task.recover(err)
         }
       })
+
+      // action
       this.queue.add(async child => {
         if (task.hookErrored) {
           return
         }
         try {
           const state = new State(child, task, this)
-          this.results.set(
-            `${name}`,
-            await task.start(state)
-          )
+          this.results.set(`${name}`, await task.start(state))
         } catch (err) {
           task.actionErrored = true
           this.results.set(`${name}:error`, err)
@@ -77,6 +77,8 @@ class Pipeline {
           await task.recover(err)
         }
       })
+
+      // onAfter
       this.queue.add(async child => {
         if (task.actionErrored) {
           return

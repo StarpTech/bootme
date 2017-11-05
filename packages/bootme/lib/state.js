@@ -2,7 +2,6 @@
 
 const debug = require('debug')('job')
 const Task = require('./task')
-const Pipeline = require('./pipeline')
 
 /**
  *
@@ -19,10 +18,6 @@ class State {
   constructor(queue, parentTask, pipeline) {
     if (!(parentTask instanceof Task)) {
       throw new TypeError('The ParentTask must be a Task instance')
-    }
-
-    if (!(Object.getPrototypeOf(pipeline).isPrototypeOf(pipeline))) {
-      throw new TypeError('The Pipeline must be a Pipeline instance')
     }
 
     this.queue = queue
