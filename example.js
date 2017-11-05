@@ -6,11 +6,16 @@ const task = new Bootme.Task().setName('foo').setConfig({})
 
 task.addHook('onBefore', async function() {})
 task.addHook('onAfter', async function() {})
-task.addHook('onFailure', async function() {})
-task.action(async function(queue) {
+task.addHook('onFailure', async function(err) {
+  console.log('Uppps!', err)
+})
+task.action(async function(parent) {
   console.log('Foo')
-  queue.add(async function() {
+  parent.add(async function(parent) {
     console.log('Boo')
+    parent.add(async function() {
+      console.log('Boo2')
+    })
   })
 })
 
