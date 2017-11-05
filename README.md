@@ -51,7 +51,12 @@ registry.shareConfig({
 })
 
 registry.addTask(task)
-registry.addHook('foo', 'onBefore', () => console.log('Before foo'))
+registry.addHook('foo', 'onBefore', async function() {
+  console.log(`Before ${this.name}`)
+})
+registry.addHook('foo', 'onAfter', async function() {
+  console.log(`After ${this.name}`)
+})
 
 // Get result from Task
 pipeline.getResult('foo')

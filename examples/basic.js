@@ -1,7 +1,6 @@
 'use strict'
 
-const Bootme = require('./packages/bootme')
-const HttpRequestTask = require('./packages/bootme-request')
+const Bootme = require('./../packages/bootme')
 
 const task = new Bootme.Task().setName('foo').setConfig({})
 
@@ -28,20 +27,11 @@ registry.shareConfig({
   basePath: process.cwd()
 })
 registry.addTask(task)
-registry.addTask(
-  new HttpRequestTask().setName('iss_position').setConfig({
-    method: 'GET',
-    url: 'http://api.open-notify.org/iss-now.json',
-    options: {
-      headers: {}
-    }
-  })
-)
-registry.addHook('foo', 'onBefore', async () => console.log('Before foo'))
-registry.addHook('foo', 'onAfter', async () => console.log('After foo'))
-registry.addHook('iss_position', 'onAfter', async () => {
-  console.log('Get IIS position')
-  console.log(await pipeline.getResult('iss_position').json)
+registry.addHook('foo', 'onBefore', async function() {
+  console.log(`Before ${this.name}`)
+})
+registry.addHook('foo', 'onAfter', async function() {
+  console.log(`After ${this.name}`)
 })
 
 pipeline.execute()
