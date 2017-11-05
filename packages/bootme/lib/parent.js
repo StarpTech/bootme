@@ -1,4 +1,7 @@
+'use strict'
+
 const debug = require('debug')('job')
+const Task = require('./task')
 
 /**
  *
@@ -13,6 +16,10 @@ class Parent {
    * @memberof Parent
    */
   constructor(queue, parentTask) {
+    if (!(parentTask instanceof Task)) {
+      throw new TypeError('The ParentTask must be a Task instance')
+    }
+
     this.queue = queue
     this.parentTask = parentTask
   }
@@ -23,6 +30,10 @@ class Parent {
    * @memberof Parent
    */
   addJob(fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError('The Job handler must be a function')
+    }
+
     this.queue.add(async child => {
       try {
         await fn(new Parent(child, this.parentTask))

@@ -1,5 +1,5 @@
 {
-  "name": "bootme-request",
+  "name": "bootme-checkout",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -18,7 +18,7 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
     "bootme": "^0.0.5",
-    "r2": "^2.0.0"
+    "simple-git": "^1.80.1"
   },
   "devDependencies": {
     "tap": "^10.7.2"

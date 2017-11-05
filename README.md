@@ -38,6 +38,9 @@ task.action(async function(parent) {
 
 // Collect and manipulate
 const registry = new Bootme.Registry()
+registry.shareConfig({
+  basePath: process.cwd()
+})
 registry.addTask(task)
 registry.addHook('foo', 'onBefore', () => console.log('Before foo'))
 registry.addHook('foo', 'onAfter', () => console.log('After foo'))

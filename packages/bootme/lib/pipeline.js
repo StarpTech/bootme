@@ -2,7 +2,9 @@
 
 const q = require('workq')
 const debug = require('debug')('pipeline')
+const error = require('debug')('pipeline:error')
 const Parent = require('./parent')
+const Registry = require('./registry')
 
 /**
  *
@@ -16,6 +18,10 @@ class Pipeline {
    * @memberof Pipeline
    */
   constructor(registry) {
+    if (!(registry instanceof Registry)) {
+      throw new TypeError('The Registry must be a Registry instance')
+    }
+
     this.registry = registry
     this.queue = q()
   }
@@ -25,13 +31,16 @@ class Pipeline {
    * @param {any} task
    * @memberof Pipeline
    */
-  async execute(task) {
+  async execute() {
     for (let [name, task] of this.registry.tasks) {
+      task.config = Object.assign(task.config, this.registry.sharedConfig)
+
       this.queue.add(async child => {
         try {
           await task.executeHooks('onBefore', [child])
         } catch (err) {
           task.hookErrored = true
+          error('Task <%s> error %O', name, err)
           await task.recover(err)
         }
       })
@@ -44,6 +53,7 @@ class Pipeline {
         } catch (err) {
           task.actionErrored = true
           debug('Task <%s> execute recover routine', name)
+          error('Task <%s> error %O', name, err)
           await task.recover(err)
         }
       })
@@ -56,6 +66,7 @@ class Pipeline {
         } catch (err) {
           task.hookErrored = true
           debug('Task <%s> execute recover routine', name)
+          error('Task <%s> error %O', name, err)
           await task.recover(err)
         }
       })

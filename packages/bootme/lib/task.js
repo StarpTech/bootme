@@ -1,5 +1,7 @@
 'use strict'
 
+const supportedHooks = ['onBefore', 'onAfter', 'onFailure']
+
 /**
  *
  *
@@ -32,6 +34,10 @@ class Task {
    * @memberof Task
    */
   setName(name) {
+    if (typeof name !== 'string') {
+      throw new TypeError('The Task name must be a string')
+    }
+
     this.name = name
     return this
   }
@@ -42,6 +48,10 @@ class Task {
    * @memberof Task
    */
   action(fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError('The action handler must be a function')
+    }
+
     this.action = fn
   }
   /**
@@ -52,6 +62,14 @@ class Task {
    * @memberof Task
    */
   addHook(name, fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError('The hook handler must be a function')
+    }
+
+    if (supportedHooks.indexOf(name) === -1) {
+      throw new Error(`${name} hook not supported!`)
+    }
+
     this[name].push(fn)
   }
   /**
@@ -73,8 +91,12 @@ class Task {
    * @param {any} args
    * @memberof Task
    */
-  async executeHooks(hookName, args) {
-    for (let hook of this[hookName]) {
+  async executeHooks(name, args) {
+    if (supportedHooks.indexOf(name) === -1) {
+      throw new Error(`${name} hook not supported!`)
+    }
+
+    for (let hook of this[name]) {
       await hook.apply(this, args)
     }
   }

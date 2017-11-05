@@ -23,12 +23,18 @@ task.action(async function(parent) {
 const registry = new Bootme.Registry()
 registry.addTask(task)
 registry.addTask(
-  new HttpRequestTask().setName('createRepository').setConfig({})
+  new HttpRequestTask().setName('googleRequest').setConfig({
+    method: 'GET',
+    url: 'http://google.de',
+    options: {
+      headers: {}
+    }
+  })
 )
 registry.addHook('foo', 'onBefore', () => console.log('Before foo'))
 registry.addHook('foo', 'onAfter', () => console.log('After foo'))
-registry.addHook('createRepository', 'onAfter', () =>
-  console.log('Repository created!')
+registry.addHook('googleRequest', 'onAfter', () =>
+  console.log('Google requested!')
 )
 
 const pipeline = new Bootme.Pipeline(registry)
