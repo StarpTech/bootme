@@ -6,7 +6,10 @@
   "scripts": {
     "unit": "tap -j4 test/*.test.js test/*/*.test.js",
     "precommit": "npm run format",
-    "format": "prettier-standard \"./lib/**/*.js\""
+    "format": "prettier-standard \"./lib/**/*.js\"",
+    "patch": "np patch --yolo",
+    "minor": "np minor --yolo",
+    "major": "np major --yolo"
   },
   "repository": {
     "type": "git",
