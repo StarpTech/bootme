@@ -84,3 +84,40 @@ class HttpRequestTask extends Task {
   }
 }
 ```
+
+## API
+
+  * <a href="#task"><code>bootme.<b>Task()</b></code></a>
+  * <a href="#setConfig"><code>bootme.Task#<b>setConfig()</b></code></a>
+  * <a href="#setName"><code>bootme.Task#<b>setName()</b></code></a>
+  * <a href="#addHook"><code>bootme.Task#<b>addHook()</b></code></a>
+  * <a href="#action"><code>bootme.Task#<b>action()</b></code></a>
+  * <a href="#config"><code>bootme.Task#<b>config</b></code></a>
+  * <a href="#executeHooks"><code>bootme.Task#<b>executeHooks()</b></code></a>
+  * <a href="#start"><code>bootme.Task#<b>start()</b></code></a>
+  * <a href="#recover"><code>bootme.Task#<b>recover()</b></code></a>
+
+  * <a href="#registry"><code>bootme.<b>Registry()</b></code></a>
+  * <a href="#addTask"><code>bootme.Registry#<b>addTask()</b></code></a>
+  * <a href="#shareConfig"><code>bootme.Registry#<b>shareConfig()</b></code></a>
+  * <a href="#addHookRegistry"><code>bootme.Registry#<b>addHook()</b></code></a>
+
+  * <a href="#Pipeline"><code>bootme.<b>Pipeline()</b></code></a>
+  * <a href="#execute"><code>bootme.Pipeline#<b>execute()</b></code></a>
+  * <a href="#getResult"><code>bootme.Pipeline#<b>getResult()</b></code></a>
+  
+-------------------------------------------------------
+
+## Contributing
+
+### Run Tests
+
+```
+lerna run test
+```
+
+### Debugging
+We use the excellent [Debug](https://github.com/visionmedia/debug) package.
+```
+$env:DEBUG = "*,-not_this" // Windows
+```
