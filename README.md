@@ -20,7 +20,7 @@ npm install bootme
 - Define Before, After, Error Hooks in the Task or via Registry.
 - Define recover routine which is triggered as soon as a Hook or a Job fails.
 - Share configuration across all Tasks.
-- Access to Task results in hooks or jobs.
+- Access Task results in Hooks or Jobs.
 
 ## Usage
 
