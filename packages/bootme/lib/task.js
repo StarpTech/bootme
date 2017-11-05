@@ -34,8 +34,8 @@ class Task {
    * @memberof Task
    */
   setConfig(config) {
-    if (typeof config !== 'object') {
-      throw new TypeError('The Config must be an Object')
+    if (typeof config !== 'object' && typeof config !== 'function') {
+      throw new TypeError('The Config must be an Object or Function that returns an Object')
     }
 
     this.config = config

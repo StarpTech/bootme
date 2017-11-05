@@ -32,8 +32,16 @@ class Pipeline {
    * @param {any} name
    * @memberof Pipeline
    */
-  getResult(name) {
-    return this.results.get(name)
+  async get(name) {
+    if (Array.isArray(name)) {
+      let results = new Map()
+      for (let task of name) {
+        results.set(name, await this.results.get(task))
+      }
+      return results
+    } else {
+      return this.results.get(name)
+    }
   }
   /**
    *
@@ -42,19 +50,23 @@ class Pipeline {
    * @memberof Pipeline
    */
   async execute() {
-    for (let [name, task] of this.registry.tasks) {
+    for (let task of this.registry.tasks) {
+      // lazy evaluation
+      if (typeof task.config === 'function') {
+        task.config = task.config()
+      }
       // onInit
       this.queue.add(async child => {
         try {
           const state = new State(child, task, this)
           this.results.set(
-            `${name}:onInit`,
+            `${task.name}:onInit`,
             await task.executeHooks('onInit', [state])
           )
         } catch (err) {
           task.hookErrored = true
-          this.results.set(`${name}:onInit:error`, err)
-          error('Task <%s> error %O', name, err)
+          this.results.set(`${task.name}:onInit:error`, err)
+          error('Task <%s> error %O', task.name, err)
           await task.recover(err)
         }
       })
@@ -67,13 +79,13 @@ class Pipeline {
         try {
           const state = new State(child, task, this)
           this.results.set(
-            `${name}:onBefore`,
+            `${task.name}:onBefore`,
             await task.executeHooks('onBefore', [state])
           )
         } catch (err) {
           task.hookErrored = true
-          this.results.set(`${name}:onBefore:error`, err)
-          error('Task <%s> error %O', name, err)
+          this.results.set(`${task.name}:onBefore:error`, err)
+          error('Task <%s> error %O', task.name, err)
           await task.recover(err)
         }
       })
@@ -85,11 +97,11 @@ class Pipeline {
         }
         try {
           const state = new State(child, task, this)
-          this.results.set(`${name}`, await task.start(state))
+          this.results.set(`${task.name}`, await task.start(state))
         } catch (err) {
           task.actionErrored = true
-          this.results.set(`${name}:error`, err)
-          error('Task <%s> error %O', name, err)
+          this.results.set(`${task.name}:error`, err)
+          error('Task <%s> error %O', task.name, err)
           await task.recover(err)
         }
       })
@@ -102,13 +114,13 @@ class Pipeline {
         try {
           const state = new State(child, task, this)
           this.results.set(
-            `${name}:onAfter`,
+            `${task.name}:onAfter`,
             await task.executeHooks('onAfter', [state])
           )
         } catch (err) {
           task.hookErrored = true
-          this.results.set(`${name}:onAfter:error`, err)
-          error('Task <%s> error %O', name, err)
+          this.results.set(`${task.name}:onAfter:error`, err)
+          error('Task <%s> error %O', task.name, err)
           await task.recover(err)
         }
       })

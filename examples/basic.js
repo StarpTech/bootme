@@ -14,7 +14,7 @@ task.action(async function(parent) {
   parent.addJob(async function(parent) {
     console.log('Boo')
     parent.addJob(async function(parent) {
-      console.log(parent.pipeline.getResult('foo'))
+      console.log(parent.pipeline.get('foo'))
     })
   })
   return 'finished'

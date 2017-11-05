@@ -2,6 +2,7 @@
 
 const Bootme = require('./../packages/bootme')
 const CheckoutTask = require('./../packages/bootme-checkout')
+const TemplateTask = require('./../packages/bootme-template')
 
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
@@ -18,12 +19,10 @@ registry.addTask(
   })
 )
 
-registry.addHook('checkout', 'onBefore', async function() {
-  console.log(`Before ${this.name}`)
-})
-registry.addHook('checkout', 'onAfter', async function() {
-  console.log(`After ${this.name} result`)
-  console.log(await pipeline.get(this.name))
-})
+registry.addTask(
+  new TemplateTask().setName('replace').setConfig({
+    deps: ['checkout']
+  })
+)
 
 pipeline.execute()

@@ -1,0 +1,29 @@
+{
+  "name": "bootme-template",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.test.js test/*/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StarpTech/bootme.git"
+  },
+  "author": "Dustin Deus <deusdustin@gmail.com> (http://www.starptech.de)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StarpTech/bootme/issues"
+  },
+  "homepage": "https://github.com/StarpTech/bootme#readme",
+  "dependencies": {
+    "bootme": "^0.0.5",
+    "del": "^3.0.0",
+    "glob": "^7.1.2",
+    "handlebars": "^4.0.11",
+    "make-dir": "^1.1.0"
+  },
+  "devDependencies": {
+    "tap": "^10.7.2"
+  }
+}

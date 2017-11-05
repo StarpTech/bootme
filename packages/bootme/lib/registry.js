@@ -13,7 +13,7 @@ class Registry {
    * @memberof Registry
    */
   constructor() {
-    this.tasks = new Map()
+    this.tasks = []
   }
   /**
    *
@@ -40,7 +40,7 @@ class Registry {
     }
     task.addHook('onInit', async state => task.init(state))
     task.config.bootme = this.sharedConfig
-    this.tasks.set(task.name, task)
+    this.tasks.push(task)
 
     return task
   }
@@ -53,7 +53,7 @@ class Registry {
    * @memberof Registry
    */
   addHook(taskName, hookName, fn) {
-    const task = this.tasks.get(taskName)
+    const task = this.tasks.find((t) => t.name === taskName)
 
     if (task) {
       task.addHook(hookName, fn)

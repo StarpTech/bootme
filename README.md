@@ -59,10 +59,10 @@ registry.addHook('foo', 'onAfter', async function() {
 })
 
 // Get result from Task
-pipeline.getResult('foo')
+pipeline.get('foo')
 
 // Get error from Task
-pipeline.getResult('foo:error')
+pipeline.get('foo:error')
 
 // Execute
 pipeline.execute()
@@ -77,8 +77,10 @@ class HttpRequestTask extends Task {
   constructor() {
     super()
   }
-  async init() {
+  async init(state) {
     // add before, after, failure hooks
+    // Rely on result from previous Tasks
+    const results = await state.pipeline.get(['foo'])
   }
   async action(parent) {
     // Do something!
@@ -106,7 +108,7 @@ class HttpRequestTask extends Task {
 
   * <a href="#Pipeline"><code>bootme.<b>Pipeline()</b></code></a>
   * <a href="#execute"><code>bootme.Pipeline#<b>execute()</b></code></a>
-  * <a href="#getResult"><code>bootme.Pipeline#<b>getResult()</b></code></a>
+  * <a href="#getResult"><code>bootme.Pipeline#<b>get()</b></code></a>
 
 -------------------------------------------------------
 
