@@ -1,16 +1,21 @@
 {
-  "name": "bootme",
-  "version": "0.0.5",
-  "description": "",
+  "name": "bootme-monorepo",
+  "private": true,
+  "description": "A fully configurable and extendable Task Pipeline",
   "main": "index.js",
   "scripts": {
-    "test": "tap test/*.test.js test/*/*.test.js",
-    "precommit": "npm run format",
-    "format": "prettier-standard \"./lib/**/*.js\"",
-    "patch": "np patch --yolo",
-    "minor": "np minor --yolo",
-    "major": "np major --yolo"
+    "clean": "lerna clean",
+    "release": "lerna publish",
+    "postinstall": "lerna bootstrap",
+    "test": "lerna run test"
   },
+  "keywords": [
+    "boot",
+    "bootstrap",
+    "pipeline",
+    "task",
+    "queue"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/StarpTech/bootme.git"
@@ -21,9 +26,6 @@
     "url": "https://github.com/StarpTech/bootme/issues"
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
-  "dependencies": {
-    "workq": "^1.1.1"
-  },
   "devDependencies": {
     "eslint": "^4.10.0",
     "eslint-config-standard": "^10.2.1",
@@ -31,9 +33,8 @@
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "np": "^2.16.1",
+    "lerna": "^2.5.1",
     "prettier": "^1.7.4",
-    "prettier-standard": "^7.0.3",
-    "tap": "^10.7.2"
+    "prettier-standard": "^7.0.3"
   }
 }

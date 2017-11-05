@@ -1,7 +1,7 @@
 'use strict'
 
-const Bootme = require('./')
-const HttpRequestTask = require('./tasks/httpRequestTask')
+const Bootme = require('./packages/bootme')
+const HttpRequestTask = require('./packages/bootme-request')
 
 const task = new Bootme.Task().setName('foo').setConfig({})
 

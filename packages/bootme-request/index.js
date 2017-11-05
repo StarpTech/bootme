@@ -1,6 +1,6 @@
 'use strict'
 
-const Task = require('./../').Task
+const Task = require('bootme').Task
 
 class HttpRequestTask extends Task {
   async action() {
