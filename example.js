@@ -21,6 +21,9 @@ task.action(async function(parent) {
 })
 
 const registry = new Bootme.Registry()
+registry.shareConfig({
+  basePath: process.cwd()
+})
 registry.addTask(task)
 registry.addTask(
   new HttpRequestTask().setName('googleRequest').setConfig({

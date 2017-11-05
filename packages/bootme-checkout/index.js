@@ -7,13 +7,11 @@ class CheckoutTask extends Task {
   constructor() {
     super()
     this.git = SimpleGit()
-    this.repoUrl = this.config.repoUrl
-    this.localUrl = this.config.localUrl
   }
   async action() {
     await this.git()
       .silent(true)
-      .clone(this.repoUrl, this.localUrl)
+      .clone(this.config.repoUrl, this.config.bootme.basePath)
   }
 }
 

@@ -33,7 +33,7 @@ class Pipeline {
    */
   async execute() {
     for (let [name, task] of this.registry.tasks) {
-      task.config = Object.assign(task.config, this.registry.sharedConfig)
+      task.config.bootme = this.registry.sharedConfig
 
       this.queue.add(async child => {
         try {

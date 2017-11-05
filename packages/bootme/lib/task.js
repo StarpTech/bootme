@@ -14,6 +14,7 @@ class Task {
     this.onFailure = []
     this.actionErrored = false
     this.hookErrored = false
+    this.config = {}
   }
   /**
    *
@@ -23,7 +24,12 @@ class Task {
    * @memberof Task
    */
   setConfig(config) {
+    if (typeof config !== 'object') {
+      throw new TypeError('The Config must be an Object')
+    }
+
     this.config = config
+
     return this
   }
   /**
@@ -39,6 +45,7 @@ class Task {
     }
 
     this.name = name
+
     return this
   }
   /**
