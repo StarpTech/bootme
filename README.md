@@ -36,7 +36,7 @@ task.addHook('onError', async function(err) {})
 task.action(async function(parent) {
   // Nested Jobs
   parent.addJob(async function(parent) {
-    console.log(parent.pipeline.getResult('foo'))
+    console.log(parent.pipeline.get('foo'))
   })
 
   return 'finished'
