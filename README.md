@@ -41,3 +41,19 @@ registry.addHook('foo', 'onAfter', () => console.log('After foo'))
 const pipeline = new Bootme.Pipeline(registry)
 pipeline.execute()
 ```
+
+### Task Template
+
+```js
+const Task = require('./../').Task
+
+class HttpRequestTask extends Task {
+  constructor() {
+    super()
+    // add before, after, failure hooks
+  }
+  async action() {
+    console.log('Do something!')
+  }
+}
+```
