@@ -6,3 +6,4 @@ docs
 packages
 node_modules
 media
+package-lock.json
