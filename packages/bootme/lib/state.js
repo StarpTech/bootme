@@ -2,26 +2,32 @@
 
 const debug = require('debug')('job')
 const Task = require('./task')
+const Pipeline = require('./pipeline')
 
 /**
  *
  *
  * @class Parent
  */
-class Parent {
+class State {
   /**
    * Creates an instance of Parent.
    * @param {any} queue
    * @param {any} parentTask
    * @memberof Parent
    */
-  constructor(queue, parentTask) {
+  constructor(queue, parentTask, pipeline) {
     if (!(parentTask instanceof Task)) {
       throw new TypeError('The ParentTask must be a Task instance')
     }
 
+    if (!(Object.getPrototypeOf(pipeline).isPrototypeOf(pipeline))) {
+      throw new TypeError('The Pipeline must be a Pipeline instance')
+    }
+
     this.queue = queue
     this.parentTask = parentTask
+    this.pipeline = pipeline
   }
   /**
    *
@@ -36,7 +42,7 @@ class Parent {
 
     this.queue.add(async child => {
       try {
-        await fn(new Parent(child, this.parentTask))
+        await fn(new State(child, this.parentTask, this.pipeline))
       } catch (err) {
         debug(
           'Job error in Task <%s>, execute recover routine',
@@ -48,4 +54,4 @@ class Parent {
   }
 }
 
-module.exports = Parent
+module.exports = State

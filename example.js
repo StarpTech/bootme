@@ -14,31 +14,34 @@ task.action(async function(parent) {
   console.log('Foo')
   parent.addJob(async function(parent) {
     console.log('Boo')
-    parent.addJob(async function() {
-      console.log('Boo2')
+    parent.addJob(async function(parent) {
+      console.log(parent.pipeline.getResult('foo'))
     })
   })
+  return 'finished'
 })
 
 const registry = new Bootme.Registry()
+const pipeline = new Bootme.Pipeline(registry)
+
 registry.shareConfig({
   basePath: process.cwd()
 })
 registry.addTask(task)
 registry.addTask(
-  new HttpRequestTask().setName('googleRequest').setConfig({
+  new HttpRequestTask().setName('iss_position').setConfig({
     method: 'GET',
-    url: 'http://google.de',
+    url: 'http://api.open-notify.org/iss-now.json',
     options: {
       headers: {}
     }
   })
 )
-registry.addHook('foo', 'onBefore', () => console.log('Before foo'))
-registry.addHook('foo', 'onAfter', () => console.log('After foo'))
-registry.addHook('googleRequest', 'onAfter', () =>
-  console.log('Google requested!')
-)
+registry.addHook('foo', 'onBefore', async () => console.log('Before foo'))
+registry.addHook('foo', 'onAfter', async () => console.log('After foo'))
+registry.addHook('iss_position', 'onAfter', async () => {
+  console.log('Get IIS position')
+  console.log(await pipeline.getResult('iss_position').json)
+})
 
-const pipeline = new Bootme.Pipeline(registry)
 pipeline.execute()

@@ -3,7 +3,7 @@
 const q = require('workq')
 const debug = require('debug')('pipeline')
 const error = require('debug')('pipeline:error')
-const Parent = require('./parent')
+const State = require('./state')
 const Registry = require('./registry')
 
 /**
@@ -24,6 +24,16 @@ class Pipeline {
 
     this.registry = registry
     this.queue = q()
+    this.results = new Map()
+  }
+  /**
+   *
+   *
+   * @param {any} name
+   * @memberof Pipeline
+   */
+  getResult(name) {
+    return this.results.get(name)
   }
   /**
    *
@@ -37,9 +47,14 @@ class Pipeline {
 
       this.queue.add(async child => {
         try {
-          await task.executeHooks('onBefore', [child])
+          const state = new State(child, task, this)
+          this.results.set(
+            `${name}:onBefore`,
+            await task.executeHooks('onBefore', [state])
+          )
         } catch (err) {
           task.hookErrored = true
+          this.results.set(`${name}:onBefore:error`, err)
           error('Task <%s> error %O', name, err)
           await task.recover(err)
         }
@@ -49,9 +64,14 @@ class Pipeline {
           return
         }
         try {
-          await task.start(new Parent(child, task))
+          const state = new State(child, task, this)
+          this.results.set(
+            `${name}`,
+            await task.start(state)
+          )
         } catch (err) {
           task.actionErrored = true
+          this.results.set(`${name}:error`, err)
           debug('Task <%s> execute recover routine', name)
           error('Task <%s> error %O', name, err)
           await task.recover(err)
@@ -62,9 +82,14 @@ class Pipeline {
           return
         }
         try {
-          await task.executeHooks('onAfter', [child])
+          const state = new State(child, task, this)
+          this.results.set(
+            `${name}:onAfter`,
+            await task.executeHooks('onAfter', [state])
+          )
         } catch (err) {
           task.hookErrored = true
+          this.results.set(`${name}:onAfter:error`, err)
           debug('Task <%s> execute recover routine', name)
           error('Task <%s> error %O', name, err)
           await task.recover(err)

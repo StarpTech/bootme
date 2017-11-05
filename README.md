@@ -18,7 +18,9 @@ npm install bootme
 
 - Handle nested queues, the order of execution is guaranteed thanks to [workq](https://github.com/delvedor/workq) package.
 - Define Before, After, Failure Hooks in the Task or after via Registry.
-- The recover routine of the task is triggered when nested jobs fail.
+- The recover routine of the Task is triggered as soon as a Hook or a Job fails.
+- Share configuration across all Tasks.
+- Access to Task results in hooks or jobs.
 
 ## Usage
 
@@ -32,21 +34,38 @@ task.addHook('onFailure', async function(err) {})
 task.action(async function(parent) {
   // Nested Jobs
   parent.addJob(async function(parent) {
-    parent.addJob(async function() {})
+    parent.addJob(async function(parent) {
+      // Get result from Task
+      console.log(parent.pipeline.getResult('foo'))
+    })
   })
+  return 'finished'
 })
 
 // Collect and manipulate
 const registry = new Bootme.Registry()
+const pipeline = new Bootme.Pipeline(registry)
+
+// Share config across all Tasks
 registry.shareConfig({
   basePath: process.cwd()
 })
+
 registry.addTask(task)
 registry.addHook('foo', 'onBefore', () => console.log('Before foo'))
 registry.addHook('foo', 'onAfter', () => console.log('After foo'))
 
+// Get result from Task
+pipeline.getResult('foo')
+pipeline.getResult('foo:onBefore')
+pipeline.getResult('foo:onAfter')
+
+// Get error from Task
+pipeline.getResult('foo:error')
+pipeline.getResult('foo:onBefore:error')
+pipeline.getResult('foo:onAfter:error')
+
 // Execute
-const pipeline = new Bootme.Pipeline(registry)
 pipeline.execute()
 ```
 
@@ -61,8 +80,7 @@ class HttpRequestTask extends Task {
     // add before, after, failure hooks
   }
   async action(parent) {
-    console.log('Do something!')
-    parent.addJob(async (parent) => {})
+    // Do something!
   }
 }
 ```
