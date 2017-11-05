@@ -6,7 +6,7 @@
 
 # BootMe
 
-A fully configurable and extendable Task Pipeline
+A fully configurable and extendable Task pipeline with hooks, shared-state and fallbacks.
 
 ## Installation
 
