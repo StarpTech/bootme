@@ -76,6 +76,8 @@ const Task = require('bootme').Task
 class HttpRequestTask extends Task {
   constructor() {
     super()
+  }
+  async init() {
     // add before, after, failure hooks
   }
   async action(parent) {
@@ -87,6 +89,7 @@ class HttpRequestTask extends Task {
 ## API
 
   * <a href="#task"><code>bootme.<b>Task()</b></code></a>
+  * <a href="#setConfig"><code>bootme.Task#<b>init()</b></code></a>
   * <a href="#setConfig"><code>bootme.Task#<b>setConfig()</b></code></a>
   * <a href="#setName"><code>bootme.Task#<b>setName()</b></code></a>
   * <a href="#addHook"><code>bootme.Task#<b>addHook()</b></code></a>
