@@ -45,15 +45,16 @@ pipeline.execute()
 ### Task Template
 
 ```js
-const Task = require('./../').Task
+const Task = require('bootme').Task
 
 class HttpRequestTask extends Task {
   constructor() {
     super()
     // add before, after, failure hooks
   }
-  async action() {
+  async action(parent) {
     console.log('Do something!')
+    parent.addJob(async (parent) => {})
   }
 }
 ```
