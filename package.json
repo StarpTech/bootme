@@ -1,0 +1,35 @@
+{
+  "name": "tasko",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "unit": "tap -j4 test/*.test.js test/*/*.test.js",
+    "precommit": "npm run format",
+    "format": "prettier-standard \"./lib/**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StarpTech/tasko.git"
+  },
+  "author": "Dustin Deus <deusdustin@gmail.com> (http://www.starptech.de)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StarpTech/tasko/issues"
+  },
+  "homepage": "https://github.com/StarpTech/tasko#readme",
+  "dependencies": {
+    "workq": "^1.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.10.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "prettier": "^1.7.4",
+    "prettier-standard": "^7.0.3",
+    "tap": "^10.7.2"
+  }
+}
