@@ -11,9 +11,9 @@ task.addHook('onFailure', async function(err) {
 })
 task.action(async function(parent) {
   console.log('Foo')
-  parent.add(async function(parent) {
+  parent.addJob(async function(parent) {
     console.log('Boo')
-    parent.add(async function() {
+    parent.addJob(async function() {
       console.log('Boo2')
     })
   })
