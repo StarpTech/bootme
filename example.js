@@ -6,7 +6,11 @@ const task = new Bootme.Task().setName('test')
 
 task.before(async function() {})
 task.action(async function() {})
-task.restore(async function() {})
+task.recover(async function() {})
 task.after(async function() {})
 
-task.start()
+const registry = new Bootme.Registry()
+registry.addTask(task)
+
+const pipeline = new Bootme.Pipeline(registry)
+pipeline.execute()
