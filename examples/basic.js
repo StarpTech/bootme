@@ -6,7 +6,7 @@ const task = new Bootme.Task().setName('foo').setConfig({})
 
 task.addHook('onBefore', async function() {})
 task.addHook('onAfter', async function() {})
-task.addHook('onFailure', async function(err) {
+task.addHook('onError', async function(err) {
   console.log(err)
 })
 task.action(async function(parent) {

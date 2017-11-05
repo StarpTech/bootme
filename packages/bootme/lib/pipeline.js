@@ -43,10 +43,27 @@ class Pipeline {
    */
   async execute() {
     for (let [name, task] of this.registry.tasks) {
-      task.config.bootme = this.registry.sharedConfig
+      // onInit
+      this.queue.add(async child => {
+        try {
+          const state = new State(child, task, this)
+          this.results.set(
+            `${name}:onInit`,
+            await task.executeHooks('onInit', [state])
+          )
+        } catch (err) {
+          task.hookErrored = true
+          this.results.set(`${name}:onInit:error`, err)
+          error('Task <%s> error %O', name, err)
+          await task.recover(err)
+        }
+      })
 
       // onBefore
       this.queue.add(async child => {
+        if (task.hookErrored) {
+          return
+        }
         try {
           const state = new State(child, task, this)
           this.results.set(
@@ -72,7 +89,6 @@ class Pipeline {
         } catch (err) {
           task.actionErrored = true
           this.results.set(`${name}:error`, err)
-          debug('Task <%s> execute recover routine', name)
           error('Task <%s> error %O', name, err)
           await task.recover(err)
         }
@@ -92,7 +108,6 @@ class Pipeline {
         } catch (err) {
           task.hookErrored = true
           this.results.set(`${name}:onAfter:error`, err)
-          debug('Task <%s> execute recover routine', name)
           error('Task <%s> error %O', name, err)
           await task.recover(err)
         }

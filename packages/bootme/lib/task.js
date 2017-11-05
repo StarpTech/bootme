@@ -1,6 +1,8 @@
 'use strict'
 
-const supportedHooks = ['onBefore', 'onAfter', 'onFailure']
+const debug = require('debug')('task')
+
+const supportedHooks = ['onBefore', 'onAfter', 'onError', 'onInit']
 
 /**
  *
@@ -11,11 +13,19 @@ class Task {
   constructor() {
     this.onAfter = []
     this.onBefore = []
-    this.onFailure = []
+    this.onError = []
+    this.onInit = []
     this.actionErrored = false
     this.hookErrored = false
+    this.initErrored = false
     this.config = {}
   }
+  /**
+   *
+   *
+   * @memberof Task
+   */
+  async init() {}
   /**
    *
    *
@@ -103,6 +113,8 @@ class Task {
       throw new Error(`${name} hook not supported!`)
     }
 
+    debug(`Task <${this.name}> execute ${name} hooks`)
+
     for (let hook of this[name]) {
       await hook.apply(this, args)
     }
@@ -114,7 +126,9 @@ class Task {
    * @memberof Task
    */
   async recover(err) {
-    for (let hook of this.onFailure) {
+    debug(`Task <${this.name}> execute recover routines`)
+
+    for (let hook of this.onError) {
       await hook(err)
     }
   }

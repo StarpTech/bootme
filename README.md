@@ -17,7 +17,7 @@ npm install bootme
 ## Features
 
 - Handle nested queues, the order of execution is guaranteed thanks to [workq](https://github.com/delvedor/workq) package.
-- Define Before, After, Failure Hooks in the Task or via Registry.
+- Define Before, After, Error Hooks in the Task or via Registry.
 - Define recover routine which is triggered as soon as a Hook or a Job fails.
 - Share configuration across all Tasks.
 - Access to Task results in hooks or jobs.
@@ -30,7 +30,7 @@ const task = new Bootme.Task().setName('foo').setConfig({})
 
 task.addHook('onBefore', async function() {})
 task.addHook('onAfter', async function() {})
-task.addHook('onFailure', async function(err) {})
+task.addHook('onError', async function(err) {})
 
 task.action(async function(parent) {
   // Nested Jobs

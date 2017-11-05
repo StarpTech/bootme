@@ -38,8 +38,11 @@ class Registry {
     if (!(task instanceof Task)) {
       throw new TypeError('The Task must be a Task instance')
     }
-
+    task.addHook('onInit', async state => task.init(state))
+    task.config.bootme = this.sharedConfig
     this.tasks.set(task.name, task)
+
+    return task
   }
   /**
    *
