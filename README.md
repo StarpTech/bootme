@@ -27,6 +27,7 @@ npm install bootme
 ```js
 // Create a Task
 const task = new Bootme.Task().setName('foo').setConfig({})
+
 task.addHook('onBefore', async function() {})
 task.addHook('onAfter', async function() {})
 task.addHook('onFailure', async function(err) {})
@@ -34,11 +35,9 @@ task.addHook('onFailure', async function(err) {})
 task.action(async function(parent) {
   // Nested Jobs
   parent.addJob(async function(parent) {
-    parent.addJob(async function(parent) {
-      // Get result from Task
-      console.log(parent.pipeline.getResult('foo'))
-    })
+    console.log(parent.pipeline.getResult('foo'))
   })
+
   return 'finished'
 })
 
@@ -53,17 +52,12 @@ registry.shareConfig({
 
 registry.addTask(task)
 registry.addHook('foo', 'onBefore', () => console.log('Before foo'))
-registry.addHook('foo', 'onAfter', () => console.log('After foo'))
 
 // Get result from Task
 pipeline.getResult('foo')
-pipeline.getResult('foo:onBefore')
-pipeline.getResult('foo:onAfter')
 
 // Get error from Task
 pipeline.getResult('foo:error')
-pipeline.getResult('foo:onBefore:error')
-pipeline.getResult('foo:onAfter:error')
 
 // Execute
 pipeline.execute()
@@ -105,7 +99,7 @@ class HttpRequestTask extends Task {
   * <a href="#Pipeline"><code>bootme.<b>Pipeline()</b></code></a>
   * <a href="#execute"><code>bootme.Pipeline#<b>execute()</b></code></a>
   * <a href="#getResult"><code>bootme.Pipeline#<b>getResult()</b></code></a>
-  
+
 -------------------------------------------------------
 
 ## Contributing
