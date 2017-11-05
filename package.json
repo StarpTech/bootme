@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "unit": "tap -j4 test/*.test.js test/*/*.test.js",
+    "test": "tap test/*.test.js test/*/*.test.js",
     "precommit": "npm run format",
     "format": "prettier-standard \"./lib/**/*.js\"",
     "patch": "np patch --yolo",

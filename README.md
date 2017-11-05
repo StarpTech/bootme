@@ -1,3 +1,6 @@
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](#badge)
+[![NPM version](https://img.shields.io/npm/v/bootme.svg?style=flat)](https://www.npmjs.com/package/bootme)
+
 # BootMe
 
 A fully configurable and extendable Task Pipeline
