@@ -36,7 +36,8 @@ registry.shareConfig({
 })
 
 registry.addTask(
-  new GitcloneTask().setName('gitclone').setConfig({
+  new GitcloneTask().setName('gitclone')
+  .setConfig({
     url: 'https://github.com/netzkern/eslint-config-netzkern-base',
     path: '/test-checkout'
   })
@@ -46,7 +47,8 @@ registry.addTask(
 )
 
 registry.addTask(
-  new TemplateTask().setName('replace').setConfig({
+  new TemplateTask().setName('replace')
+  .setConfig({
     refs: {
       url: 'gitclone' // Point to the result of named Task
     },
@@ -64,6 +66,32 @@ registry.addHook('gitclone', 'onError', async (err) => console.log(err))
 
 pipeline.execute()
 ```
+
+### Integrate Commandline prompt
+
+```js
+const inquirer = require('inquirer')
+
+const task = new Task().setName('pizza')
+  task.setConfig(async () => {
+    const result = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'size',
+        message: 'What size do you need?',
+        choices: ['Jumbo', 'Large', 'Standard', 'Medium', 'Small', 'Micro'],
+        filter: function(val) {
+          return val.toLowerCase()
+        }
+      }
+    ])
+
+    return result
+  })
+
+registry.addTask(task)
+```
+
 
 ### Task Template
 
