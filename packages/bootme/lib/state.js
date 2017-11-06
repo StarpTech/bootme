@@ -40,10 +40,10 @@ class State {
         await fn(new State(child, this.parentTask, this.pipeline))
       } catch (err) {
         debug(
-          'Job error in Task <%s>, execute recover routine',
+          'Task <%s> execute recover routines cause (Job) error',
           this.parentTask.name
         )
-        await this.parentTask.recover(err)
+        await this.pipeline.recover(err)
       }
     })
   }
