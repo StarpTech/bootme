@@ -86,8 +86,10 @@ class HttpRequestTask extends Task {
 ## API
 
   * <a href="#task"><code>bootme.<b>Task()</b></code></a>
-  * <a href="#setConfig"><code>bootme.Task#<b>init()</b></code></a>
+  * <a href="#init"><code>bootme.Task#<b>init()</b></code></a>
   * <a href="#setConfig"><code>bootme.Task#<b>setConfig()</b></code></a>
+  * <a href="#validateResult"><code>bootme.Task#<b>validateResult()</b></code></a>
+  * <a href="#validateConfig"><code>bootme.Task#<b>validateConfig()</b></code></a>
   * <a href="#setName"><code>bootme.Task#<b>setName()</b></code></a>
   * <a href="#addHook"><code>bootme.Task#<b>addHook()</b></code></a>
   * <a href="#action"><code>bootme.Task#<b>action()</b></code></a>
