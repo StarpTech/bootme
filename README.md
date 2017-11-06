@@ -27,46 +27,32 @@ npm install bootme
 ## Usage
 
 ```js
-// Create a Task
-const task = new Bootme.Task().setName('foo').setConfig({})
-
-task.addHook('onBefore', async function() {})
-task.addHook('onAfter', async function() {})
-task.addHook('onError', async function(err) {})
-
-task.action(async function(state) {
-  // Nested Jobs
-  state.addJob(async function(state) {
-    console.log(state.pipeline.get('foo'))
-  })
-
-  return 'finished'
-})
-
-// Collect and manipulate
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-// Share config across all Tasks
 registry.shareConfig({
   basePath: process.cwd()
 })
 
-registry.addTask(task)
-registry.addHook('foo', 'onBefore', async function() {
-  console.log(`Before ${this.name}`)
-})
-registry.addHook('foo', 'onAfter', async function() {
-  console.log(`After ${this.name}`)
-})
+registry.addTask(
+  new GitcloneTask().setName('gitclone').setConfig({
+    url: 'https://github.com/netzkern/eslint-config-netzkern-base',
+    path: '/test-checkout'
+  })
+)
 
-// Get result from Task
-pipeline.get('foo')
+registry.addTask(
+  new TemplateTask().setName('replace').setConfig({
+    refs: {
+      url: 'gitclone' // Point to result of previous task
+    },
+    templateData: {
+      project: 'Hello BootMe!'
+    },
+    files: ['README.md']
+  })
+)
 
-// Get error from Task
-pipeline.get('foo:error')
-
-// Execute
 pipeline.execute()
 ```
 
