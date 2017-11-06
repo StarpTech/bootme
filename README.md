@@ -96,8 +96,8 @@ class HttpRequestTask extends Task {
 
   * <a href="#Pipeline"><code>bootme.<b>Pipeline()</b></code></a>
   * <a href="#execute"><code>bootme.Pipeline#<b>execute()</b></code></a>
-  * <a href="#getResult"><code>bootme.Pipeline#<b>get()</b></code></a>
-  * <a href="#getResult"><code>bootme.Pipeline#<b>hasError()</b></code></a>
+  * <a href="#get"><code>bootme.Pipeline#<b>get()</b></code></a>
+  * <a href="#hasError"><code>bootme.Pipeline#<b>hasError()</b></code></a>
 
 -------------------------------------------------------
 
