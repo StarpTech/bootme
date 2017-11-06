@@ -83,8 +83,10 @@ class Pipeline {
     for (let task of this.registry.tasks) {
       // lazy evaluation of task config
       if (typeof task.config === 'function') {
-        task.setConfig(task.config())
+        const config = await task.config()
+        task.setConfig(config)
       }
+
       // onInit
       this.queue.add(async child => {
         try {
