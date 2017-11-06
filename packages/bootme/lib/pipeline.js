@@ -1,6 +1,7 @@
 'use strict'
 
 const q = require('workq')
+const Hoek = require('hoek')
 const error = require('debug')('pipeline:error')
 const State = require('./state')
 const Registry = require('./registry')
@@ -106,7 +107,7 @@ class Pipeline {
 
     // lazy evaluation of task config
     if (typeof task.config === 'function') {
-      const config = await task.config()
+      const config = await task.config(state)
       task.setConfig(config)
     } else {
       task.setConfig(task.config)
@@ -139,18 +140,18 @@ class Pipeline {
         break
       }
 
-      // lazy evaluation of task config
-      if (typeof task.config === 'function') {
-        const config = await task.config()
-        task.setConfig(config)
-      } else {
-        task.setConfig(task.config)
-      }
-
       // onInit
       this.queue.add(async child => {
         try {
           const state = new State(child, task, this)
+          // lazy evaluation of task config
+          if (typeof task.config === 'function') {
+            const config = await task.config(state)
+            task.setConfig(config)
+          } else {
+            task.setConfig(task.config)
+          }
+
           await task.executeHooks('onInit', state)
         } catch (err) {
           error('Task <%s> onInit error %O', task.name, err)

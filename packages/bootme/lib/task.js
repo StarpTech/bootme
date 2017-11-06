@@ -59,16 +59,13 @@ class Task {
       this.config = config
     } else {
       const result = this.validateConfig(config)
-      if (result) {
-        if (result.error) {
-          error(`Invalid config schema. Task "${this.name}"`)
-          throw result.error
-        }
 
-        this.config = result.value
-      } else {
-        this.config = config
+      if (result.error) {
+        error(`Invalid config schema. Task "${this.name}"`)
+        throw result.error
       }
+
+      this.config = result.value
     }
 
     return this
