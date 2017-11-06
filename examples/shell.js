@@ -14,9 +14,18 @@ registry.addTask(
 )
 
 registry.addTask(
-  new ShellTask().setName('ls').setConfig({
+  new ShellTask().setName('exec').setConfig({
     cmd: 'exec',
     args: ['node -v']
+  })
+)
+
+registry.addHook(
+  'exec',
+  'onAfter',
+  new ShellTask().setName('echo2').setConfig({
+    cmd: 'echo',
+    args: ['End']
   })
 )
 

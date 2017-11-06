@@ -86,7 +86,9 @@ class Task {
    */
   action(fn) {
     if (typeof fn !== 'function') {
-      throw new TypeError(`Action handler must be a function. Task "${this.name}"`)
+      throw new TypeError(
+        `Action handler must be a function. Task "${this.name}"`
+      )
     }
 
     this.action = fn
@@ -101,8 +103,10 @@ class Task {
    * @memberof Task
    */
   addHook(name, fn) {
-    if (typeof fn !== 'function') {
-      throw new TypeError(`Hook handler of must be a function. Task "${this.name}"`)
+    if (typeof fn !== 'function' && !(fn instanceof Task)) {
+      throw new TypeError(
+        `Hook handler of must be a function or Task instance. Task "${this.name}"`
+      )
     }
 
     if (supportedHooks.indexOf(name) === -1) {
@@ -133,10 +137,10 @@ class Task {
    *
    *
    * @param {any} hookName
-   * @param {any} args
+   * @param {any} state
    * @memberof Task
    */
-  async executeHooks(name, args) {
+  async executeHooks(name, state) {
     if (supportedHooks.indexOf(name) === -1) {
       throw new Error(`${name} hook not supported!`)
     }
@@ -144,7 +148,11 @@ class Task {
     debug(`Task <${this.name}> execute ${name} hooks`)
 
     for (let hook of this[name]) {
-      await hook.apply(this, args)
+      if (hook instanceof Task) {
+        await hook.action(state)
+      } else {
+        await hook.call(this, state)
+      }
     }
   }
   /**
