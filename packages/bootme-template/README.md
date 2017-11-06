@@ -6,7 +6,7 @@ Task to parse files as mustache templates and replace the original content.
 
 ```js
 registry.addTask(
-  new TemplateTask().setName('replace').setConfig({
+  new TemplateTask('templating').setConfig({
     refs: {
       url: 'gitclone' // Point to result of previous task
     },

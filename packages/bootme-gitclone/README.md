@@ -6,7 +6,7 @@ Task to clone a Git Repository
 
 ```js
 registry.addTask(
-  new GitcloneTask().setName('gitclone').setConfig({
+  new GitcloneTask('gitclone').setConfig({
     url: 'https://github.com/netzkern/eslint-config-netzkern-base',
     path: '/test-checkout'
   })

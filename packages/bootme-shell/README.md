@@ -6,7 +6,7 @@ Task to execute portable Unix shell commands
 
 ```js
 registry.addTask(
-  new ShellTask().setName('echo').setConfig({
+  new ShellTask('echo').setConfig({
     cmd: 'echo',
     args: ['BootMe']
   })

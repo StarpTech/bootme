@@ -12,14 +12,14 @@ registry.shareConfig({
 })
 
 registry.addTask(
-  new GitcloneTask().setName('gitclone').setConfig({
+  new GitcloneTask('gitclone').setConfig({
     url: 'https://github.com/netzkern/eslint-config-netzkern-base',
     path: '/test-checkout'
   })
 )
 
 registry.addTask(
-  new TemplateTask().setName('replace').setConfig({
+  new TemplateTask('replace').setConfig({
     refs: {
       url: 'gitclone' // Poiint to result of previous task
     },

@@ -11,12 +11,23 @@ const supportedHooks = ['onBefore', 'onAfter', 'onError', 'onInit']
  * @class Task
  */
 class Task {
-  constructor() {
+  constructor(name) {
+    if (!name) {
+      throw new Error(`Task name is required`)
+    }
+
+    if (typeof name !== 'string') {
+      throw new TypeError(`Name must be a string`)
+    }
+
+    this.name = name
     this.onAfter = []
     this.onBefore = []
     this.onError = []
     this.onInit = []
     this.config = {}
+
+    return this
   }
   /**
    *
@@ -59,22 +70,6 @@ class Task {
         this.config = config
       }
     }
-
-    return this
-  }
-  /**
-   *
-   *
-   * @param {any} name
-   * @returns
-   * @memberof Task
-   */
-  setName(name) {
-    if (typeof name !== 'string') {
-      throw new TypeError(`Name must be a string. Task "${this.name}"`)
-    }
-
-    this.name = name
 
     return this
   }

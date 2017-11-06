@@ -11,7 +11,7 @@ registry.shareConfig({
 })
 
 registry.addTask(
-  new HttpRequestTask().setName('iss_position').setConfig({
+  new HttpRequestTask('iss_position').setConfig({
     method: 'GET',
     url: 'http://api.open-notify.org/iss-now.json'
   })

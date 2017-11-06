@@ -17,8 +17,8 @@ class GitcloneTask extends Task {
    * Creates an instance of GitcloneTask.
    * @memberof GitcloneTask
    */
-  constructor() {
-    super()
+  constructor(name) {
+    super(name)
     this.git = SimpleGit()
   }
   /**

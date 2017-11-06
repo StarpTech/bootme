@@ -4,7 +4,7 @@ const inquirer = require('inquirer')
 const Joi = require('joi')
 const Bootme = require('./../packages/bootme')
 
-const task = new Bootme.Task().setName('foo')
+const task = new Bootme.Task('foo')
 
 task.validateConfig = function(value) {
   return Joi.object()

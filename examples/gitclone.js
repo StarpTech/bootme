@@ -7,7 +7,7 @@ const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
 registry.addTask(
-  new GitcloneTask().setName('gitclone').setConfig({
+  new GitcloneTask('gitclone').setConfig({
     url: 'https://github.com/netzkern/eslint-config-netzkern-base',
     path: '/test-checkout'
   })

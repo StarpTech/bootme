@@ -36,7 +36,7 @@ registry.shareConfig({
 })
 
 registry.addTask(
-  new GitcloneTask().setName('gitclone')
+  new GitcloneTask('gitclone')
   .setConfig({
     url: 'https://github.com/netzkern/eslint-config-netzkern-base',
     path: '/test-checkout'
@@ -47,7 +47,7 @@ registry.addTask(
 )
 
 registry.addTask(
-  new TemplateTask().setName('replace')
+  new TemplateTask('replace')
   .setConfig({
     refs: {
       url: 'gitclone' // Point to the result of named Task
@@ -63,6 +63,7 @@ registry.addTask(
 )
 
 registry.addHook('gitclone', 'onError', async (err) => console.log(err))
+registry.addHook('gitclone', 'onAfter', new Task('bar'))
 
 pipeline.execute()
 ```
@@ -72,7 +73,7 @@ pipeline.execute()
 ```js
 const inquirer = require('inquirer')
 
-const task = new Task().setName('pizza')
+const task = new Task('pizza')
   task.setConfig(async () => {
     const result = await inquirer.prompt([
       {

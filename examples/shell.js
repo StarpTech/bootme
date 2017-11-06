@@ -7,14 +7,14 @@ const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
 registry.addTask(
-  new ShellTask().setName('echo').setConfig({
+  new ShellTask('echo').setConfig({
     cmd: 'echo',
     args: ['BootMe']
   })
 )
 
 registry.addTask(
-  new ShellTask().setName('exec').setConfig({
+  new ShellTask('exec').setConfig({
     cmd: 'exec',
     args: ['node -v']
   })
@@ -23,8 +23,7 @@ registry.addTask(
 registry.addHook(
   'exec',
   'onAfter',
-  new ShellTask()
-    .setName('echo2')
+  new ShellTask('echo2')
     .setConfig({
       cmd: 'echo',
       args: ['End']
