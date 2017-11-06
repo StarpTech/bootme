@@ -16,9 +16,6 @@ class Task {
     this.onBefore = []
     this.onError = []
     this.onInit = []
-    this.actionErrored = false
-    this.hookErrored = false
-    this.initErrored = false
     this.config = {}
   }
   /**
