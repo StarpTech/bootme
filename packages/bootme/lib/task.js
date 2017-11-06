@@ -1,6 +1,7 @@
 'use strict'
 
 const debug = require('debug')('task')
+const error = require('debug')('task:error')
 
 const supportedHooks = ['onBefore', 'onAfter', 'onError', 'onInit']
 
@@ -52,6 +53,7 @@ class Task {
       const result = this.validateConfig(config)
       if (result) {
         if (result.error) {
+          error(`Invalid config schema. Task ${this.name}`)
           throw result.error
         }
 
@@ -72,7 +74,7 @@ class Task {
    */
   setName(name) {
     if (typeof name !== 'string') {
-      throw new TypeError('The Task name must be a string')
+      throw new TypeError(`Name must be a string. Task "${this.name}"`)
     }
 
     this.name = name
@@ -87,7 +89,7 @@ class Task {
    */
   action(fn) {
     if (typeof fn !== 'function') {
-      throw new TypeError('The action handler must be a function')
+      throw new TypeError(`Action handler must be a function. Task "${this.name}"`)
     }
 
     this.action = fn
@@ -101,11 +103,11 @@ class Task {
    */
   addHook(name, fn) {
     if (typeof fn !== 'function') {
-      throw new TypeError('The hook handler must be a function')
+      throw new TypeError(`Hook handler of must be a function. Task "${this.name}"`)
     }
 
     if (supportedHooks.indexOf(name) === -1) {
-      throw new Error(`${name} hook not supported!`)
+      throw new Error(`Hook not supported! Task "${this.name}"`)
     }
 
     this[name].push(fn)
@@ -119,7 +121,7 @@ class Task {
    */
   async start(queue) {
     if (typeof this.action !== 'function') {
-      throw new TypeError('Action must be a function')
+      throw new TypeError(`Action must be a function. Task "${this.name}"`)
     }
 
     const result = await this.action(queue)

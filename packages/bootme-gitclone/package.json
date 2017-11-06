@@ -1,7 +1,7 @@
 {
   "name": "bootme-gitclone",
   "version": "0.0.1",
-  "description": "",
+  "description": "Task to clone a Git Repository",
   "main": "index.js",
   "scripts": {
     "test": "tap test/*.test.js test/*/*.test.js"

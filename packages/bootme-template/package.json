@@ -1,7 +1,7 @@
 {
   "name": "bootme-template",
   "version": "0.0.1",
-  "description": "",
+  "description": "Task to parse files as mustache templates and replace the original content",
   "main": "index.js",
   "scripts": {
     "test": "tap test/*.test.js test/*/*.test.js"

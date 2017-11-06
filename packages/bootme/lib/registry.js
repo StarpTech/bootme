@@ -62,7 +62,7 @@ class Registry {
     if (task) {
       task.addHook(hookName, fn)
     } else {
-      throw new Error(`Task ${taskName} could not be found`)
+      throw new Error(`Task "${taskName}" could not be found`)
     }
   }
 }
