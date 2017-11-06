@@ -17,6 +17,7 @@ class Task {
     this.onError = []
     this.onInit = []
     this.config = {}
+    this.bootme = {}
   }
   /**
    *
@@ -50,7 +51,7 @@ class Task {
       const result = this.validateConfig(config)
       if (result) {
         if (result.error) {
-          error(`Invalid config schema. Task ${this.name}`)
+          error(`Invalid config schema. Task "${this.name}"`)
           throw result.error
         }
 
@@ -105,7 +106,8 @@ class Task {
   addHook(name, fn) {
     if (typeof fn !== 'function' && !(fn instanceof Task)) {
       throw new TypeError(
-        `Hook handler of must be a function or Task instance. Task "${this.name}"`
+        `Hook handler of must be a function or Task instance. Task "${this
+          .name}"`
       )
     }
 
@@ -148,8 +150,9 @@ class Task {
     debug(`Task <${this.name}> execute ${name} hooks`)
 
     for (let hook of this[name]) {
+      // allow passing tasks as hook handlers
       if (hook instanceof Task) {
-        await hook.action(state)
+        await state.pipeline.bootSubTask(hook, state)
       } else {
         await hook.call(this, state)
       }

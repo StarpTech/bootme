@@ -21,6 +21,7 @@ class TaskShell extends Task {
   validateConfig(value) {
     return Joi.object()
       .keys({
+        bootme: Joi.object(),
         cmd: Joi.string()
           .allow([
             'rm',

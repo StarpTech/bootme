@@ -23,10 +23,13 @@ registry.addTask(
 registry.addHook(
   'exec',
   'onAfter',
-  new ShellTask().setName('echo2').setConfig({
-    cmd: 'echo',
-    args: ['End']
-  })
+  new ShellTask()
+    .setName('echo2')
+    .setConfig({
+      cmd: 'echo',
+      args: ['End']
+    })
+    .addHook('onError', () => {})
 )
 
 pipeline.execute()

@@ -20,6 +20,7 @@ class HttpRequestTask extends Task {
   validateConfig(value) {
     return Joi.object()
       .keys({
+        bootme: Joi.object(),
         method: Joi.string()
           .lowercase()
           .allow(['get', 'post', 'put', 'delete'])

@@ -31,6 +31,7 @@ class GitcloneTask extends Task {
   validateConfig(value) {
     return Joi.object()
       .keys({
+        bootme: Joi.object(),
         path: Joi.string().required(),
         url: Joi.string()
           .uri()
