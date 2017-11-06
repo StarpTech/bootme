@@ -1,6 +1,6 @@
 {
   "name": "bootme-template",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme": "^0.0.5",
+    "bootme": "^0.0.6",
     "del": "^3.0.0",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
