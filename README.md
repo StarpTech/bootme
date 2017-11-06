@@ -42,8 +42,8 @@ registry.addTask(
     path: '/test-checkout'
   })
   .addHook('onError', async (err) => console.log(err))
-  .addHook('onBefore', async () => ...)
-  .addHook('onAfter', async () => ...)
+  .addHook('onBefore', async (state) => ...)
+  .addHook('onAfter', async (state) => ...)
 )
 
 registry.addTask(
@@ -58,8 +58,8 @@ registry.addTask(
     files: ['README.md']
   })
   .addHook('onError', async (err) => console.log(err))
-  .addHook('onBefore', async () => ...)
-  .addHook('onAfter', async () => ...)
+  .addHook('onBefore', async (state) => ...)
+  .addHook('onAfter', async (state) => ...)
 )
 
 registry.addHook('gitclone', 'onError', async (err) => console.log(err))
