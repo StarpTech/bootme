@@ -1,7 +1,7 @@
 {
   "name": "bootme-monorepo",
   "private": true,
-  "description": "A fully configurable and extendable Task Pipeline",
+  "description": "Configurable and extendable Task pipeline",
   "main": "index.js",
   "scripts": {
     "clean": "lerna clean",
