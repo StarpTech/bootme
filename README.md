@@ -100,6 +100,9 @@ registry.addTask(task)
 const Task = require('bootme').Task
 
 class HttpRequestTask extends Task {
+  constructor(name) {
+    super(name)
+  }
   async init(state) {}
   async action(state) {}
   async validateResult(value) {}
