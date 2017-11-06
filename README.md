@@ -18,7 +18,7 @@ npm install bootme
 
 - Handle nested queues, the order of execution is guaranteed thanks to [Workq](https://github.com/delvedor/workq) package.
 - Define Before, After, Error Hooks in the Task or via Registry.
-- Define recover routines which are triggered as soon as a Hook or a Job fails.
+- Define recover routines which are triggered as soon as a Hook, Task or a Job fails.
 - Share configuration across all Tasks.
 - Access Task results in Hooks or Jobs.
 - Reference to Task results in other Tasks.
