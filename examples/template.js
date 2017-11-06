@@ -1,7 +1,7 @@
 'use strict'
 
 const Bootme = require('./../packages/bootme')
-const CheckoutTask = require('./../packages/bootme-checkout')
+const GitcloneTask = require('./../packages/bootme-gitclone')
 const TemplateTask = require('./../packages/bootme-template')
 
 const registry = new Bootme.Registry()
@@ -12,8 +12,7 @@ registry.shareConfig({
 })
 
 registry.addTask(
-  new CheckoutTask().setName('checkout').setConfig({
-    method: 'GET',
+  new GitcloneTask().setName('gitclone').setConfig({
     url: 'https://github.com/netzkern/eslint-config-netzkern-base',
     path: '/test-checkout'
   })
@@ -21,7 +20,13 @@ registry.addTask(
 
 registry.addTask(
   new TemplateTask().setName('replace').setConfig({
-    deps: ['checkout']
+    refs: {
+      url: 'gitclone' // Poiint to result of previous task
+    },
+    templateData: {
+      project: 'Hello BootMe!'
+    },
+    files: ['README.md']
   })
 )
 

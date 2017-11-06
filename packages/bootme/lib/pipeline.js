@@ -1,7 +1,6 @@
 'use strict'
 
 const q = require('workq')
-const debug = require('debug')('pipeline')
 const error = require('debug')('pipeline:error')
 const State = require('./state')
 const Registry = require('./registry')
@@ -51,12 +50,28 @@ class Pipeline {
     if (Array.isArray(name)) {
       let results = new Map()
       for (let task of name) {
-        results.set(name, await this.results.get(task))
+        results.set(task, this.getResult(task))
       }
       return results
     } else {
-      return this.results.get(name)
+      return this.getResult(name)
     }
+  }
+  /**
+   *
+   *
+   * @param {any} name
+   * @returns
+   * @memberof Pipeline
+   */
+  getResult(name) {
+    const res = this.results.get(name)
+
+    if (res === undefined) {
+      throw new Error(`Task result "${name}" not available`)
+    }
+
+    return res
   }
   /**
    *

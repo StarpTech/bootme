@@ -48,11 +48,15 @@ class Task {
   setConfig(config) {
     const result = this.validateConfig(config)
 
-    if (result.error) {
-      throw result.error
-    }
+    if (result) {
+      if (result.error) {
+        throw result.error
+      }
 
-    this.config = result.value
+      this.config = result.value
+    } else {
+      this.config = config
+    }
 
     return this
   }

@@ -23,7 +23,7 @@ registry.addHook('iss_position', 'onBefore', async function() {
 
 registry.addHook('iss_position', 'onAfter', async function() {
   console.log(`After ${this.name} result`)
-  const result = await pipeline.get(this.name)
+  const result = await pipeline.get(`${this.name}`)
   console.log(await result.json)
 })
 
