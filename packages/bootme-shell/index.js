@@ -42,7 +42,8 @@ class TaskShell extends Task {
             'sort',
             'tail',
             'test',
-            'touch'
+            'touch',
+            'which'
           ])
           .required(),
         args: Joi.array()

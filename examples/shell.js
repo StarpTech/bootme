@@ -23,12 +23,13 @@ registry.addTask(
 registry.addHook(
   'exec',
   'onAfter',
-  new ShellTask('echo2')
+  new ShellTask('list')
     .setConfig({
-      cmd: 'echo',
-      args: ['End']
+      cmd: 'ls'
     })
-    .addHook('onError', () => {})
+    .addHook('onAfter', async function (state) {
+      console.log(await state.pipeline.get(this.name))
+    })
 )
 
 pipeline.execute()
