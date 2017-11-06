@@ -18,6 +18,7 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
     "bootme": "^0.0.5",
+    "joi": "^13.0.1",
     "r2": "^2.0.0"
   },
   "devDependencies": {

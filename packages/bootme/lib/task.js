@@ -1,6 +1,7 @@
 'use strict'
 
 const debug = require('debug')('task')
+const Joi = require('joi')
 
 const supportedHooks = ['onBefore', 'onAfter', 'onError', 'onInit']
 
@@ -34,11 +35,13 @@ class Task {
    * @memberof Task
    */
   setConfig(config) {
-    if (typeof config !== 'object' && typeof config !== 'function') {
-      throw new TypeError('The Config must be an Object or Function that returns an Object')
+    const result = Joi.validate(config, this.configSchema)
+
+    if (result.error) {
+      throw result.error
     }
 
-    this.config = config
+    this.config = result.value
 
     return this
   }

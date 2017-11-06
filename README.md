@@ -22,6 +22,7 @@ npm install bootme
 - Share configuration across all Tasks.
 - Access Task results in Hooks or Jobs.
 - Reference to Task results in other Tasks.
+- Task config validation with [Joi](https://github.com/hapijs/joi)
 
 ## Usage
 
@@ -110,8 +111,17 @@ class HttpRequestTask extends Task {
   * <a href="#Pipeline"><code>bootme.<b>Pipeline()</b></code></a>
   * <a href="#execute"><code>bootme.Pipeline#<b>execute()</b></code></a>
   * <a href="#getResult"><code>bootme.Pipeline#<b>get()</b></code></a>
+  * <a href="#getResult"><code>bootme.Pipeline#<b>hasError()</b></code></a>
 
 -------------------------------------------------------
+
+## Packages
+
+| General | Version | Description |
+|--------|-------|-------|
+| [bootme-request](https://github.com/starptech/bootme/tree/master/packages/bootme-request) | [![npm](https://img.shields.io/npm/v/bootme-request.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-request) | Start HTTP request |
+| [bootme-gitclone](https://github.com/starptech/bootme/tree/master/packages/bootme-gitclone) | [![npm](https://img.shields.io/npm/v/bootme-gitclone.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-gitclone) | Clone a Git Repository |
+| [bootme-template](https://github.com/starptech/bootme/tree/master/packages/bootme-template) | [![npm](https://img.shields.io/npm/v/bootme-template.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-template) | Template parser |
 
 ## Contributing
 

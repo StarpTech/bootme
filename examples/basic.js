@@ -9,6 +9,7 @@ task.addHook('onAfter', async function() {})
 task.addHook('onError', async function(err) {
   console.log(err)
 })
+
 task.action(async function(parent) {
   console.log('Foo')
   parent.addJob(async function(parent) {
@@ -26,10 +27,13 @@ const pipeline = new Bootme.Pipeline(registry)
 registry.shareConfig({
   basePath: process.cwd()
 })
+
 registry.addTask(task)
+
 registry.addHook('foo', 'onBefore', async function() {
   console.log(`Before ${this.name}`)
 })
+
 registry.addHook('foo', 'onAfter', async function() {
   console.log(`After ${this.name}`)
 })

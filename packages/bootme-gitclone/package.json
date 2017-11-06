@@ -1,5 +1,5 @@
 {
-  "name": "bootme-checkout",
+  "name": "bootme-gitclone",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -19,6 +19,7 @@
   "dependencies": {
     "bootme": "^0.0.5",
     "del": "^3.0.0",
+    "joi": "^13.0.1",
     "simple-git": "^1.80.1"
   },
   "devDependencies": {

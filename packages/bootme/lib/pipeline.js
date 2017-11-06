@@ -30,6 +30,21 @@ class Pipeline {
    *
    *
    * @param {any} name
+   * @returns
+   * @memberof Pipeline
+   */
+  hasError(name) {
+    return (
+      this.results.get(`${name}:error`) ||
+      this.results.get(`${name}:onBefore:error`) ||
+      this.results.get(`${name}:onAfter:error`) ||
+      this.results.get(`${name}:onInit:error`)
+    )
+  }
+  /**
+   *
+   *
+   * @param {any} name
    * @memberof Pipeline
    */
   async get(name) {
@@ -51,9 +66,9 @@ class Pipeline {
    */
   async execute() {
     for (let task of this.registry.tasks) {
-      // lazy evaluation
+      // lazy evaluation of task config
       if (typeof task.config === 'function') {
-        task.config = task.config()
+        task.setConfig(task.config())
       }
       // onInit
       this.queue.add(async child => {
