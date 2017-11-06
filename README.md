@@ -34,10 +34,10 @@ task.addHook('onBefore', async function() {})
 task.addHook('onAfter', async function() {})
 task.addHook('onError', async function(err) {})
 
-task.action(async function(parent) {
+task.action(async function(state) {
   // Nested Jobs
-  parent.addJob(async function(parent) {
-    console.log(parent.pipeline.getResult('foo'))
+  state.addJob(async function(state) {
+    console.log(state.pipeline.get('foo'))
   })
 
   return 'finished'
@@ -76,15 +76,12 @@ pipeline.execute()
 const Task = require('bootme').Task
 
 class HttpRequestTask extends Task {
-  constructor() {
-    super()
-  }
-  async init(state) {
+  async init(state) {
     // add before, after, failure hooks
     // Rely on result from previous Tasks
     const results = await state.pipeline.get(['foo'])
   }
-  async action(parent) {
+  async action(state) {
     // Do something!
   }
 }
