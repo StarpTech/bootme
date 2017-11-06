@@ -1,6 +1,6 @@
 {
   "name": "bootme-shell",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Task to execute portable Unix shell commands",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme": "^0.0.6",
+    "bootme": "^0.0.7",
     "joi": "^13.0.1",
     "shelljs": "^0.7.8"
   },
