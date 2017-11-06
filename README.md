@@ -6,7 +6,7 @@
 
 # BootMe
 
-Configurable and extendable Task pipeline.
+Configurable and extendable Task pipeline. Bootme help you to scaffold complete projects, services or other useful parts without fuss. It comes with a minimal API, no Framework, no Generator.
 
 ## Installation
 
