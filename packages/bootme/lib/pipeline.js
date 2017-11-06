@@ -74,10 +74,7 @@ class Pipeline {
       this.queue.add(async child => {
         try {
           const state = new State(child, task, this)
-          this.results.set(
-            `${task.name}:onInit`,
-            await task.executeHooks('onInit', [state])
-          )
+          await task.executeHooks('onInit', [state])
         } catch (err) {
           task.hookErrored = true
           this.results.set(`${task.name}:onInit:error`, err)
@@ -93,10 +90,7 @@ class Pipeline {
         }
         try {
           const state = new State(child, task, this)
-          this.results.set(
-            `${task.name}:onBefore`,
-            await task.executeHooks('onBefore', [state])
-          )
+          await task.executeHooks('onBefore', [state])
         } catch (err) {
           task.hookErrored = true
           this.results.set(`${task.name}:onBefore:error`, err)
@@ -128,10 +122,7 @@ class Pipeline {
         }
         try {
           const state = new State(child, task, this)
-          this.results.set(
-            `${task.name}:onAfter`,
-            await task.executeHooks('onAfter', [state])
-          )
+          await task.executeHooks('onAfter', [state])
         } catch (err) {
           task.hookErrored = true
           this.results.set(`${task.name}:onAfter:error`, err)

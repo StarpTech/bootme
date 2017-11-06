@@ -2,7 +2,7 @@
 
 const Bootme = require('./../packages/bootme')
 
-const task = new Bootme.Task().setName('foo').setConfig({})
+const task = new Bootme.Task().setName('foo')
 
 task.addHook('onBefore', async function() {})
 task.addHook('onAfter', async function() {})
