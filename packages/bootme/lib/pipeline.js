@@ -106,7 +106,13 @@ class Pipeline {
         }
         try {
           const state = new State(child, task, this)
-          this.results.set(`${task.name}`, await task.start(state))
+          const result = await task.start(state)
+
+          if (result && typeof task.validateResult === 'function') {
+            await task.validateResult(result)
+          }
+
+          this.results.set(`${task.name}`, result)
         } catch (err) {
           task.actionErrored = true
           this.results.set(`${task.name}:error`, err)

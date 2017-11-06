@@ -24,16 +24,28 @@ class GitcloneTask extends Task {
   /**
    *
    *
-   * @readonly
+   * @param {any} value
+   * @returns
    * @memberof GitcloneTask
    */
-  get configSchema() {
-    return Joi.object().keys({
-      path: Joi.string().required(),
-      url: Joi.string()
-        .uri()
-        .required()
-    })
+  validateConfig(value) {
+    return Joi.object()
+      .keys({
+        path: Joi.string().required(),
+        url: Joi.string()
+          .uri()
+          .required()
+      })
+      .validate(value)
+  }
+  /**
+   *
+   *
+   * @param {any} result
+   * @memberof HttpRequestTask
+   */
+  async validateResult(value) {
+    return Joi.validate(value, Joi.string().required())
   }
   /**
    *

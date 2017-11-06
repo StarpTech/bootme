@@ -1,7 +1,6 @@
 'use strict'
 
 const debug = require('debug')('task')
-const Joi = require('joi')
 
 const supportedHooks = ['onBefore', 'onAfter', 'onError', 'onInit']
 
@@ -26,6 +25,18 @@ class Task {
    *
    * @memberof Task
    */
+  async validateResult() {}
+  /**
+   *
+   *
+   * @memberof Task
+   */
+  validateConfig() {}
+  /**
+   *
+   *
+   * @memberof Task
+   */
   async init() {}
   /**
    *
@@ -35,7 +46,7 @@ class Task {
    * @memberof Task
    */
   setConfig(config) {
-    const result = Joi.validate(config, this.configSchema)
+    const result = this.validateConfig(config)
 
     if (result.error) {
       throw result.error

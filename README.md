@@ -22,7 +22,7 @@ npm install bootme
 - Share configuration across all Tasks.
 - Access Task results in Hooks or Jobs.
 - Reference to Task results in other Tasks.
-- Task config validation with [Joi](https://github.com/hapijs/joi)
+- Task config and result validation with [Joi](https://github.com/hapijs/joi)
 
 ## Usage
 
@@ -76,14 +76,10 @@ pipeline.execute()
 const Task = require('bootme').Task
 
 class HttpRequestTask extends Task {
-  async init(state) {
-    // add before, after, failure hooks
-    // Rely on result from previous Tasks
-    const results = await state.pipeline.get(['foo'])
-  }
-  async action(state) {
-    // Do something!
-  }
+  async init(state) {}
+  async action(state) {}
+  async validateResult(value) {}
+  validateConfig(value) {}
 }
 ```
 

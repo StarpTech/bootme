@@ -12,24 +12,37 @@ const Joi = require('joi')
  */
 class HttpRequestTask extends Task {
   /**
+ *
+ *
+ * @readonly
+ * @memberof HttpRequestTask
+ */
+  validateConfig(value) {
+    return Joi.object()
+      .keys({
+        method: Joi.string()
+          .lowercase()
+          .allow(['get', 'post', 'put', 'delete'])
+          .required(),
+        url: Joi.string()
+          .uri()
+          .required(),
+        options: Joi.object()
+          .keys({
+            headers: Joi.object()
+          })
+          .optional()
+      })
+      .validate(value)
+  }
+  /**
    *
    *
-   * @readonly
+   * @param {any} result
    * @memberof HttpRequestTask
    */
-  get configSchema() {
-    return Joi.object().keys({
-      method: Joi.string()
-        .lowercase()
-        .allow(['get', 'post', 'put', 'delete'])
-        .required(),
-      url: Joi.string()
-        .uri()
-        .required(),
-      options: Joi.object().keys({
-        headers: Joi.object()
-      }).optional()
-    })
+  async validateResult(value) {
+    return Joi.validate(value, Joi.object().required())
   }
   /**
    *
