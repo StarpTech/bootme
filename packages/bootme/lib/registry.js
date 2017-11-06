@@ -35,6 +35,25 @@ class Registry {
   /**
    *
    *
+   * @param {any} name
+   * @memberof Registry
+   */
+  setRef(taskName, key, value) {
+    const task = this.tasks.find(t => t.name === taskName)
+
+    if (!task) {
+      throw new Error(`The Task "${taskName}" does not exists`)
+    }
+
+    if (task.config.refs) {
+      task.config.refs[key] = value
+    } else {
+      task.config.refs = { [key]: value }
+    }
+  }
+  /**
+   *
+   *
    * @param {any} task
    * @memberof Registry
    */
