@@ -69,6 +69,10 @@ class HttpRequestTask extends Task {
 }
 ```
 
+## Examples
+
+[Here](examples)
+
 ## API
 
   * <a href="#task"><code>bootme.<b>Task()</b></code></a>
