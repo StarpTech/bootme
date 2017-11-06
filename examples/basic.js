@@ -10,12 +10,12 @@ task.addHook('onError', async function(err) {
   console.log(err)
 })
 
-task.action(async function(parent) {
+task.action(async function(state) {
   console.log('Foo')
-  parent.addJob(async function(parent) {
+  state.addJob(async function(state) {
     console.log('Boo')
-    parent.addJob(async function(parent) {
-      console.log(parent.pipeline.get('foo'))
+    state.addJob(async function(state) {
+      console.log(state.pipeline.get('foo'))
     })
   })
   return 'finished'
