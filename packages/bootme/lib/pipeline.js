@@ -80,7 +80,7 @@ class Pipeline {
    *
    * @memberof Pipeline
    */
-  async recover(err) {
+  async rollback(err) {
     this.errored = true
     this.pipeError = err
 
@@ -117,9 +117,9 @@ class Pipeline {
           const state = new State(child, task, this)
           await task.executeHooks('onInit', [state])
         } catch (err) {
-          error('Task <%s> error %O', task.name, err)
+          error('Task <%s> onInit error %O', task.name, err)
           this.results.set(`${task.name}:onInit:error`, err)
-          await this.recover(err)
+          await this.rollback(err)
         }
       })
 
@@ -132,9 +132,9 @@ class Pipeline {
           const state = new State(child, task, this)
           await task.executeHooks('onBefore', [state])
         } catch (err) {
-          error('Task <%s> error %O', task.name, err)
+          error('Task <%s> onBefore error %O', task.name, err)
           this.results.set(`${task.name}:onBefore:error`, err)
-          await this.recover(err)
+          await this.rollback(err)
         }
       })
 
@@ -153,9 +153,9 @@ class Pipeline {
 
           this.results.set(`${task.name}`, result)
         } catch (err) {
-          error('Task <%s> error %O', task.name, err)
+          error('Task <%s> action error %O', task.name, err)
           this.results.set(`${task.name}:error`, err)
-          await this.recover(err)
+          await this.rollback(err)
         }
       })
 
@@ -168,12 +168,9 @@ class Pipeline {
           const state = new State(child, task, this)
           await task.executeHooks('onAfter', [state])
         } catch (err) {
-          error('Task <%s> error %O', task.name, err)
-
-          this.errored = true
-          this.pipeError = err
+          error('Task <%s> onAfter error %O', task.name, err)
           this.results.set(`${task.name}:onAfter:error`, err)
-          await task.recover(err)
+          await this.rollback(err)
         }
       })
     }
