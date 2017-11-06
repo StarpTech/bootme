@@ -16,13 +16,14 @@ npm install bootme
 
 ## Features
 
-- Handle nested queues, the order of execution is guaranteed thanks to [workq](https://github.com/delvedor/workq) package.
+- Handle nested queues, the order of execution is guaranteed thanks to [Workq](https://github.com/delvedor/workq) package.
 - Define Before, After, Error Hooks in the Task or via Registry.
 - Define recover routines which are triggered as soon as a Hook or a Job fails.
 - Share configuration across all Tasks.
 - Access Task results in Hooks or Jobs.
 - Reference to Task results in other Tasks.
 - Task config and result validation with [Joi](https://github.com/hapijs/joi)
+- [Easy](examples/basic-wizard.js) integration of CLI Wizard thanks to [Inquirer](https://github.com/SBoudrias/Inquirer.js)
 
 ## Usage
 
