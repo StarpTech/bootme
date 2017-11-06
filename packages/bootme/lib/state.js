@@ -1,6 +1,7 @@
 'use strict'
 
 const debug = require('debug')('job')
+const error = require('debug')('job:error')
 const Task = require('./task')
 
 /**
@@ -43,7 +44,16 @@ class State {
           'Task <%s> execute recover routines cause (Job) error',
           this.parentTask.name
         )
-        await this.pipeline.recover(err)
+
+        // avoid error bubbling otherwise we recover a second time
+        try {
+          await this.pipeline.recover(err)
+        } catch (err) {
+          error(
+            'Task <%s> error during (Job) recover routine',
+            this.parentTask.name
+          )
+        }
       }
     })
   }
