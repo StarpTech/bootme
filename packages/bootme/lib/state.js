@@ -41,16 +41,16 @@ class State {
         await fn(new State(child, this.parentTask, this.pipeline))
       } catch (err) {
         debug(
-          'Task <%s> execute recover routines cause (Job) error',
+          'Task <%s> execute rollback routines cause (Job) error',
           this.parentTask.name
         )
 
-        // avoid error bubbling otherwise we recover a second time
+        // avoid error bubbling otherwise we rollback a second time
         try {
-          await this.pipeline.recover(err)
+          await this.pipeline.rollback(err)
         } catch (err) {
           error(
-            'Task <%s> error during (Job) recover routine',
+            'Task <%s> error during (Job) rollback routine',
             this.parentTask.name
           )
         }

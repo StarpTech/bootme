@@ -86,9 +86,9 @@ class Pipeline {
 
     for (let task of this.registry.tasks.reverse()) {
       try {
-        await task.recover(err)
+        await task.rollback(err)
       } catch (err) {
-        error(`Error during recover process %O`, err)
+        error(`Error during rollback process %O`, err)
       }
     }
   }

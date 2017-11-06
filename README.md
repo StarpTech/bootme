@@ -123,7 +123,7 @@ class HttpRequestTask extends Task {
   * <a href="#config"><code>bootme.Task#<b>config</b></code></a>
   * <a href="#executeHooks"><code>bootme.Task#<b>executeHooks()</b></code></a>
   * <a href="#start"><code>bootme.Task#<b>start()</b></code></a>
-  * <a href="#recover"><code>bootme.Task#<b>recover()</b></code></a>
+  * <a href="#rollback"><code>bootme.Task#<b>rollback()</b></code></a>
 
   * <a href="#registry"><code>bootme.<b>Registry()</b></code></a>
   * <a href="#addTask"><code>bootme.Registry#<b>addTask()</b></code></a>

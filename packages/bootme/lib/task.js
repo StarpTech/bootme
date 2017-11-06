@@ -163,8 +163,8 @@ class Task {
    * @param {any} err
    * @memberof Task
    */
-  async recover(err) {
-    debug(`Task <${this.name}> execute recover routines`)
+  async rollback(err) {
+    debug(`Task <${this.name}> execute rollback routines`)
 
     for (let hook of this.onError) {
       await hook(err)
