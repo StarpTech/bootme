@@ -6,10 +6,6 @@ const GitcloneTask = require('./../packages/bootme-gitclone')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-registry.shareConfig({
-  basePath: process.cwd()
-})
-
 registry.addTask(
   new GitcloneTask().setName('gitclone').setConfig({
     url: 'https://github.com/netzkern/eslint-config-netzkern-base',

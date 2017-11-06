@@ -14,6 +14,9 @@ class Registry {
    */
   constructor() {
     this.tasks = []
+    this.sharedConfig = {
+      basePath: process.cwd()
+    }
   }
   /**
    *
@@ -26,7 +29,7 @@ class Registry {
       throw new TypeError('The Config must be an Object')
     }
 
-    this.sharedConfig = cfg
+    this.sharedConfig = Object.assign(this.sharedConfig, cfg)
   }
   /**
    *
