@@ -90,6 +90,8 @@ class Task {
     }
 
     this.action = fn
+
+    return this
   }
   /**
    *
@@ -108,6 +110,8 @@ class Task {
     }
 
     this[name].push(fn)
+
+    return this
   }
   /**
    *

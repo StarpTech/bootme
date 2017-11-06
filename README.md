@@ -40,19 +40,27 @@ registry.addTask(
     url: 'https://github.com/netzkern/eslint-config-netzkern-base',
     path: '/test-checkout'
   })
+  .addHook('onError', async (err) => console.log(err))
+  .addHook('onBefore', async () => ...)
+  .addHook('onAfter', async () => ...)
 )
 
 registry.addTask(
   new TemplateTask().setName('replace').setConfig({
     refs: {
-      url: 'gitclone' // Point to result of previous task
+      url: 'gitclone' // Point to the result of named Task
     },
     templateData: {
       project: 'Hello BootMe!'
     },
     files: ['README.md']
   })
+  .addHook('onError', async (err) => console.log(err))
+  .addHook('onBefore', async () => ...)
+  .addHook('onAfter', async () => ...)
 )
+
+registry.addHook('gitclone', 'onError', async (err) => console.log(err))
 
 pipeline.execute()
 ```
