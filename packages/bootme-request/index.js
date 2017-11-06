@@ -24,6 +24,10 @@ class HttpRequestTask extends Task {
           .lowercase()
           .allow(['get', 'post', 'put', 'delete'])
           .required(),
+        contentType: Joi.string()
+          .lowercase()
+          .allow(['text', 'json', 'response'])
+          .default('json'),
         url: Joi.string()
           .uri()
           .required(),
@@ -55,7 +59,7 @@ class HttpRequestTask extends Task {
       this.config.url,
       this.config.options
     )
-    return result
+    return result[this.config.contentType]
   }
 }
 

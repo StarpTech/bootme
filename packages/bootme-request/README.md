@@ -8,6 +8,7 @@ Task to fire a HTTP Request
 registry.addTask(
   new HttpRequestTask().setName('iss_position').setConfig({
     method: 'GET',
+    contentType: 'json',
     url: 'http://api.open-notify.org/iss-now.json'
   })
 )
@@ -15,4 +16,4 @@ registry.addTask(
 
 ## Result
 
-- Instance of R2 (**[R2](https://github.com/mikeal/r2)**)
+- Based on the `contentType` property.
