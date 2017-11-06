@@ -17,7 +17,6 @@ class Task {
     this.onError = []
     this.onInit = []
     this.config = {}
-    this.bootme = {}
   }
   /**
    *
