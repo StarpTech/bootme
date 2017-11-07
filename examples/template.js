@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * This pipeline will checkout a sample respository, parse files as mustach and replace the original content.
+ */
+
 const Bootme = require('./../packages/bootme')
 const GitcloneTask = require('./../packages/bootme-gitclone')
 const TemplateTask = require('./../packages/bootme-template')

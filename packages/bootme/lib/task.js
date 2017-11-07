@@ -40,7 +40,9 @@ class Task {
    *
    * @memberof Task
    */
-  validateConfig() {}
+  validateConfig() {
+    return {}
+  }
   /**
    *
    *
@@ -143,7 +145,7 @@ class Task {
     for (let hook of this[name]) {
       // allow passing tasks as hook handlers
       if (hook instanceof Task) {
-        await state.pipeline.addTask(hook, state)
+        await state.addTask(hook, state)
       } else {
         await hook.call(this, state)
       }

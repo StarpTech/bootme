@@ -13,16 +13,16 @@ class State {
   /**
    * Creates an instance of Parent.
    * @param {any} queue
-   * @param {any} parentTask
+   * @param {any} task
    * @memberof Parent
    */
-  constructor(queue, parentTask, pipeline) {
-    if (!(parentTask instanceof Task)) {
-      throw new TypeError('The ParentTask must be a Task instance')
+  constructor(queue, task, pipeline) {
+    if (!(task instanceof Task)) {
+      throw new TypeError('The Task must be a Task instance')
     }
 
     this.queue = queue
-    this.parentTask = parentTask
+    this.task = task
     this.pipeline = pipeline
   }
   /**
@@ -34,7 +34,7 @@ class State {
    */
   async addTask(task) {
     const state = this
-    this.pipeline.executeTask(task, state)
+    await this.pipeline.executeTask(task, state)
   }
   /**
    *
@@ -49,11 +49,11 @@ class State {
 
     this.queue.add(async child => {
       try {
-        await fn(new State(child, this.parentTask, this.pipeline))
+        await fn(new State(child, this.task, this.pipeline))
       } catch (err) {
         debug(
           'Task <%s> execute rollback routines cause (Job) error',
-          this.parentTask.name
+          this.task.name
         )
 
         // avoid error bubbling otherwise we rollback a second time
@@ -62,7 +62,7 @@ class State {
         } catch (err) {
           error(
             'Task <%s> error during (Job) rollback routine',
-            this.parentTask.name
+            this.task.name
           )
         }
       }

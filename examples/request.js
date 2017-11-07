@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * This pipeline will execute a simple HTTP Request
+ */
+
 const Bootme = require('./../packages/bootme')
 const HttpRequestTask = require('./../packages/bootme-request')
 

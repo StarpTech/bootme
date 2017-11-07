@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * This pipeline will execute some simple shell commands
+ */
+
 const Bootme = require('./../packages/bootme')
 const ShellTask = require('./../packages/bootme-shell')
 
@@ -27,7 +31,7 @@ registry.addHook(
     .setConfig({
       cmd: 'ls'
     })
-    .addHook('onAfter', async function (state) {
+    .addHook('onAfter', async function(state) {
       console.log(await state.pipeline.get(this.name))
     })
 )

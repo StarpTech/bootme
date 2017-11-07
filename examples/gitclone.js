@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * This pipeline will clone a sample Git Repository
+ */
+
 const Bootme = require('./../packages/bootme')
 const GitcloneTask = require('./../packages/bootme-gitclone')
 

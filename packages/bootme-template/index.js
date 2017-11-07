@@ -31,6 +31,7 @@ class TemplateTask extends Task {
   validateConfig(value) {
     return Joi.object()
       .keys({
+        bootme: Joi.object(),
         url: Joi.string().optional(),
         templateData: Joi.object().required(),
         refs: Joi.object()

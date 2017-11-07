@@ -1,5 +1,10 @@
 'use strict'
 
+/**
+ * This pipeline will list all available containers on your machine and
+ * logged the informations about your selected container
+ */
+
 const inquirer = require('inquirer')
 const Bootme = require('./../packages/bootme')
 const DockerTask = require('./../packages/bootme-docker')

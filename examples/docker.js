@@ -1,5 +1,10 @@
 'use strict'
 
+/**
+ * This pipeline will create a docker container and
+ * list all available containers on your machine
+ */
+
 const Bootme = require('./../packages/bootme')
 const DockerTask = require('./../packages/bootme-docker')
 
