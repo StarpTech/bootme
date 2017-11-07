@@ -1,0 +1,26 @@
+{
+  "name": "bootme-json-runner",
+  "version": "0.0.0",
+  "description": "Tool to use JSON as pipeline definition",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StarpTech/bootme.git"
+  },
+  "author": "Dustin Deus <deusdustin@gmail.com> (http://www.starptech.de)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StarpTech/bootme/issues"
+  },
+  "homepage": "https://github.com/StarpTech/bootme#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "bootme-gitclone": "0.0.9",
+    "bootme-shell": "0.0.8",
+    "bootme-template": "0.0.9",
+    "tap": "^10.7.2"
+  }
+}

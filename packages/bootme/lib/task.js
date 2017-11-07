@@ -64,7 +64,11 @@ class Task {
 
       if (result) {
         if (result.error) {
-          error(`Invalid config schema. Task "${this.name}"`)
+          error(
+            'Task <%s:%s> Invalid config schema',
+            this.constructor.name,
+            this.name
+          )
           throw result.error
         } else if (result.value) {
           this.config = result.value
@@ -85,7 +89,8 @@ class Task {
   action(fn) {
     if (typeof fn !== 'function') {
       throw new TypeError(
-        `Action handler must be a function. Task "${this.name}"`
+        `Task <${this.constructor.name}:${this
+          .name}> Action handler must be a function`
       )
     }
 
@@ -103,13 +108,16 @@ class Task {
   addHook(name, fn) {
     if (typeof fn !== 'function' && !(fn instanceof Task)) {
       throw new TypeError(
-        `Hook handler of must be a function or Task instance. Task "${this
-          .name}"`
+        `Task <${this.constructor.name}:${this
+          .name}> Hook handler of must be a function or Task instance`
       )
     }
 
     if (supportedHooks.indexOf(name) === -1) {
-      throw new Error(`Hook not supported! Task "${this.name}"`)
+      throw new TypeError(
+        `Task <${this.constructor.name}:${this
+          .name}> Hook "${name}" not supported!`
+      )
     }
 
     this[name].push(fn)
@@ -125,7 +133,10 @@ class Task {
    */
   async start(queue) {
     if (typeof this.action !== 'function') {
-      throw new TypeError(`Action must be a function. Task "${this.name}"`)
+      throw new TypeError(
+        `Task <${this.constructor.name}:${this
+          .name}> Action must be a function. Actual ${typeof this.action}`
+      )
     }
 
     const result = await this.action(queue)
@@ -141,10 +152,15 @@ class Task {
    */
   async executeHooks(name, state) {
     if (supportedHooks.indexOf(name) === -1) {
-      throw new Error(`${name} hook not supported!`)
+      throw new TypeError(
+        `Task <${this.constructor.name}:${this
+          .name}> Hook "${name}" not supported!`
+      )
     }
 
-    debug(`Task <${this.name}> execute ${name} hooks`)
+    debug(
+      `Task <${this.constructor.name}:${this.name}> execute "${name}" hooks`
+    )
 
     for (let hook of this[name]) {
       // allow passing tasks as hook handlers
@@ -162,7 +178,9 @@ class Task {
    * @memberof Task
    */
   async rollback(err) {
-    debug(`Task <${this.name}> execute rollback routines`)
+    debug(
+      `Task <${this.constructor.name}:${this.name}> execute rollback routines`
+    )
 
     for (let hook of this.onError) {
       await hook(err)

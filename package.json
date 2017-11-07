@@ -36,6 +36,7 @@
     "inquirer": "^3.3.0",
     "joi": "^13.0.1",
     "lerna": "^2.5.1",
+    "minimist": "^1.2.0",
     "prettier": "^1.7.4",
     "prettier-standard": "^7.0.3"
   }

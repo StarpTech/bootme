@@ -72,7 +72,8 @@ class State {
         await fn(new State(child, this.task, this.pipeline))
       } catch (err) {
         debug(
-          'Task <%s> execute rollback routines cause (Job) error',
+          'Task <%s:%s> execute rollback routines cause (Job) error',
+          this.task.constructor.name,
           this.task.name
         )
 
@@ -80,7 +81,11 @@ class State {
         try {
           await this.pipeline.rollback(err)
         } catch (err) {
-          error('Task <%s> error during (Job) rollback routine', this.task.name)
+          error(
+            'Task <%s:%s> error during (Job) rollback routine',
+            this.task.constructor.name,
+            this.task.name
+          )
         }
       }
     })

@@ -92,7 +92,12 @@ class Pipeline {
       try {
         await task.rollback(err)
       } catch (err) {
-        error(`Error during rollback process %O`, err)
+        error(
+          `Task <%s:%s> Error during rollback process %O`,
+          task.constructor.name,
+          task.name,
+          err
+        )
       }
     }
   }
@@ -148,7 +153,10 @@ class Pipeline {
   async execute() {
     for (let task of this.registry.tasks) {
       if (this.errored) {
-        error('Abort Pipeline cause Task error %O', this.pipeError)
+        error(
+          'Abort Pipeline error %O',
+          this.pipeError
+        )
         break
       }
 
@@ -166,7 +174,12 @@ class Pipeline {
 
           await task.executeHooks('onInit', state)
         } catch (err) {
-          error('Task <%s> onInit error %O', task.name, err)
+          error(
+            'Task <%s:%s> onInit error %O',
+            task.constructor.name,
+            task.name,
+            err
+          )
           this.results.set(`${task.name}:onInit:error`, err)
           await this.rollback(err)
         }
@@ -181,7 +194,12 @@ class Pipeline {
           const state = new State(child, task, this)
           await task.executeHooks('onBefore', state)
         } catch (err) {
-          error('Task <%s> onBefore error %O', task.name, err)
+          error(
+            'Task <%s:%s> onBefore error %O',
+            task.constructor.name,
+            task.name,
+            err
+          )
           this.results.set(`${task.name}:onBefore:error`, err)
           await this.rollback(err)
         }
@@ -202,7 +220,12 @@ class Pipeline {
 
           this.results.set(`${task.name}`, result)
         } catch (err) {
-          error('Task <%s> action error %O', task.name, err)
+          error(
+            'Task <%s:%s> action error %O',
+            task.constructor.name,
+            task.name,
+            err
+          )
           this.results.set(`${task.name}:error`, err)
           await this.rollback(err)
         }
@@ -217,7 +240,12 @@ class Pipeline {
           const state = new State(child, task, this)
           await task.executeHooks('onAfter', state)
         } catch (err) {
-          error('Task <%s> onAfter error %O', task.name, err)
+          error(
+            'Task <%s:%s> onAfter error %O',
+            task.constructor.name,
+            task.name,
+            err
+          )
           this.results.set(`${task.name}:onAfter:error`, err)
           await this.rollback(err)
         }
