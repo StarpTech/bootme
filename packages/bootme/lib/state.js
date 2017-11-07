@@ -34,32 +34,7 @@ class State {
    */
   async addTask(task) {
     const state = this
-    this.pipeline.registry.addTask(task)
-
-    // pass share config
-    task.config.bootme = this.pipeline.registry.sharedConfig
-
-    // lazy evaluation of task config
-    if (typeof task.config === 'function') {
-      const config = await task.config(state)
-      task.setConfig(config)
-    } else {
-      task.setConfig(task.config)
-    }
-
-    task.addHook('onInit', async state => task.init(state))
-
-    await task.executeHooks('onInit', state)
-    await task.executeHooks('onBefore', state)
-
-    const result = await task.action(state)
-    if (result && typeof task.validateResult === 'function') {
-      await task.validateResult(result)
-    }
-
-    state.pipeline.results.set(`${task.name}`, result)
-
-    await task.executeHooks('onAfter', state)
+    this.pipeline.executeTask(task, state)
   }
   /**
    *

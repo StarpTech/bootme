@@ -110,6 +110,15 @@ class HttpRequestTask extends Task {
 }
 ```
 
+## Task Lifecycle
+
+- Constructor
+- Load configuration
+- Fire `onInit` hooks
+- Fire `onBefore` hooks
+- Fire `action`
+- Fire `onAfter` hooks
+
 ## Examples
 
 [Here](examples)
