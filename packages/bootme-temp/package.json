@@ -1,6 +1,6 @@
 {
   "name": "bootme-temp",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Task to get a random temporary file or directory path",
   "main": "index.js",
   "scripts": {
