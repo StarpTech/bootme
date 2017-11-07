@@ -17,3 +17,7 @@ registry.addTask(
 ## Result
 
 - Based on the `contentType` property.
+
+## Caveats
+
+Don't forget to register your `onError` hook to rollback the operation.

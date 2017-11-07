@@ -16,3 +16,7 @@ registry.addTask(
 ## Result
 
 - Look at [shelljs](https://github.com/shelljs/shelljs)
+
+## Caveats
+
+Don't forget to register your `onError` hook to rollback the operation.

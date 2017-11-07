@@ -15,3 +15,7 @@ registry.addTask(
 ## Result
 
 - Return the path to the destination
+
+## Caveats
+
+The operating system will clean up when needed.

@@ -22,3 +22,7 @@ registry.addTask(
 ## Result
 
 - No Result
+
+## Rollback
+
+- Not implemented

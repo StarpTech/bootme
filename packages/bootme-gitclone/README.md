@@ -16,3 +16,7 @@ registry.addTask(
 ## Result
 
 - Local path of the repository (**String**)
+
+## Rollback
+
+- Remove the repository

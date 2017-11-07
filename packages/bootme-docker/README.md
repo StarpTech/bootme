@@ -18,3 +18,7 @@ registry.addTask(
 ## Result
 
 - Look at [dockerode](https://github.com/apocas/dockerode)
+
+## Caveats
+
+Don't forget to register your `onError` hook to rollback the operation.

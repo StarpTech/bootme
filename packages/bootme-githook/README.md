@@ -17,3 +17,7 @@ registry.addTask(
 1. Remove the suffix `.sample` from default hook files in `.git/hooks`
 2. Place your files under `./git_hooks/<name>`
 3. Execute Task
+
+## Rollback
+
+- Unlink
