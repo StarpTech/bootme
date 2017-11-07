@@ -17,7 +17,7 @@ npm install bootme
 ## Core features
 
 - **Hooks**: define `Init`, `Before`, `After`, `Error` Hooks in the Task or with the Registry.
-- **Rollback**: the pipeline behaves fully transactional. Define rollback routines which are triggered as soon as a `Hook`, `Task` or a `Job` or nested things fail.
+- **Rollback**: the pipeline behaves fully transactional. Define rollback routines which are triggered as soon as a `Hook`, `Task` or a `Job` or nested thing fail.
 - **Configuration**: congiure your Task with JSON or pass a inquirer prompt to setup your config dynamically.
 - **Composable**: work with results of other Tasks without to rely on strong dependencies.
 - **100% asynchronous**: all the core is implemented with asynchronous code. ES7 allow us to write good readable code.
