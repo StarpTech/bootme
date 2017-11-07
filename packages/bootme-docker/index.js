@@ -29,6 +29,7 @@ class TaskDocker extends Task {
     return Joi.object()
       .keys({
         bootme: Joi.object(),
+        refs: Joi.object(),
         host: Joi.string().default('127.0.0.1'),
         port: Joi.number().default(2375),
         version: Joi.string().default('v1.25'),

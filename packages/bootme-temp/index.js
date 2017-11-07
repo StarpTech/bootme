@@ -22,6 +22,7 @@ class TempTask extends Task {
     return Joi.object()
       .keys({
         bootme: Joi.object(),
+        refs: Joi.object(),
         type: Joi.string()
           .lowercase()
           .allow(['directory', 'file'])

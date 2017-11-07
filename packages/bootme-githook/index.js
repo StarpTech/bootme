@@ -27,6 +27,7 @@ class GitHookTask extends Task {
     return Joi.object()
       .keys({
         bootme: Joi.object(),
+        refs: Joi.object(),
         cmd: Joi.string()
           .allow(['link', 'unlink'])
           .default('link'),

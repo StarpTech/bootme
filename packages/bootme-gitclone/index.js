@@ -32,6 +32,7 @@ class GitcloneTask extends Task {
     return Joi.object()
       .keys({
         bootme: Joi.object(),
+        refs: Joi.object(),
         path: Joi.string().required(),
         url: Joi.string()
           .uri()

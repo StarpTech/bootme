@@ -22,6 +22,7 @@ class TaskShell extends Task {
     return Joi.object()
       .keys({
         bootme: Joi.object(),
+        refs: Joi.object(),
         cmd: Joi.string()
           .allow([
             'rm',

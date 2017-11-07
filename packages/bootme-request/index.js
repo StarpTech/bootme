@@ -21,6 +21,7 @@ class HttpRequestTask extends Task {
     return Joi.object()
       .keys({
         bootme: Joi.object(),
+        refs: Joi.object(),
         method: Joi.string()
           .lowercase()
           .allow(['get', 'post', 'put', 'delete'])
