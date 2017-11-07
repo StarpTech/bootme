@@ -170,6 +170,7 @@ class SampleTask extends Task {
 | General | Version | Description |
 |--------|-------|-------|
 | [bootme](https://github.com/starptech/bootme/tree/master/packages/bootme) | [![npm](https://img.shields.io/npm/v/bootme.svg?maxAge=3600)](https://www.npmjs.com/package/bootme) | Core |
+| [bootme-json-runner](https://github.com/starptech/bootme/tree/master/packages/bootme-json-runner) | [![npm](https://img.shields.io/npm/v/bootme-json-runner.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-json-runner) | Load pipeline configuration from JSON |
 | [bootme-request](https://github.com/starptech/bootme/tree/master/packages/bootme-request) | [![npm](https://img.shields.io/npm/v/bootme-request.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-request) | Start HTTP request |
 | [bootme-gitclone](https://github.com/starptech/bootme/tree/master/packages/bootme-gitclone) | [![npm](https://img.shields.io/npm/v/bootme-gitclone.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-gitclone) | Clone a Git Repository |
 | [bootme-template](https://github.com/starptech/bootme/tree/master/packages/bootme-template) | [![npm](https://img.shields.io/npm/v/bootme-template.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-template) | Mustache Templating |
