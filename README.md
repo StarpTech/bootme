@@ -141,6 +141,10 @@ class HttpRequestTask extends Task {
   * <a href="#rollback"><code>bootme.Pipeline#<b>rollback()</b></code></a>
   * <a href="#hasError"><code>bootme.Pipeline#<b>hasError()</b></code></a>
 
+  * <a href="#Pipeline"><code>bootme.<b>State()</b></code></a>
+  * <a href="#execute"><code>bootme.State#<b>addJob()</b></code></a>
+  * <a href="#get"><code>bootme.State#<b>addTask()</b></code></a>
+
 -------------------------------------------------------
 
 ## Packages
