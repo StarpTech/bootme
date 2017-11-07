@@ -10,7 +10,7 @@ registry.addTask(
     refs: {
       url: 'gitclone' // Point to result of previous task
     },
-    url: '...', // alternative a fixed value
+    url: '', // alternative a relative path to the directory
     templateData: {
       project: 'Hello BootMe!'
     },
