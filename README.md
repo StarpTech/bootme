@@ -32,7 +32,7 @@ const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
 registry.shareConfig({
-  a: 1
+  TOKEN: process.env.TOKEN
 })
 
 registry.addTask(
