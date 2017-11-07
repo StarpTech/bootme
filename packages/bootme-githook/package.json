@@ -1,6 +1,6 @@
 {
   "name": "bootme-githook",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Task to create Cross-platform git hooks",
   "main": "index.js",
   "scripts": {
