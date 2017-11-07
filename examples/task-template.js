@@ -12,12 +12,6 @@ class SampleTask extends Bootme.Task {
     // try to get value from previous task or fallback to config
     this.flag = await state.getValue(this.config.refs.flag)
   }
-  /**
- *
- *
- * @readonly
- * @memberof HttpRequestTask
- */
   validateConfig(value) {
     return Joi.object()
       .keys({
@@ -35,21 +29,9 @@ class SampleTask extends Bootme.Task {
       })
       .validate(value)
   }
-  /**
-   *
-   *
-   * @param {any} result
-   * @memberof HttpRequestTask
-   */
   async validateResult(value) {
     return Joi.validate(value, Joi.string().required())
   }
-  /**
-   *
-   *
-   * @returns
-   * @memberof HttpRequestTask
-   */
   async action() {
     return this.validateConfig.method + ' world'
   }
@@ -66,7 +48,7 @@ const pipeline = new Bootme.Pipeline(registry)
 registry.addTask(task)
 
 registry.addHook('helloWorld', 'onInit', async function() {
-  console.log('Flag:', this.flag)
+  console.log(`Flag:${this.flag}`)
 })
 
 registry.addHook('helloWorld', 'onBefore', async function() {
