@@ -1,8 +1,8 @@
 'use strict'
 
 /**
- * This pipeline will list all available containers on your machine and
- * logged the informations about your selected container
+ * This pipeline will list all available containers on your machine and will
+ * log the informations about your selected container
  */
 
 const inquirer = require('inquirer')
