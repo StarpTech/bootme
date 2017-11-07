@@ -1,8 +1,7 @@
 'use strict'
 
 /**
- * This wil demonstrate how to load the task configuration from JSON and pass them
- * as args to cli tool
+ * This will demonstrate how to load the pipeline configuration from JSON
  */
 
 const JsonRunner = require('./')
