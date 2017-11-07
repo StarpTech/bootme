@@ -37,34 +37,33 @@ registry.shareConfig({
 
 registry.addTask(
   new GitcloneTask('gitclone')
-  .setConfig({
-    url: 'https://github.com/netzkern/eslint-config-netzkern-base',
-    path: '/test-checkout'
-  })
-  .addHook('onError', async (err) => console.log(err))
+  .setConfig({})
+  .addHook('onError', async (err) => ...)
   .addHook('onBefore', async (state) => ...)
   .addHook('onAfter', async (state) => ...)
 )
 
 registry.addTask(
-  new TemplateTask('replace')
-  .setConfig({
-    refs: {
-      url: 'gitclone' // Point to the result of named Task
-    },
-    templateData: {
-      project: 'Hello BootMe!'
-    },
-    files: ['README.md']
-  })
-  .addHook('onError', async (err) => console.log(err))
+  new TemplateTask('replaceStrings')
+  .setConfig({})
+  .addHook('onError', async (err) => ...)
   .addHook('onBefore', async (state) => {
     state.addJob(async (state) => console.log('Job'))
   })
   .addHook('onAfter', async (state) => ...)
 )
 
-registry.addHook('gitclone', 'onError', async (err) => console.log(err))
+registry.addTask(
+  new TemplateTask('createMongodb')
+  .setConfig({})
+  .addHook('onError', async (err) => ...)
+  .addHook('onBefore', async (state) => {
+    state.addJob(async (state) => console.log('Job'))
+  })
+  .addHook('onAfter', async (state) => ...)
+)
+
+registry.addHook('gitclone', 'onError', async (err) => ...)
 registry.addHook('gitclone', 'onAfter', new Task('bar'))
 
 pipeline.execute()
