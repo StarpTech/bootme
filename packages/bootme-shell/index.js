@@ -7,7 +7,7 @@ const Task = require('bootme').Task
 /**
  *
  *
- * @class GitcloneTask
+ * @class TaskShell
  * @extends {Task}
  */
 class TaskShell extends Task {
@@ -16,7 +16,7 @@ class TaskShell extends Task {
    *
    * @param {any} value
    * @returns
-   * @memberof GitcloneTask
+   * @memberof TaskShell
    */
   validateConfig(value) {
     return Joi.object()
@@ -56,7 +56,7 @@ class TaskShell extends Task {
    *
    *
    * @returns
-   * @memberof GitcloneTask
+   * @memberof TaskShell
    */
   async action() {
     const cmd = Shelljs[this.config.cmd].apply(Shelljs, this.config.args)
