@@ -19,7 +19,7 @@ npm install bootme
 - **Hooks**: define `Init`, `Before`, `After`, `Error` Hooks in the Task or with the Registry.
 - **Rollback**: the pipeline behaves fully transactional. Define rollback routines which are triggered as soon as a `Hook`, `Task` or a `Job` or nested thing fail.
 - **Configuration**: congiure your Task with JSON or pass a inquirer prompt to setup your config dynamically.
-- **Composable**: work with results of other Tasks without to rely on strong dependencies.
+- **Composable**: work with results of previous Tasks, pass Tasks to Hooks or add Tasks in Tasks.
 - **100% asynchronous**: all the core is implemented with asynchronous code. ES7 allow us to write good readable code.
 - **Validation**: you can validate the result and config of your Task with [Joi](https://github.com/hapijs/joi).
 - **CLI Wizards**: create beautiful Command-line Wizards with [ease](examples/basic-wizard.js).
