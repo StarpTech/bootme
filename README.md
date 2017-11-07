@@ -114,7 +114,7 @@ class HttpRequestTask extends Task {
 
 - <code>bootme.Task<b>()</b></code>
 - Load configuration
-- <code>bootme.Task#<b>ValidateConfig()</b></code>
+- <code>bootme.Task#<b>validateConfig()</b></code>
 - Fire `onInit` hooks (`init` is also a hook)
 - Fire `onBefore` hooks
 - Fire `action`
