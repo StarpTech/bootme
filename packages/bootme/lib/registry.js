@@ -14,6 +14,7 @@ class Registry {
    */
   constructor() {
     this.tasks = []
+    this.preTaskConfigs = new Map()
     this.sharedConfig = {
       basePath: process.cwd()
     }
@@ -30,6 +31,16 @@ class Registry {
     }
 
     this.sharedConfig = Object.assign(this.sharedConfig, cfg)
+  }
+  /**
+   *
+   *
+   * @param {any} taskName
+   * @param {any} value
+   * @memberof Registry
+   */
+  setConfig(taskName, value) {
+    this.preTaskConfigs.set(taskName, value)
   }
   /**
    *

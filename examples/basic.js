@@ -12,7 +12,7 @@ const task2 = new Bootme.Task('foo2').action(async function() {
 })
 const task3 = new Bootme.Task('foo3').action(async function() {
   console.log(this.name, ' executed')
-  console.log(this.config.bootme, 'Bootme global')
+  console.log(this.config, 'Bootme global')
 })
 
 task.addHook('onBefore', task2)
@@ -36,6 +36,8 @@ task.action(async function(state) {
 
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
+
+registry.setConfig('foo3', { a: 1 })
 
 registry.shareConfig({
   basePath: process.cwd()

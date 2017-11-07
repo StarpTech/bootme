@@ -111,9 +111,17 @@ class Pipeline {
 
     // lazy evaluation of task config
     if (typeof task.config === 'function') {
-      const config = await task.config(state)
+      let config = await task.config(state)
+      config = Object.assign(
+        config,
+        this.registry.preTaskConfigs.get(task.name, config)
+      )
       task.setConfig(config)
     } else {
+      task.config = Object.assign(
+        task.config,
+        this.registry.preTaskConfigs.get(task.name, task.config)
+      )
       task.setConfig(task.config)
     }
 

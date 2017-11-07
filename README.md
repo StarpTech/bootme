@@ -147,6 +147,7 @@ class SampleTask extends Task {
   * <a href="#registry"><code>bootme.<b>Registry()</b></code></a>
   * <a href="#addTask"><code>bootme.Registry#<b>addTask()</b></code></a>
   * <a href="#setRef"><code>bootme.Registry#<b>setRef()</b></code></a>
+  * <a href="#registrySetConfig"><code>bootme.Registry#<b>setConfig()</b></code></a>
   * <a href="#shareConfig"><code>bootme.Registry#<b>shareConfig()</b></code></a>
   * <a href="#addHookRegistry"><code>bootme.Registry#<b>addHook()</b></code></a>
 
