@@ -22,7 +22,7 @@ const inspectTask = new DockerTask('inspect')
         name: 'name',
         message: 'Select a container',
         choices: async function(val) {
-          const containers = await state.pipeline.get('list')
+          const containers = await state.getValue('list')
           return containers.map(x => {
             if (x.Names.length) {
               return x.Names[0]
@@ -39,8 +39,8 @@ const inspectTask = new DockerTask('inspect')
       cmd: 'inspectContainer'
     }
   })
-  .addHook('onAfter', async () => {
-    const infos = await pipeline.get('inspect')
+  .addHook('onAfter', async (state) => {
+    const infos = await state.getValue('inspect')
     console.log(infos.State)
   })
 

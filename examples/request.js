@@ -21,9 +21,9 @@ registry.addHook('iss_position', 'onBefore', async function() {
   console.log(`Before ${this.name}`)
 })
 
-registry.addHook('iss_position', 'onAfter', async function() {
+registry.addHook('iss_position', 'onAfter', async function(state) {
   console.log(`After ${this.name} result`)
-  console.log(await pipeline.get(`${this.name}`))
+  console.log(await state.getValue(`${this.name}`))
 })
 
 pipeline.execute()

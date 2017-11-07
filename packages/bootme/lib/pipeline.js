@@ -66,14 +66,18 @@ class Pipeline {
    * @returns
    * @memberof Pipeline
    */
+  hasResult(name) {
+    return !!this.results.get(name)
+  }
+  /**
+   *
+   *
+   * @param {any} name
+   * @returns
+   * @memberof Pipeline
+   */
   getResult(name) {
-    const res = this.results.get(name)
-
-    if (res === undefined) {
-      throw new Error(`Task result "${name}" not available`)
-    }
-
-    return res
+    return this.results.get(name)
   }
   /**
    *

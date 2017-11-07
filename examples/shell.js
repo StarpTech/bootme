@@ -32,7 +32,7 @@ registry.addHook(
       cmd: 'ls'
     })
     .addHook('onAfter', async function(state) {
-      console.log(await state.pipeline.get(this.name))
+      console.log(await state.getValue(this.name))
     })
 )
 

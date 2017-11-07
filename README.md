@@ -54,7 +54,7 @@ registry.addTask(
 )
 
 registry.addTask(
-  new TemplateTask('createMongodb')
+  new DockerTask('createMongodb')
   .setConfig({})
   .addHook('onError', async (err) => ...)
   .addHook('onBefore', async (state) => {
@@ -151,13 +151,15 @@ class HttpRequestTask extends Task {
 
   * <a href="#Pipeline"><code>bootme.<b>Pipeline()</b></code></a>
   * <a href="#execute"><code>bootme.Pipeline#<b>execute()</b></code></a>
-  * <a href="#get"><code>bootme.Pipeline#<b>get()</b></code></a>
+  * <a href="#getValue"><code>bootme.Pipeline#<b>getValue()</b></code></a>
   * <a href="#rollback"><code>bootme.Pipeline#<b>rollback()</b></code></a>
   * <a href="#hasError"><code>bootme.Pipeline#<b>hasError()</b></code></a>
+  * <a href="#hasError"><code>bootme.Pipeline#<b>hasResult()</b></code></a>
 
-  * <a href="#Pipeline"><code>bootme.<b>State()</b></code></a>
-  * <a href="#execute"><code>bootme.State#<b>addJob()</b></code></a>
-  * <a href="#get"><code>bootme.State#<b>addTask()</b></code></a>
+  * <a href="#State"><code>bootme.<b>State()</b></code></a>
+  * <a href="#addJob"><code>bootme.State#<b>addJob()</b></code></a>
+  * <a href="#addTask"><code>bootme.State#<b>addTask()</b></code></a>
+  * <a href="#StateGetValue"><code>bootme.State#<b>getValue()</b></code></a>
 
 -------------------------------------------------------
 

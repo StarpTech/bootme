@@ -19,7 +19,7 @@ class TemplateTask extends Task {
    * @memberof TemplateTask
    */
   async init(state) {
-    this.path = this.config.url || (await state.pipeline.get(this.config.refs.url))
+    this.path = await state.getValue(this.config.refs.url)
   }
   /**
    *

@@ -28,7 +28,7 @@ task.action(async function(state) {
   state.addJob(async function(state) {
     console.log('Before Job 2 in', state.task.name)
     state.addJob(async function(state) {
-      console.log('Result of', state.task.name, await state.pipeline.get('foo'))
+      console.log('Result of', state.task.name, await state.getValue('foo'))
     })
   })
   return { a: 1 }

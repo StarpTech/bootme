@@ -25,9 +25,9 @@ registry.addTask(
   })
 )
 
-registry.addHook('listContainers', 'onAfter', async function() {
+registry.addHook('listContainers', 'onAfter', async function(state) {
   console.log(`After ${this.name} result`)
-  console.log(await pipeline.get(`${this.name}`))
+  console.log(await state.getValue(`${this.name}`))
 })
 
 pipeline.execute()

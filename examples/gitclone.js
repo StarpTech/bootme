@@ -21,9 +21,9 @@ registry.addHook('gitclone', 'onBefore', async function() {
   console.log(`Before ${this.name}`)
 })
 
-registry.addHook('gitclone', 'onAfter', async function() {
+registry.addHook('gitclone', 'onAfter', async function(state) {
   console.log(`After ${this.name} result`)
-  console.log(await pipeline.get(`${this.name}`))
+  console.log(await state.getValue(`${this.name}`))
 })
 
 pipeline.execute()

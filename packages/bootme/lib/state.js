@@ -28,6 +28,26 @@ class State {
   /**
    *
    *
+   * @param {any} name
+   * @returns
+   * @memberof State
+   */
+  getValue(name) {
+    const res = this.pipeline.results.get(name)
+
+    if (res === undefined) {
+      for (var key in this.task.config) {
+        if (this.task.config[key]) {
+          return this.task.config[key]
+        }
+      }
+    }
+
+    return res
+  }
+  /**
+   *
+   *
    * @param {any} task
    * @param {any} state
    * @memberof State
@@ -60,10 +80,7 @@ class State {
         try {
           await this.pipeline.rollback(err)
         } catch (err) {
-          error(
-            'Task <%s> error during (Job) rollback routine',
-            this.task.name
-          )
+          error('Task <%s> error during (Job) rollback routine', this.task.name)
         }
       }
     })

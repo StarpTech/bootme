@@ -8,6 +8,10 @@ const Joi = require('joi')
 const Bootme = require('./../packages/bootme')
 
 class SampleTask extends Bootme.Task {
+  async init(state) {
+    // try to get value from previous task or fallback to config
+    this.flag = await state.getValue(this.config.refs.flag)
+  }
   /**
  *
  *
@@ -18,6 +22,12 @@ class SampleTask extends Bootme.Task {
     return Joi.object()
       .keys({
         bootme: Joi.object(),
+        flag: Joi.string(),
+        refs: Joi.object()
+          .keys({
+            url: Joi.string()
+          })
+          .default({}),
         cmd: Joi.string()
           .lowercase()
           .allow(['hello'])
@@ -45,12 +55,19 @@ class SampleTask extends Bootme.Task {
   }
 }
 
-const task = new SampleTask('helloWorld').setConfig({ cmd: 'hello' })
+const task = new SampleTask('helloWorld').setConfig({
+  cmd: 'hello',
+  flag: 'foo'
+})
 
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
 registry.addTask(task)
+
+registry.addHook('helloWorld', 'onInit', async function() {
+  console.log('Flag:', this.flag)
+})
 
 registry.addHook('helloWorld', 'onBefore', async function() {
   console.log(`Before ${this.name}`)
