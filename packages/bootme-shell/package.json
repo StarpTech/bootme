@@ -1,6 +1,6 @@
 {
   "name": "bootme-shell",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Task to execute portable Unix shell commands",
   "main": "index.js",
   "scripts": {
