@@ -11,10 +11,6 @@ const TemplateTask = require('./../packages/bootme-template')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-registry.shareConfig({
-  basePath: process.cwd()
-})
-
 registry.addTask(
   new GitcloneTask('gitclone').setConfig({
     url: 'https://github.com/netzkern/eslint-config-netzkern-base',

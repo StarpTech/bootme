@@ -11,10 +11,6 @@ const DockerTask = require('./../packages/bootme-docker')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-registry.shareConfig({
-  basePath: process.cwd()
-})
-
 registry.addTask(
   new DockerTask('mongodb').setConfig({
     cmd: 'createContainer',

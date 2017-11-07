@@ -10,10 +10,6 @@ const HttpRequestTask = require('./../packages/bootme-request')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-registry.shareConfig({
-  basePath: process.cwd()
-})
-
 registry.addTask(
   new HttpRequestTask('iss_position').setConfig({
     method: 'GET',
