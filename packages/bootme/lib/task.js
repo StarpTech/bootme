@@ -40,8 +40,8 @@ class Task {
    *
    * @memberof Task
    */
-  validateConfig() {
-    return {}
+  validateConfig(value) {
+    return value
   }
   /**
    *
@@ -62,12 +62,16 @@ class Task {
     } else {
       const result = this.validateConfig(config)
 
-      if (result.error) {
-        error(`Invalid config schema. Task "${this.name}"`)
-        throw result.error
+      if (result) {
+        if (result.error) {
+          error(`Invalid config schema. Task "${this.name}"`)
+          throw result.error
+        } else if (result.value) {
+          this.config = result.value
+        } else {
+          this.config = config
+        }
       }
-
-      this.config = result.value
     }
 
     return this

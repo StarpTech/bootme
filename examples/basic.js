@@ -12,6 +12,7 @@ const task2 = new Bootme.Task('foo2').action(async function() {
 })
 const task3 = new Bootme.Task('foo3').action(async function() {
   console.log(this.name, ' executed')
+  console.log(this.config.bootme, 'Bootme global')
 })
 
 task.addHook('onBefore', task2)

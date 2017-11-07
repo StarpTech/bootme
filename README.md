@@ -32,7 +32,7 @@ const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
 registry.shareConfig({
-  basePath: process.cwd()
+  a: 1
 })
 
 registry.addTask(

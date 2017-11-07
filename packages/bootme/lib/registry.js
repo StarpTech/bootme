@@ -15,8 +15,7 @@ class Registry {
   constructor() {
     this.tasks = []
     this.sharedConfig = {
-      basePath: process.cwd(),
-      env: process.env
+      basePath: process.cwd()
     }
   }
   /**
