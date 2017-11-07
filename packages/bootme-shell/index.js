@@ -59,7 +59,13 @@ class TaskShell extends Task {
    * @memberof GitcloneTask
    */
   async action() {
-    return Shelljs[this.config.cmd].apply(Shelljs, this.config.args)
+    const cmd = Shelljs[this.config.cmd].apply(Shelljs, this.config.args)
+
+    if (cmd.code !== 0) {
+      throw new Error('Shell command returned with none zero code')
+    }
+
+    return cmd
   }
 }
 
