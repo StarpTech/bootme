@@ -1,7 +1,7 @@
 {
   "name": "bootme-githook",
   "version": "0.0.0",
-  "description": "Task to create a githook",
+  "description": "Task to create Cross-platform git hooks",
   "main": "index.js",
   "scripts": {
     "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""
