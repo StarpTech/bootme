@@ -4,7 +4,7 @@
   "description": "Task to administrate a docker environment",
   "main": "index.js",
   "scripts": {
-    "test": "tap test/*.test.js test/*/*.test.js"
+    "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""
   },
   "repository": {
     "type": "git",

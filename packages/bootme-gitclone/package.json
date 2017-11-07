@@ -4,7 +4,7 @@
   "description": "Task to clone a Git Repository",
   "main": "index.js",
   "scripts": {
-    "test": "tap test/*.test.js test/*/*.test.js"
+    "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""
   },
   "repository": {
     "type": "git",

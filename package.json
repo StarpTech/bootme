@@ -7,7 +7,7 @@
     "clean": "lerna clean",
     "release": "lerna publish",
     "postinstall": "lerna bootstrap",
-    "test": "lerna run test"
+    "test": "lerna run test --parallel"
   },
   "keywords": [
     "boot",
