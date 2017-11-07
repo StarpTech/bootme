@@ -58,7 +58,9 @@ registry.addTask(
     files: ['README.md']
   })
   .addHook('onError', async (err) => console.log(err))
-  .addHook('onBefore', async (state) => ...)
+  .addHook('onBefore', async (state) => {
+    state.addJob(async (state) => console.log('Job'))
+  })
   .addHook('onAfter', async (state) => ...)
 )
 
