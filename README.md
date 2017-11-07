@@ -114,7 +114,7 @@ class HttpRequestTask extends Task {
 
 - Constructor
 - Load configuration
-- Fire `onInit` hooks
+- Fire `onInit` hooks (`init` is also a hook)
 - Fire `onBefore` hooks
 - Fire `action`
 - Fire `onAfter` hooks
