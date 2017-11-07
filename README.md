@@ -14,16 +14,16 @@ Configurable and extendable Task pipeline. Bootme help you to scaffold complete 
 npm install bootme
 ```
 
-## Features
+## Core features
 
-- Handle nested queues, the order of execution is guaranteed thanks to [Workq](https://github.com/delvedor/workq) package.
-- Define `Before`, `After`, `Error` Hooks in the Task or with the Registry.
-- Define rollback routines which are triggered as soon as a `Hook`, `Task` or a `Job` fails.
-- Share configuration across all Tasks.
-- Access Task results in Hooks or Jobs.
-- Work with results of other Tasks.
-- Validate the result and config of your Task with [Joi](https://github.com/hapijs/joi)
-- Create beautiful Command-line Wizards with [ease](examples/basic-wizard.js)
+- **Hooks**: define `Init`, `Before`, `After`, `Error` Hooks in the Task or with the Registry.
+- **Rollback**: the pipeline behaves fully transactional. Define rollback routines which are triggered as soon as a `Hook`, `Task` or a `Job` or nested things fail.
+- **Configuration**: congiure your Task with JSON or pass a inquirer prompt to setup your config dynamically.
+- **Composable**: work with results of other Tasks without to rely on strong dependencies.
+- **100% asynchronous**: all the core is implemented with asynchronous code. ES7 allow us to write good readable code.
+- **Validation**: you can validate the result and config of your Task with [Joi](https://github.com/hapijs/joi).
+- **CLI Wizards**: create beautiful Command-line Wizards with [ease](examples/basic-wizard.js).
+- **Queue**: the order of execution is guaranteed thanks to [Workq](https://github.com/delvedor/workq) package.
 
 ## Usage
 
