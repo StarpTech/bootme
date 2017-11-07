@@ -13,6 +13,7 @@ const pipeline = new Bootme.Pipeline(registry)
 registry.addTask(
   new GitHookTask('precommit').setConfig({
     hooks: ['pre-commit'],
+    cmd: 'unlink',
     hookDir: 'git_hooks'
   })
 )

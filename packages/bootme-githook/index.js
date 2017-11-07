@@ -62,7 +62,12 @@ class GitHookTask extends Task {
   unlink(basePath, hookDir) {
     this.config.hooks.forEach(function(hook) {
       const hookInSourceControl = Path.resolve(basePath, hookDir, hook)
-      const hookInHiddenDirectory = Path.resolve(basePath, '.git', 'hooks', hook)
+      const hookInHiddenDirectory = Path.resolve(
+        basePath,
+        '.git',
+        'hooks',
+        hook
+      )
 
       Fs.accessSync(hookInHiddenDirectory)
       Fs.unlinkSync(hookInSourceControl, hookInHiddenDirectory)
@@ -78,7 +83,12 @@ class GitHookTask extends Task {
   link(basePath, hookDir) {
     this.config.hooks.forEach(function(hook) {
       const hookInSourceControl = Path.resolve(basePath, hookDir, hook)
-      const hookInHiddenDirectory = Path.resolve(basePath, '.git', 'hooks', hook)
+      const hookInHiddenDirectory = Path.resolve(
+        basePath,
+        '.git',
+        'hooks',
+        hook
+      )
 
       Fs.accessSync(hookInHiddenDirectory)
       Fs.unlinkSync(hookInHiddenDirectory)
@@ -93,11 +103,7 @@ class GitHookTask extends Task {
    * @memberof GitHookTask
    */
   async action() {
-    if (this.config.cmd === 'link') {
-      this.link(this.config.bootme.basePath, this.config.hookDir)
-    } else {
-      this.link(this.config.bootme.basePath, this.config.hookDir)
-    }
+    this[this.config.cmd](this.config.bootme.basePath, this.config.hookDir)
   }
 }
 
