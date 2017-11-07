@@ -100,7 +100,7 @@ registry.addTask(task)
 ```js
 const Task = require('bootme').Task
 
-class HttpRequestTask extends Task {
+class SampleTask extends Task {
   constructor(name) {
     super(name)
   }
