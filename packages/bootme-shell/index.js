@@ -62,7 +62,9 @@ class TaskShell extends Task {
     const cmd = Shelljs[this.config.cmd].apply(Shelljs, this.config.args)
 
     if (cmd.code !== 0) {
-      throw new Error('Shell command returned with none zero code')
+      throw new Error(
+        `Shell command "${this.config.cmd}" returned with none zero code`
+      )
     }
 
     return cmd
