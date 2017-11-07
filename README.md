@@ -121,6 +121,8 @@ class HttpRequestTask extends Task {
 - <code>bootme.Task#<b>validateResult()</b></code>
 - Fire `onAfter` hooks
 
+**An error in the cycle will abort the complete pipeline and execute the `onError` routines of all Tasks.**
+
 ## Examples
 
 [Here](examples)
