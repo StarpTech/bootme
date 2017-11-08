@@ -2,8 +2,6 @@
 
 const Task = require('./task')
 
-const supportedHooks = ['onTaskStart', 'onTaskEnd']
-
 /**
  *
  *
@@ -17,8 +15,6 @@ class Registry {
   constructor() {
     this.tasks = []
     this.preTaskConfigs = new Map()
-    this.onTaskStart = []
-    this.onTaskEnd = []
     this.sharedConfig = {
       basePath: process.cwd()
     }
@@ -99,16 +95,6 @@ class Registry {
    * @memberof Registry
    */
   addHook(taskName, hookName, fn) {
-    // addHook('task:start', fn)
-    if (
-      typeof hookName === 'function' &&
-      supportedHooks.indexOf(taskName) !== -1
-    ) {
-      this[taskName].push(hookName)
-      return
-    }
-
-    // addHook('name', 'onBefore', fn)
     const task = this.tasks.find(t => t.name === taskName)
 
     if (task) {

@@ -157,6 +157,9 @@ class SampleTask extends Task {
   * <a href="#rollback"><code>bootme.Pipeline#<b>rollback()</b></code></a>
   * <a href="#hasError"><code>bootme.Pipeline#<b>hasError()</b></code></a>
   * <a href="#hasError"><code>bootme.Pipeline#<b>hasResult()</b></code></a>
+  * <a href="#hasError"><code>bootme.Pipeline#<b>onTaskStart()</b></code></a>
+  * <a href="#hasError"><code>bootme.Pipeline#<b>onTaskEnd()</b></code></a>
+  * <a href="#hasError"><code>bootme.Pipeline#<b>onRollback()</b></code></a>
 
   * <a href="#State"><code>bootme.<b>State()</b></code></a>
   * <a href="#addJob"><code>bootme.State#<b>addJob()</b></code></a>

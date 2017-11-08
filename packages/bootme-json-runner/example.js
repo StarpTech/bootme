@@ -15,12 +15,17 @@ const jsonRunner = new JsonRunner(pipeline)
 let config = [
   {
     request: {
-      url: 'http://api.open-notify.org/iss-nowede.json'
+      url: 'http://api.open-notify.org/iss-now.json'
     }
   },
   {
     temp: {
       type: 'file'
+    }
+  },
+  {
+    request: {
+      url: 'http://invalid'
     }
   }
 ]
