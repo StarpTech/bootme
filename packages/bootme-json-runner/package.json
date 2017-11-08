@@ -1,6 +1,6 @@
 {
   "name": "bootme-json-runner",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Tool to use JSON as pipeline definition",
   "main": "index.js",
   "scripts": {
