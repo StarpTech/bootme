@@ -19,5 +19,8 @@
   "dependencies": {
     "bootme-request": "^0.0.15",
     "bootme-temp": "^0.0.5"
+  },
+  "devDependencies": {
+    "tap": "^10.7.3"
   }
 }
