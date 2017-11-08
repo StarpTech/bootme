@@ -1,7 +1,7 @@
 {
   "name": "bootme-task-spinner",
   "version": "0.0.0",
-  "description": "Tool to provide an elegant terminal spinner",
+  "description": "Tool to provide an elegant terminal spinner when your Tasks are running",
   "main": "index.js",
   "scripts": {
     "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""

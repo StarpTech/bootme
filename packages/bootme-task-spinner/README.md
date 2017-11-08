@@ -1,11 +1,11 @@
 # bootme-task-spinner
 
-Tool to provide an elegant terminal spinner
+Tool to provide an elegant terminal spinner when your Tasks are running.
 
 ## Usage
 
 ```js
 const pipeline = new Bootme.Pipeline(registry)
-const taskSpinner = new TaskSpinner(pipeline)
+new TaskSpinner(pipeline).attach()
 pipeline.execute()
 ```
