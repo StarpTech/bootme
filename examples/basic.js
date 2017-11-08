@@ -53,4 +53,8 @@ registry.addHook('foo', 'onAfter', async function() {
   console.log(`After ${this.name}`)
 })
 
+// Global
+pipeline.onTaskStart(async (state) => console.log('Task Start', state.task.name))
+pipeline.onTaskEnd(async (state) => console.log('Task End', state.task.name))
+
 pipeline.execute()

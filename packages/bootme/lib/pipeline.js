@@ -25,7 +25,11 @@ class Pipeline {
     this.queue = q()
     this.results = new Map()
     this.errored = false
-    this.pipeError = null
+    this.error = null
+
+    this.onRollbackHook = () => {}
+    this.onTaskEndHook = () => {}
+    this.onTaskStartHook = () => {}
   }
   /**
    *
@@ -35,12 +39,7 @@ class Pipeline {
    * @memberof Pipeline
    */
   hasError(name) {
-    return (
-      this.results.get(`${name}:error`) ||
-      this.results.get(`${name}:onBefore:error`) ||
-      this.results.get(`${name}:onAfter:error`) ||
-      this.results.get(`${name}:onInit:error`)
-    )
+    return this.results.get(`${name}:error`)
   }
   /**
    *
@@ -86,10 +85,11 @@ class Pipeline {
    */
   async rollback(err) {
     this.errored = true
-    this.pipeError = err
+    this.error = err
 
     for (let task of this.registry.tasks.reverse()) {
       try {
+        await this.onRollbackHook(task)
         await task.rollback(err)
       } catch (err) {
         error(
@@ -104,13 +104,38 @@ class Pipeline {
   /**
    *
    *
+   * @param {any} fn
+   * @memberof Pipeline
+   */
+  onTaskStart(fn) {
+    this.onTaskStartHook = fn
+  }
+  /**
+   *
+   *
+   * @param {any} fn
+   * @memberof Pipeline
+   */
+  onTaskEnd(fn) {
+    this.onTaskEndHook = fn
+  }
+  /**
+   *
+   *
+   * @param {any} fn
+   * @memberof Pipeline
+   */
+  onRollback(fn) {
+    this.onRollbackHook = fn
+  }
+  /**
+   *
+   *
    * @param {any} task
    * @param {any} state
    * @memberof Pipeline
    */
   async executeTask(task, state) {
-    this.registry.addTask(task)
-
     // pass share config
     task.config.bootme = this.registry.sharedConfig
 
@@ -147,107 +172,137 @@ class Pipeline {
   /**
    *
    *
+   * @param {any} state
+   * @memberof Pipeline
+   */
+  async action(state) {
+    if (this.errored) {
+      return
+    }
+    const task = state.task
+
+    try {
+      const result = await task.start(state)
+
+      if (result && typeof task.validateResult === 'function') {
+        await task.validateResult(result)
+      }
+
+      this.results.set(`${task.name}`, result)
+    } catch (err) {
+      error(
+        'Task <%s:%s> action error %O',
+        task.constructor.name,
+        task.name,
+        err
+      )
+      throw err
+    }
+  }
+  /**
+   *
+   *
+   * @param {any} state
+   * @memberof Pipeline
+   */
+  async onBefore(state) {
+    if (this.errored) {
+      return
+    }
+    const task = state.task
+
+    try {
+      await task.executeHooks('onBefore', state)
+    } catch (err) {
+      error(
+        'Task <%s:%s> onBefore error %O',
+        task.constructor.name,
+        task.name,
+        err
+      )
+      throw err
+    }
+  }
+  /**
+   *
+   *
+   * @param {any} state
+   * @memberof Pipeline
+   */
+  async onInit(state) {
+    const task = state.task
+    try {
+      // lazy evaluation of task config
+      if (typeof task.config === 'function') {
+        const config = await task.config(state)
+        task.setConfig(config)
+      } else {
+        task.setConfig(task.config)
+      }
+
+      await task.executeHooks('onInit', state)
+    } catch (err) {
+      error(
+        'Task <%s:%s> onInit error %O',
+        task.constructor.name,
+        task.name,
+        err
+      )
+      throw err
+    }
+  }
+  /**
+   *
+   *
+   * @param {any} state
+   * @memberof Pipeline
+   */
+  async onAfter(state) {
+    if (this.errored) {
+      return
+    }
+    const task = state.task
+
+    try {
+      await task.executeHooks('onAfter', state)
+    } catch (err) {
+      error(
+        'Task <%s:%s> onAfter error %O',
+        task.constructor.name,
+        task.name,
+        err
+      )
+      throw err
+    }
+  }
+  /**
+   *
+   *
    * @param {any} task
    * @memberof Pipeline
    */
   async execute() {
     for (let task of this.registry.tasks) {
       if (this.errored) {
-        error(
-          'Abort Pipeline error %O',
-          this.pipeError
-        )
+        error('Abort Pipeline error %O', this.error)
         break
       }
 
-      // onInit
       this.queue.add(async child => {
+        let state = new State(child, task, this)
+
         try {
-          const state = new State(child, task, this)
-          // lazy evaluation of task config
-          if (typeof task.config === 'function') {
-            const config = await task.config(state)
-            task.setConfig(config)
-          } else {
-            task.setConfig(task.config)
-          }
-
-          await task.executeHooks('onInit', state)
+          await this.onTaskStartHook(state)
+          await this.onInit(state)
+          await this.onBefore(state)
+          await this.action(state)
+          await this.onAfter(state)
+          await this.onTaskEndHook(state)
         } catch (err) {
-          error(
-            'Task <%s:%s> onInit error %O',
-            task.constructor.name,
-            task.name,
-            err
-          )
-          this.results.set(`${task.name}:onInit:error`, err)
-          await this.rollback(err)
-        }
-      })
-
-      // onBefore
-      this.queue.add(async child => {
-        if (this.errored) {
-          return
-        }
-        try {
-          const state = new State(child, task, this)
-          await task.executeHooks('onBefore', state)
-        } catch (err) {
-          error(
-            'Task <%s:%s> onBefore error %O',
-            task.constructor.name,
-            task.name,
-            err
-          )
-          this.results.set(`${task.name}:onBefore:error`, err)
-          await this.rollback(err)
-        }
-      })
-
-      // action
-      this.queue.add(async child => {
-        if (this.errored) {
-          return
-        }
-        try {
-          const state = new State(child, task, this)
-          const result = await task.start(state)
-
-          if (result && typeof task.validateResult === 'function') {
-            await task.validateResult(result)
-          }
-
-          this.results.set(`${task.name}`, result)
-        } catch (err) {
-          error(
-            'Task <%s:%s> action error %O',
-            task.constructor.name,
-            task.name,
-            err
-          )
+          error('Task error %O', err)
           this.results.set(`${task.name}:error`, err)
           await this.rollback(err)
-        }
-      })
-
-      // onAfter
-      this.queue.add(async child => {
-        if (this.errored) {
-          return
-        }
-        try {
-          const state = new State(child, task, this)
-          await task.executeHooks('onAfter', state)
-        } catch (err) {
-          error(
-            'Task <%s:%s> onAfter error %O',
-            task.constructor.name,
-            task.name,
-            err
-          )
-          this.results.set(`${task.name}:onAfter:error`, err)
-          await this.rollback(err)
+          await this.onTaskEndHook(state)
         }
       })
     }

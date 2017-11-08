@@ -4,6 +4,7 @@
  * This will demonstrate how to load the pipeline configuration from JSON
  */
 
+const Ora = require('ora')
 const JsonRunner = require('./')
 const Bootme = require('bootme')
 
@@ -13,40 +14,34 @@ const jsonRunner = new JsonRunner(pipeline)
 
 let config = [
   {
-    gitclone: [
-      {
-        url: 'https://github.com/netzkern/eslint-config-netzkern-base',
-        path: '/test-checkout'
-      },
-      {
-        url: 'https://github.com/netzkern/eslint-config-netzkern-base',
-        path: '/test-checkout2'
-      }
-    ]
-  },
-  {
-    shell: {
-      cmd: 'echo',
-      args: ['Hello']
+    request: {
+      url: 'http://api.open-notify.org/iss-nowede.json'
     }
   },
   {
-    shell: {
-      cmd: 'echo',
-      args: ['Hello']
-    }
-  },
-  {
-    template: {
-      refs: {
-        url: 'gitclone-1-1' // Point to result of previous task
-      },
-      templateData: {
-        project: 'Hello BootMe!'
-      },
-      files: ['README.md']
+    temp: {
+      type: 'file'
     }
   }
 ]
+
+const spinners = new Map()
+
+pipeline.onTaskStart(state => {
+  spinners.set(state.task.name, new Ora(state.task.name).start())
+})
+
+pipeline.onRollback(task => {
+  spinners.get(task.name).info(`Rollback ${task.name}`)
+})
+
+pipeline.onTaskEnd(state => {
+  if (state.pipeline.error) {
+    spinners.get(state.task.name).fail()
+    spinners.get(state.task.name).stopAndPersist()
+  } else {
+    spinners.get(state.task.name).succeed()
+  }
+})
 
 jsonRunner.run(config)

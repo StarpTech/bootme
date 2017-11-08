@@ -25,7 +25,7 @@ class HttpRequestTask extends Task {
         method: Joi.string()
           .lowercase()
           .allow(['get', 'post', 'put', 'delete'])
-          .required(),
+          .default('get'),
         contentType: Joi.string()
           .lowercase()
           .allow(['text', 'json', 'response'])

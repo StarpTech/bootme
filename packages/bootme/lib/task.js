@@ -152,7 +152,7 @@ class Task {
    */
   async executeHooks(name, state) {
     if (supportedHooks.indexOf(name) === -1) {
-      throw new TypeError(
+      throw new Error(
         `Task <${this.constructor.name}:${this
           .name}> Hook "${name}" not supported!`
       )

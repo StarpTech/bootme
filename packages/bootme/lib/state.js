@@ -54,7 +54,10 @@ class State {
    */
   async addTask(task) {
     const state = this
+    this.pipeline.registry.addTask(task)
+    await this.pipeline.onTaskStartHook(state)
     await this.pipeline.executeTask(task, state)
+    await this.pipeline.onTaskEndHook(state)
   }
   /**
    *
