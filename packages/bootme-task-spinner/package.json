@@ -1,6 +1,6 @@
 {
   "name": "bootme-task-spinner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tool to provide an elegant terminal spinner when your Tasks are running",
   "main": "index.js",
   "scripts": {

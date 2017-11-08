@@ -1,6 +1,6 @@
 {
   "name": "bootme-projectx",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Example of how to share a JSON pipeline definition",
   "main": "index.js",
   "scripts": {
@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme-request": "^0.0.15",
-    "bootme-temp": "^0.0.5"
+    "bootme-request": "^0.0.16",
+    "bootme-temp": "^0.0.6"
   },
   "devDependencies": {
     "tap": "^10.7.3"

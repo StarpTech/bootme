@@ -1,6 +1,6 @@
 {
   "name": "bootme-githook",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Task to create Cross-platform git hooks",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme": "^0.0.18",
+    "bootme": "^0.0.19",
     "joi": "^13.0.1"
   },
   "devDependencies": {
