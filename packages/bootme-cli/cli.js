@@ -7,7 +7,7 @@
 const Ora = require('ora')
 const Bootme = require('bootme')
 const Fs = require('fs')
-const Minimist = require('minimist')
+const program = require('commander')
 const Path = require('path')
 const JsonRunner = require('bootme-json-runner')
 const UpdateNotifier = require('update-notifier')
@@ -45,12 +45,14 @@ pipeline.onTaskEnd(state => {
   }
 })
 
-const argv = Minimist(process.argv.slice(2))
-const configFile = argv.config || '.bootme.json'
+program
+  .version(pkg.version)
+  .option('-c, --config <c>', 'Path to config', '.bootme.json')
+  .parse(process.argv)
 
 try {
   const config = Fs.readFileSync(
-    Path.resolve(process.cwd(), configFile),
+    Path.resolve(process.cwd(), program.config),
     'utf8'
   )
   const jsonConfig = JSON.parse(config)
