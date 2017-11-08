@@ -41,3 +41,10 @@ let config = [
 jsonRunner.run(config)
 
 ```
+
+## Usage
+
+- The runner try to load `bootme-<name>` module when a task is started.
+- Any value inside the task key `<name>` object is used for the task configuration and will be validated.
+- You can define hooks inside the task object `onInit`, `onError`, `onBefore`, `onAfter`
+- The `info` property is used to describe the task.
