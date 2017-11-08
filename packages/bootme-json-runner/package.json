@@ -6,6 +6,12 @@
   "scripts": {
     "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""
   },
+  "keywords": [
+    "bootme",
+    "json",
+    "tool",
+    "runner"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/StarpTech/bootme.git"

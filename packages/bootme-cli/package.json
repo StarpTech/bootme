@@ -1,7 +1,7 @@
 {
   "name": "bootme-cli",
   "version": "0.0.2",
-  "description": "Run any bootme Task from command-line",
+  "description": "Command line for BootMe©",
   "main": "cli.js",
   "bin": {
     "bootme": "cli.js"
@@ -10,6 +10,10 @@
     "bin": "node cli.js",
     "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""
   },
+  "keywords": [
+    "bootme",
+    "cli"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/StarpTech/bootme.git"
@@ -26,7 +30,9 @@
     "bootme-task-spinner": "^0.0.1",
     "chalk": "^2.3.0",
     "commander": "^2.11.0",
+    "execa": "^0.8.0",
     "find-up": "^2.1.0",
+    "inquirer": "^3.3.0",
     "update-notifier": "^2.3.0"
   },
   "devDependencies": {

@@ -37,64 +37,18 @@ registry.shareConfig({
 })
 
 registry.addTask(
-  new GitcloneTask('gitclone')
+  new Task('sample')
   .setConfig({})
   .addHook('onError', async (err) => ...)
   .addHook('onBefore', async (state) => ...)
   .addHook('onAfter', async (state) => ...)
 )
 
-registry.addTask(
-  new TemplateTask('replaceStrings')
-  .setConfig({})
-  .addHook('onError', async (err) => ...)
-  .addHook('onBefore', async (state) => {
-    state.addJob(async (state) => console.log('Job'))
-  })
-  .addHook('onAfter', async (state) => ...)
-)
-
-registry.addTask(
-  new DockerTask('createMongodb')
-  .setConfig({})
-  .addHook('onError', async (err) => ...)
-  .addHook('onBefore', async (state) => {
-    state.addJob(async (state) => console.log('Job'))
-  })
-  .addHook('onAfter', async (state) => ...)
-)
-
-registry.addHook('gitclone', 'onError', async (err) => ...)
-registry.addHook('gitclone', 'onAfter', new Task('bar'))
+registry.addHook('sample', 'onError', async (err) => ...)
+registry.addHook('sample', 'onAfter', new Task('bar'))
 
 pipeline.execute()
 ```
-
-### Using a Wizard to load the Task configuration
-
-```js
-const inquirer = require('inquirer')
-
-const task = new Task('pizza')
-  task.setConfig(async () => {
-    const result = await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'size',
-        message: 'What size do you need?',
-        choices: ['Jumbo', 'Large', 'Standard', 'Medium', 'Small', 'Micro'],
-        filter: function(val) {
-          return val.toLowerCase()
-        }
-      }
-    ])
-
-    return result
-  })
-
-registry.addTask(task)
-```
-
 
 ### Task Template
 
@@ -190,7 +144,7 @@ class SampleTask extends Task {
 ## Share Project Templates
 | General | Version | Description |
 |--------|-------|-------|
-| [bootme-projectx](https://github.com/starptech/bootme/tree/master/packages/bootme-projectx) | [![npm](https://img.shields.io/npm/v/bootme-projectx.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-projectx) | Example of how to load the JSON pipeline definition from a NPM package |
+| [bootme-projectx](https://github.com/starptech/bootme/tree/master/packages/bootme-projectx) | [![npm](https://img.shields.io/npm/v/bootme-projectx.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-projectx) | Example of how to share a JSON pipeline definition |
 
 
 ## Contributing

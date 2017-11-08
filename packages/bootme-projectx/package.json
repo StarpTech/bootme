@@ -1,11 +1,16 @@
 {
   "name": "bootme-projectx",
   "version": "0.0.1",
-  "description": "Example of how to pack a Bootme config as a NPM package.",
+  "description": "Example of how to share a JSON pipeline definition",
   "main": "index.js",
   "scripts": {
     "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""
   },
+  "keywords": [
+    "bootme",
+    "example",
+    "template"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/StarpTech/bootme.git"
