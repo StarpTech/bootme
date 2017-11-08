@@ -7,3 +7,9 @@ Tool to run Bootme Tasks from the console
 ```sh
 npx bootme --config ./bootme.json
 ```
+
+## Define the runner
+
+```sh
+npx bootme --config ./bootme.json --runner json
+```

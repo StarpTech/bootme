@@ -49,32 +49,52 @@ program
   .version(pkg.version)
   .option('-c, --config <c>', 'Path to config', '.bootme.json')
   .option('-t, --template [t]', 'Name of your Template')
+  .option('-r, --runner [r]', 'The runner', /^(json)$/i, 'json')
   .parse(process.argv)
 
 let jsonConfig
 let error
+
 try {
   if (program.template) {
     jsonConfig = require(program.template)
   }
 } catch (err) {
   error = err
-  new Ora()
-    .start()
-    .fail(`Template could not be loaded. Error: ${err.message}`)
-    .info(`Please install it with "npm i -s ${program.template}".`)
-}
 
-if (!jsonConfig && !error) {
-  try {
-    const config = Fs.readFileSync(
-      Path.resolve(process.cwd(), program.config),
-      'utf8'
-    )
-    jsonConfig = JSON.parse(config)
-  } catch (err) {
-    new Ora().start().fail(`Config could not be loaded. Error: ${err.message}`)
+  if (err.code === 'MODULE_NOT_FOUND') {
+    new Ora()
+      .start()
+      .fail(
+        `Template could not be loaded. Please install it with "npm i -s ${program.template}".`
+      )
+  } else {
+    new Ora().start().fail(`Fatal error: ${err.message}`)
   }
 }
 
-jsonRunner.run(jsonConfig)
+if (!error && !jsonConfig) {
+  try {
+    const configPath = Fs.readFileSync(
+      Path.resolve(process.cwd(), program.config),
+      'utf8'
+    )
+    jsonConfig = JSON.parse(configPath)
+  } catch (err) {
+    error = err
+
+    if (err.code === 'ENOENT') {
+      new Ora()
+        .start()
+        .fail(
+          `Config could not be loaded. Please verify the path ${program.config}`
+        )
+    } else {
+      new Ora().start().fail(`Fatal error: ${err.message}`)
+    }
+  }
+}
+
+if (!error) {
+  jsonRunner.run(jsonConfig)
+}
