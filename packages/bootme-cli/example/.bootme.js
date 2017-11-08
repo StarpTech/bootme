@@ -7,7 +7,7 @@ module.exports = [
     onInit: async state => {},
     onBefore: async state => {},
     onAfter: async state => {},
-    onError: async state => {}
+    onError: async err => {}
   },
   {
     info: 'Create temp file',
