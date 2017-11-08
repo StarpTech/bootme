@@ -48,7 +48,21 @@ class HttpRequestTask extends Task {
    * @memberof HttpRequestTask
    */
   async validateResult(value) {
-    return Joi.validate(value, Joi.object().required())
+    switch (this.config.contentType) {
+      case 'text':
+        return Joi.validate(value, Joi.string().required())
+      case 'json':
+        return Joi.validate(
+          value,
+          Joi.any()
+            .allow(Joi.object(), Joi.array())
+            .required()
+        )
+      case 'response':
+        return Joi.validate(value, Joi.object().required())
+      default:
+        break
+    }
   }
   /**
    *

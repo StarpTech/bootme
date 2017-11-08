@@ -1,10 +1,13 @@
 {
   "name": "bootme-cli",
-  "version": "0.0.13",
+  "version": "0.0.0",
   "description": "Run any bootme Task from command-line",
-  "main": "index.js",
-  "bin": "./bin/cli.js",
+  "main": "cli.js",
+  "bin": {
+    "bootme": "cli.js"
+  },
   "scripts": {
+    "bin": "node cli.js",
     "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""
   },
   "repository": {
@@ -19,7 +22,10 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
     "bootme": "^0.0.16",
-    "listr": "^0.13.0"
+    "bootme-json-runner": "^0.0.3",
+    "minimist": "^1.2.0",
+    "ora": "^1.3.0",
+    "update-notifier": "^2.3.0"
   },
   "devDependencies": {
     "tap": "^10.7.2"

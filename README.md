@@ -70,7 +70,7 @@ registry.addHook('gitclone', 'onAfter', new Task('bar'))
 pipeline.execute()
 ```
 
-### Integrate Commandline prompt
+### Using a Wizard to load the Task configuration
 
 ```js
 const inquirer = require('inquirer')

@@ -18,11 +18,6 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "devDependencies": {
     "bootme": "0.0.16",
-    "bootme-gitclone": "^0.0.12",
-    "bootme-request": "0.0.13",
-    "bootme-shell": "^0.0.11",
-    "bootme-temp": "0.0.3",
-    "bootme-template": "^0.0.12",
     "tap": "^10.7.3"
   },
   "dependencies": {

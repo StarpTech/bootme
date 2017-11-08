@@ -23,8 +23,11 @@ class JSONRunner {
         const taskConfig = config[i][taskName]
         const taskInfo = config[i]['info']
 
+        // Remove from object because we don't want to validate in the task
+        // config schema
         delete config[i]['info']
 
+        // Convention
         const Task = require(`bootme-${taskName}`)
 
         // create unique suffix
@@ -36,17 +39,19 @@ class JSONRunner {
 
         if (Array.isArray(taskConfig)) {
           taskConfig.forEach((value, i) => {
+            const name = taskName + '-' + this.taskCounter[taskName] + '-' + i
             this.registry.addTask(
               new Task(
-                taskName + '-' + this.taskCounter[taskName] + '-' + i,
+                name,
                 taskInfo
               ).setConfig(value)
             )
           })
         } else {
+          const name = taskName + '-' + this.taskCounter[taskName]
           this.registry.addTask(
             new Task(
-              taskName + '-' + this.taskCounter[taskName],
+              name,
               taskInfo
             ).setConfig(taskConfig)
           )

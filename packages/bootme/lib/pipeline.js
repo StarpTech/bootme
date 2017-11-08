@@ -88,6 +88,7 @@ class Pipeline {
     this.error = err
 
     for (let task of this.registry.tasks.reverse()) {
+      // errors are suppressed so that each task can try to recover
       try {
         await this.onRollbackHook(task)
         await task.rollback(err)
