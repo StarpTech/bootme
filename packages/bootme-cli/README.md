@@ -25,3 +25,12 @@ Tool to run Bootme Tasks from the console
 - Load Project template based on NPM package
 - Provide an interactive cli wizard
 - Notify at startup about new version
+
+
+## Examples
+
+```
+bootme -c ./example/.bootme.js
+bootme -c ./example/.bootme.json
+bootme -t bootme-projectx
+```
