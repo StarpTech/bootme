@@ -172,7 +172,6 @@ class SampleTask extends Task {
 
 | General | Version | Description |
 |--------|-------|-------|
-| [bootme](https://github.com/starptech/bootme/tree/master/packages/bootme) | [![npm](https://img.shields.io/npm/v/bootme.svg?maxAge=3600)](https://www.npmjs.com/package/bootme) | Core |
 | [bootme-cli](https://github.com/starptech/bootme/tree/master/packages/bootme-cli) | [![npm](https://img.shields.io/npm/v/bootme-cli.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-cli) | Run Bootme Tasks from the console |
 | [bootme-json-runner](https://github.com/starptech/bootme/tree/master/packages/bootme-json-runner) | [![npm](https://img.shields.io/npm/v/bootme-json-runner.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-json-runner) | Load pipeline configuration from JSON |
 | [bootme-task-spinner](https://github.com/starptech/bootme/tree/master/packages/bootme-task-spinner) | [![npm](https://img.shields.io/npm/v/bootme-task-spinner.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-task-spinner) | Elegant terminal spinner when your Tasks are running |
