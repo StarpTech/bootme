@@ -31,6 +31,7 @@ npm install bootme
 ## Usage
 
 ```js
+const Bootme = require('bootme')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
