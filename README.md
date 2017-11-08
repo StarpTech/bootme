@@ -183,6 +183,12 @@ class SampleTask extends Task {
 | [bootme-docker](https://github.com/starptech/bootme/tree/master/packages/bootme-docker) | [![npm](https://img.shields.io/npm/v/bootme-docker.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-docker) | Docker commands |
 | [bootme-temp](https://github.com/starptech/bootme/tree/master/packages/bootme-temp) | [![npm](https://img.shields.io/npm/v/bootme-temp.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-temp) | Get a random temporary file or directory path |
 
+## Share Project Templates
+| General | Version | Description |
+|--------|-------|-------|
+| [bootme-projectx](https://github.com/starptech/bootme/tree/master/packages/bootme-projectx) | [![npm](https://img.shields.io/npm/v/bootme-projectx.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-projectx) | Example of how to load the JSON pipeline definition from a NPM package |
+
+
 ## Contributing
 
 ### Run Tests

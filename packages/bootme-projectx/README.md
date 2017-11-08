@@ -1,6 +1,6 @@
 # bootme-projectx
 
-Example of how to load a Bootme pipeline template from a NPM package.
+Example of how to load the JSON pipeline definition from a NPM package.
 
 ```
 npm i bootme-projectx
