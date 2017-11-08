@@ -96,5 +96,7 @@ if (!error && !jsonConfig) {
 }
 
 if (!error) {
-  jsonRunner.run(jsonConfig)
+  if (program.runner === 'json') {
+    jsonRunner.run(jsonConfig)
+  }
 }
