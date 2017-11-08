@@ -173,6 +173,7 @@ class SampleTask extends Task {
 | General | Version | Description |
 |--------|-------|-------|
 | [bootme](https://github.com/starptech/bootme/tree/master/packages/bootme) | [![npm](https://img.shields.io/npm/v/bootme.svg?maxAge=3600)](https://www.npmjs.com/package/bootme) | Core |
+| [bootme-cli](https://github.com/starptech/bootme/tree/master/packages/bootme-cli) | [![npm](https://img.shields.io/npm/v/bootme-cli.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-cli) | Run Bootme Tasks from the console |
 | [bootme-json-runner](https://github.com/starptech/bootme/tree/master/packages/bootme-json-runner) | [![npm](https://img.shields.io/npm/v/bootme-json-runner.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-json-runner) | Load pipeline configuration from JSON |
 | [bootme-githook](https://github.com/starptech/bootme/tree/master/packages/bootme-githook) | [![npm](https://img.shields.io/npm/v/bootme-githook.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-githook) | Cross-platform git hooks |
 | [bootme-request](https://github.com/starptech/bootme/tree/master/packages/bootme-request) | [![npm](https://img.shields.io/npm/v/bootme-request.svg?maxAge=3600)](https://www.npmjs.com/package/bootme-request) | Start HTTP request |

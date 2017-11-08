@@ -1,23 +1,9 @@
-# bootme-request
+# bootme-cli
 
-Task to fire a HTTP Request
+Tool to run Bootme Tasks from the console
 
 ## Usage
 
-```js
-registry.addTask(
-  new HttpRequestTask('iss_position').setConfig({
-    method: 'GET',
-    contentType: 'json',
-    url: 'http://api.open-notify.org/iss-now.json'
-  })
-)
+```sh
+npx bootme-cli --config ./bootme.json
 ```
-
-## Result
-
-- Based on the `contentType` property.
-
-## Caveats
-
-Don't forget to register your `onError` hook to rollback the operation.
