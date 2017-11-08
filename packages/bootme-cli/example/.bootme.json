@@ -13,7 +13,7 @@
   },
   {
     "request": {
-      "url": "http://google.ddddde",
+      "url": "http://google.de",
       "contentType": "text"
     },
     "info": "Start request against google"

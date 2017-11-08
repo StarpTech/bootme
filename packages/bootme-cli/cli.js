@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 /**
- * Ora will gracefully not do anything when there's no TTY or when in a CI.
+ * Info: Ora will gracefully not do anything when there's no TTY or when in a CI.
  */
 
 const Ora = require('ora')
@@ -38,7 +38,7 @@ pipeline.onTaskEnd(state => {
     spinners.get(state.task.name).fail()
     spinners
       .get(state.task.name)
-      .fail(`${state.task.name}: Error ${state.pipeline.error.message}`)
+      .fail(`${state.task.name}: Error: ${state.pipeline.error.message}`)
     spinners.get(state.task.name).stop()
   } else {
     spinners.get(state.task.name).succeed()
@@ -48,15 +48,33 @@ pipeline.onTaskEnd(state => {
 program
   .version(pkg.version)
   .option('-c, --config <c>', 'Path to config', '.bootme.json')
+  .option('-t, --template [t]', 'Name of your Template')
   .parse(process.argv)
 
+let jsonConfig
+let error
 try {
-  const config = Fs.readFileSync(
-    Path.resolve(process.cwd(), program.config),
-    'utf8'
-  )
-  const jsonConfig = JSON.parse(config)
-  jsonRunner.run(jsonConfig)
+  if (program.template) {
+    jsonConfig = require(program.template)
+  }
 } catch (err) {
-  new Ora().start().fail(`Config could not be loaded. Error ${err.message}`)
+  error = err
+  new Ora()
+    .start()
+    .fail(`Template could not be loaded. Error: ${err.message}`)
+    .info(`Please install it with "npm i -s ${program.template}".`)
 }
+
+if (!jsonConfig && !error) {
+  try {
+    const config = Fs.readFileSync(
+      Path.resolve(process.cwd(), program.config),
+      'utf8'
+    )
+    jsonConfig = JSON.parse(config)
+  } catch (err) {
+    new Ora().start().fail(`Config could not be loaded. Error: ${err.message}`)
+  }
+}
+
+jsonRunner.run(jsonConfig)
