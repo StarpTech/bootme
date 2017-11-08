@@ -6,8 +6,8 @@
 
 # BootMe
 
-Configurable and extendable Task pipeline. Bootme help you to run a list of tasks as a transaction and provide an api to hook into lifecycle events.
-We use Bootme to scaffold complete projects, services or other useful parts without fuss. It comes with a minimal API. When size matters _~10KB_.
+Configurable and extendable Task pipeline. BootMe help you to run a list of tasks as a transaction and provide an api to hook into lifecycle events.
+We use it to scaffold complete projects, services or other useful parts without fuss. It comes with a minimal API. When size matters _~10KB_.
 
 ## Installation
 
@@ -151,8 +151,8 @@ class SampleTask extends Task {
 
 ## FAQ
 
-### What's the difference between Bootme and Gulp ?
-[Gulp](https://gulpjs.com/) is a tookit to work with streams, transform or move bytes from one place to another. While you can parallize stuff in Gulp, in Bootme you can't, we won't! Bootstrapping an environment from scratch or setup services are error-prone this means we should be able to define a rollback mechanism to come back in a clear state and try it again. BootMe Task-Pipeline is ordered and as soon a task fail, the pipeline is trying to recover itself. You can hook into many lifecycle events. In Gulp you can pipe streams to other tasks this is quite useful because you can build modules which are composable. In BootMe it's quite different. We don't agree on streams, we respond native Javascript Objects. A task can rely on the output of another task. This is possible, because a Task can define `refs` which is part of the task configuration and defines a relation between them. When the value can not be found we trying to fallback to the default configuration. We are also able to validate the config and the result of a task. In Gulp you don't want it because the correctnes of the stream data could be reached only near the end.
+### What's the difference between BootMe and Gulp ?
+[Gulp](https://gulpjs.com/) is a tookit to work with streams, transform or move bytes from one place to another. While you can parallize stuff in Gulp, in BootMe you can't, we won't! Bootstrapping an environment from scratch or setup services are error-prone this means we should be able to define a rollback mechanism to come back in a clear state and try it again. BootMe Task-Pipeline is ordered and as soon a task fail, the pipeline is trying to recover itself. You can hook into many lifecycle events. In Gulp you can pipe streams to other tasks this is quite useful because you can build modules which are composable. In BootMe it's quite different. We don't agree on streams, we respond native Javascript Objects. A task can rely on the output of another task. This is possible, because a Task can define `refs` which is part of the task configuration and defines a relation between them. When the value can not be found we trying to fallback to the default configuration. We are also able to validate the config and the result of a task. In Gulp you don't want it because the correctnes of the stream data could be reached only near the end.
 
 BootMe is no replacement for Gulp, we use Gulp e.g in `bootme-template` to manipulate files and replace them with the orginal content.
 
