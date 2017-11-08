@@ -14,38 +14,26 @@ const jsonRunner = new JsonRunner(pipeline)
 
 let config = [
   {
-    gitclone: [
-      {
-        url: 'https://github.com/netzkern/eslint-config-netzkern-base',
-        path: '/test-checkout'
-      },
-      {
-        url: 'https://github.com/netzkern/eslint-config-netzkern-base',
-        path: '/test-checkout2'
-      }
-    ]
+    info: 'Retrieve the IIS position',
+    request: {
+      url: 'http://api.open-notify.org/iss-now.json'
+    },
+    onInit: async state => {},
+    onBefore: async state => {},
+    onAfter: async state => {},
+    onError: async state => {}
   },
   {
-    shell: {
-      cmd: 'echo',
-      args: ['Hello']
+    info: 'Create temp file',
+    temp: {
+      type: 'file'
     }
   },
   {
-    shell: {
-      cmd: 'echo',
-      args: ['Hello']
-    }
-  },
-  {
-    template: {
-      refs: {
-        url: 'gitclone-1-1' // Point to result of previous task
-      },
-      templateData: {
-        project: 'Hello BootMe!'
-      },
-      files: ['README.md']
+    info: 'Start request against google',
+    request: {
+      url: 'http://google.de',
+      contentType: 'text'
     }
   }
 ]

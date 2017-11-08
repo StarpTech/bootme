@@ -94,11 +94,16 @@ async function run() {
  */
   if (!error && !jsonConfig) {
     try {
-      const configPath = Fs.readFileSync(
-        Path.resolve(process.cwd(), program.config),
-        'utf8'
-      )
-      jsonConfig = JSON.parse(configPath)
+      const configPath = Path.resolve(process.cwd(), program.config)
+      if (Path.extname(configPath) !== '.js') {
+        const content = Fs.readFileSync(
+          Path.resolve(process.cwd(), program.config),
+          'utf8'
+        )
+        jsonConfig = JSON.parse(content)
+      } else {
+        jsonConfig = require(configPath)
+      }
     } catch (err) {
       error = err
 

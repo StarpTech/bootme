@@ -24,9 +24,9 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "devDependencies": {
     "bootme": "^0.0.19",
+    "bootme-request": "^0.0.16",
+    "bootme-task-spinner": "^0.0.2",
+    "bootme-temp": "^0.0.6",
     "tap": "^10.7.3"
-  },
-  "dependencies": {
-    "ora": "^1.3.0"
   }
 }

@@ -21,6 +21,7 @@ Tool to run Bootme Tasks from the console
 
 ## Features
 - Load the pipeline definition from JSON file
+- Load the pipeline definition from Js file (Hooks can be defined)
 - Load Project template based on NPM package
 - Provide an interactive cli wizard
-- Notify about new Version
+- Notify at startup about new version
