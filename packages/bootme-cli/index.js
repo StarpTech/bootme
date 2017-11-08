@@ -1,7 +1,6 @@
 'use strict'
 
 const Task = require('bootme').Task
-const Listr = require('listr')
 
 /**
  *

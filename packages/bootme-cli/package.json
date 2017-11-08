@@ -1,7 +1,7 @@
 {
   "name": "bootme-cli",
   "version": "0.0.13",
-  "description": "Task to fire a HTTP Request",
+  "description": "Run any bootme Task from command-line",
   "main": "index.js",
   "bin": "./bin/cli.js",
   "scripts": {
