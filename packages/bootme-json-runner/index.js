@@ -26,9 +26,17 @@ class JSONRunner {
         // Remove from object because we don't want to validate in the task
         // config schema
         delete config[i]['info']
-
-        // Convention
-        const Task = require(`bootme-${taskName}`)
+        let Task
+        try {
+          // Convention
+          Task = require(`bootme-${taskName}`)
+        } catch (err) {
+          if (err.code === 'MODULE_NOT_FOUND') {
+            console.log(
+              `Module "bootme-${taskName}" could not be found. Please try "npm i -s bootme-${taskName}"`
+            )
+          }
+        }
 
         // create unique suffix
         if (this.taskCounter[taskName]) {
@@ -40,21 +48,11 @@ class JSONRunner {
         if (Array.isArray(taskConfig)) {
           taskConfig.forEach((value, i) => {
             const name = taskName + '-' + this.taskCounter[taskName] + '-' + i
-            this.registry.addTask(
-              new Task(
-                name,
-                taskInfo
-              ).setConfig(value)
-            )
+            this.registry.addTask(new Task(name, taskInfo).setConfig(value))
           })
         } else {
           const name = taskName + '-' + this.taskCounter[taskName]
-          this.registry.addTask(
-            new Task(
-              name,
-              taskInfo
-            ).setConfig(taskConfig)
-          )
+          this.registry.addTask(new Task(name, taskInfo).setConfig(taskConfig))
         }
       }
     })

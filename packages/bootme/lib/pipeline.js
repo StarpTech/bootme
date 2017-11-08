@@ -27,9 +27,9 @@ class Pipeline {
     this.errored = false
     this.error = null
 
-    this.onRollbackHook = () => {}
-    this.onTaskEndHook = () => {}
-    this.onTaskStartHook = () => {}
+    this.onRollbackHooks = []
+    this.onTaskEndHooks = []
+    this.onTaskStartHooks = []
   }
   /**
    *
@@ -90,7 +90,9 @@ class Pipeline {
     for (let task of this.registry.tasks.reverse()) {
       // errors are suppressed so that each task can try to recover
       try {
-        await this.onRollbackHook(task)
+        for (let hook of this.onRollbackHooks) {
+          await hook(task)
+        }
         await task.rollback(err)
       } catch (err) {
         error(
@@ -109,7 +111,7 @@ class Pipeline {
    * @memberof Pipeline
    */
   onTaskStart(fn) {
-    this.onTaskStartHook = fn
+    this.onTaskStartHooks.push(fn)
   }
   /**
    *
@@ -118,7 +120,7 @@ class Pipeline {
    * @memberof Pipeline
    */
   onTaskEnd(fn) {
-    this.onTaskEndHook = fn
+    this.onTaskEndHooks.push(fn)
   }
   /**
    *
@@ -127,7 +129,7 @@ class Pipeline {
    * @memberof Pipeline
    */
   onRollback(fn) {
-    this.onRollbackHook = fn
+    this.onRollbackHooks.push(fn)
   }
   /**
    *
@@ -293,17 +295,26 @@ class Pipeline {
         let state = new State(child, task, this)
 
         try {
-          await this.onTaskStartHook(state)
+          for (let hook of this.onTaskStartHooks) {
+            await hook(state)
+          }
+
           await this.onInit(state)
           await this.onBefore(state)
           await this.action(state)
           await this.onAfter(state)
-          await this.onTaskEndHook(state)
+
+          for (let hook of this.onTaskEndHooks) {
+            await hook(state)
+          }
         } catch (err) {
           error('Task error %O', err)
           this.results.set(`${task.name}:error`, err)
           await this.rollback(err)
-          await this.onTaskEndHook(state)
+
+          for (let hook of this.onTaskEndHooks) {
+            await hook(state)
+          }
         }
       })
     }

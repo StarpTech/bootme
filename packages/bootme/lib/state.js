@@ -55,9 +55,16 @@ class State {
   async addTask(task) {
     const state = this
     this.pipeline.registry.addTask(task)
-    await this.pipeline.onTaskStartHook(state)
+
+    for (let hook of this.pipeline.onTaskStartHooks) {
+      await hook(state)
+    }
+
     await this.pipeline.executeTask(task, state)
-    await this.pipeline.onTaskEndHook(state)
+
+    for (let hook of this.pipeline.onTaskEndHooks) {
+      await hook(state)
+    }
   }
   /**
    *
