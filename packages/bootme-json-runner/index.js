@@ -9,6 +9,7 @@ class JSONRunner {
   constructor(pipeline) {
     this.pipeline = pipeline
     this.registry = pipeline.registry
+    this.hooks = ['onInit', 'onError', 'onBefore', 'onAfter']
     this.taskCounter = {}
   }
   /**
@@ -23,30 +24,13 @@ class JSONRunner {
  */
   loadTask(TaskType, name, settings, config) {
     const newTask = new TaskType(name, settings.info).setConfig(config)
-
-    if (settings.onInit && Array.isArray(settings)) {
-      settings.onInit.forEach(h => newTask.addhook('onInit', h))
-    } else if (typeof settings.onInit === 'function') {
-      newTask.addHook('onInit', settings.onInit)
-    }
-
-    if (settings.onBefore && Array.isArray(settings)) {
-      settings.onBefore.forEach(h => newTask.addhook('onBefore', h))
-    } else if (typeof settings.onBefore === 'function') {
-      newTask.addHook('onBefore', settings.onBefore)
-    }
-
-    if (settings.onAfter && Array.isArray(settings)) {
-      settings.onAfter.forEach(h => newTask.addhook('onAfter', h))
-    } else if (typeof settings.onAfter === 'function') {
-      newTask.addHook('onAfter', settings.onAfter)
-    }
-
-    if (settings.onError && Array.isArray(settings)) {
-      settings.onError.forEach(h => newTask.addhook('onError', h))
-    } else if (typeof settings.onError === 'function') {
-      newTask.addHook('onError', settings.onError)
-    }
+    this.hooks.forEach(hook => {
+      if (settings[hook] && Array.isArray(settings)) {
+        settings[hook].forEach(h => newTask.addhook(hook, h))
+      } else if (typeof settings[hook] === 'function') {
+        newTask.addHook(hook, settings[hook])
+      }
+    })
 
     return newTask
   }
@@ -64,20 +48,19 @@ class JSONRunner {
         // Task config is an object everything else is task configuration
         if (typeof taskConfig === 'object' && !Array.isArray(taskConfig)) {
           const taskSettings = {
-            info: config[i]['info'],
-            onInit: config[i]['onInit'],
-            onBefore: config[i]['onBefore'],
-            onAfter: config[i]['onAfter'],
-            onError: config[i]['onError']
+            info: config[i]['info']
           }
+
+          this.hooks.forEach(hook => {
+            taskSettings[hook] = config[i][hook]
+          })
 
           // Remove from object because we don't want to validate in the task
           // config schema
           delete config[i]['info']
-          delete config[i]['onInit']
-          delete config[i]['onBefore']
-          delete config[i]['onAfter']
-          delete config[i]['onError']
+          this.hooks.forEach(hook => {
+            delete config[i][hook]
+          })
 
           let Task
           try {
