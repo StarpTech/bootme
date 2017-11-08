@@ -16,24 +16,27 @@ let config = [
   {
     request: {
       url: 'http://api.open-notify.org/iss-now.json'
-    }
+    },
+    info: 'Get IIS position'
   },
   {
     temp: {
       type: 'file'
-    }
+    },
+    info: 'Create temp file'
   },
   {
     request: {
       url: 'http://invalid'
-    }
+    },
+    info: 'Start invalid request'
   }
 ]
 
 const spinners = new Map()
 
 pipeline.onTaskStart(state => {
-  spinners.set(state.task.name, new Ora(state.task.name).start())
+  spinners.set(state.task.name, new Ora(`${state.task.name} / ${state.task.info}`).start())
 })
 
 pipeline.onRollback(task => {

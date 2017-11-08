@@ -21,6 +21,10 @@ class JSONRunner {
     config.forEach((task, i) => {
       for (var taskName in task) {
         const taskConfig = config[i][taskName]
+        const taskInfo = config[i]['info']
+
+        delete config[i]['info']
+
         const Task = require(`bootme-${taskName}`)
 
         // create unique suffix
@@ -34,15 +38,17 @@ class JSONRunner {
           taskConfig.forEach((value, i) => {
             this.registry.addTask(
               new Task(
-                taskName + '-' + this.taskCounter[taskName] + '-' + i
+                taskName + '-' + this.taskCounter[taskName] + '-' + i,
+                taskInfo
               ).setConfig(value)
             )
           })
         } else {
           this.registry.addTask(
-            new Task(taskName + '-' + this.taskCounter[taskName]).setConfig(
-              taskConfig
-            )
+            new Task(
+              taskName + '-' + this.taskCounter[taskName],
+              taskInfo
+            ).setConfig(taskConfig)
           )
         }
       }
