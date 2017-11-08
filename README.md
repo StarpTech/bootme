@@ -11,6 +11,8 @@ We use Bootme to scaffold complete projects, services or other useful parts with
 
 ## Installation
 
+- **Requires Node.Js >= 8**
+
 ```
 npm install bootme
 ```
