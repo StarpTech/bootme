@@ -43,7 +43,7 @@ pipeline.onRollback(task => {
 pipeline.onTaskEnd(state => {
   if (state.pipeline.error) {
     spinners.get(state.task.name).fail()
-    spinners.get(state.task.name).stopAndPersist()
+    spinners.get(state.task.name).stop()
   } else {
     spinners.get(state.task.name).succeed()
   }
