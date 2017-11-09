@@ -24,6 +24,7 @@ class JSONRunner {
  */
   loadTask(TaskType, task, name) {
     const newTask = new TaskType(name, task.info).setConfig(task.config)
+    console.log(newTask, TaskType)
     this.hooks.forEach(hook => {
       if (task.hooks && task.hooks[hook] && Array.isArray(task.hooks[hook])) {
         task.hooks[hook].forEach(h => newTask.addhook(hook, h))
