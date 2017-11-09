@@ -82,6 +82,15 @@ class State {
     }
 
     this.queue.add(async child => {
+      if (this.pipeline.errored) {
+        debug(
+          'Task <%s:%s> cancel next Job due to (Job) error',
+          this.task.constructor.name,
+          this.task.name
+        )
+        return
+      }
+
       try {
         await fn(new State(child, this.task, this.pipeline))
       } catch (err) {
