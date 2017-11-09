@@ -54,6 +54,12 @@ class State {
    */
   async addTask(task) {
     const state = this
+
+    if (this.pipeline.rollbacked) {
+      error('Abort Pipeline error %O', this.error)
+      return
+    }
+
     this.pipeline.registry.addTask(task)
 
     await this.pipeline.executeTask(task, state)
@@ -70,7 +76,7 @@ class State {
     }
 
     this.queue.add(async child => {
-      if (this.pipeline.errored) {
+      if (this.pipeline.rollbacked) {
         debug(
           'Task <%s:%s> cancel next Job due to (Job) error',
           this.task.constructor.name,

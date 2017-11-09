@@ -30,11 +30,17 @@ class TaskSpinner {
       if (state.task.info) {
         spinnerMsg += `: ${state.task.info}`
       }
-      this.spinners.set(state.task.name, new Ora(spinnerMsg).start())
+      this.spinners.set(state.task.name, new Ora({
+        text: spinnerMsg,
+        stream: process.stdout
+      }).start())
     })
 
     this.pipeline.onRollback(task => {
-      this.spinners.get(task.name).info(`Rollback ${task.name}`)
+      const spinner = this.spinners.get(task.name)
+      if (spinner) {
+        spinner.info(`Rollback ${task.name}`)
+      }
     })
 
     this.pipeline.onTaskEnd(state => {

@@ -1,6 +1,7 @@
 'use strict'
 
 const q = require('workq')
+const debug = require('debug')('pipeline')
 const error = require('debug')('pipeline:error')
 const State = require('./state')
 const Registry = require('./registry')
@@ -25,6 +26,7 @@ class Pipeline {
     this.queue = q()
     this.results = new Map()
     this.errored = false
+    this.rollbacked = false
     this.error = null
 
     this.onRollbackHooks = []
@@ -84,9 +86,14 @@ class Pipeline {
    * @memberof Pipeline
    */
   async rollback(err) {
-    this.errored = true
-    this.error = err
+    if (this.rollbacked) {
+      debug(`Rollback already in progress %O`)
+      return
+    }
 
+    this.rollbacked = true
+    this.errored = !!err
+    this.error = err
     for (let task of this.registry.tasks.reverse()) {
       // errors are suppressed so that each task can try to recover
       try {
@@ -195,7 +202,7 @@ class Pipeline {
    */
   async execute() {
     for (let task of this.registry.tasks) {
-      if (this.errored) {
+      if (this.rollbacked) {
         error('Abort Pipeline error %O', this.error)
         break
       }
