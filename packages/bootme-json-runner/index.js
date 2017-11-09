@@ -11,21 +11,20 @@ class JSONRunner {
     this.registry = pipeline.registry
     this.hooks = ['onInit', 'onError', 'onBefore', 'onAfter']
     this.taskCounter = {}
+    this.classProxy = {}
   }
   /**
- *
- *
- * @param {any} TaskType
- * @param {any} name
- * @param {any} settings
- * @param {any} config
- * @returns
- * @memberof JSONRunner
- */
-  loadTask(TaskType, task, name) {
-    const newTask = new TaskType(name, task.info)
-    newTask.setConfig(task.config)
-    console.log(newTask, TaskType, typeof newTask)
+   *
+   *
+   * @param {any} task
+   * @param {any} name
+   * @returns
+   * @memberof JSONRunner
+   */
+  loadTask(task, name) {
+    const newTask = new this.classProxy[task.task](name, task.info).setConfig(
+      task.config
+    )
     this.hooks.forEach(hook => {
       if (task.hooks && task.hooks[hook] && Array.isArray(task.hooks[hook])) {
         task.hooks[hook].forEach(h => newTask.addhook(hook, h))
@@ -57,6 +56,8 @@ class JSONRunner {
         return
       }
 
+      this.classProxy[task.task] = Task
+
       // create unique suffix
       if (this.taskCounter[task.task]) {
         this.taskCounter[task.task] += 1
@@ -65,7 +66,7 @@ class JSONRunner {
       }
 
       const name = task.task + '-' + this.taskCounter[task.task]
-      this.registry.addTask(this.loadTask(Task, task, name))
+      this.registry.addTask(this.loadTask(task, name))
     })
 
     this.pipeline.execute()
