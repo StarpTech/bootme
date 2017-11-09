@@ -21,7 +21,7 @@ module.exports = [
   },
   {
     task: 'request',
-    info: 'Start request against google',
+    info: 'Make request',
     config: {
       url: 'http://google.de',
       contentType: 'text'
