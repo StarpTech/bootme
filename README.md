@@ -165,6 +165,10 @@ Yes, we provide a JSON runner [bootme-json-runner](https://github.com/starptech/
 
 Yes, we provide great tooling with [bootme-cli](https://github.com/starptech/bootme/tree/master/packages/bootme-cli)
 
+### Can I create project templates?
+
+Yes, look at example project [bootme-projectx](https://github.com/starptech/bootme/tree/master/packages/bootme-projectx) there we define the pipeline in Javascript.
+
 ## Contributing
 
 ### Run Tests
