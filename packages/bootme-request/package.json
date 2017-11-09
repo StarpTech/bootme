@@ -1,6 +1,6 @@
 {
   "name": "bootme-request",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Task to fire a HTTP Request",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme": "^0.0.21",
+    "bootme": "^0.0.22",
     "joi": "^13.0.1",
     "r2": "^2.0.0"
   },

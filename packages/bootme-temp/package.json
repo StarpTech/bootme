@@ -1,6 +1,6 @@
 {
   "name": "bootme-temp",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Task to get a random temporary file or directory path",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme": "^0.0.21",
+    "bootme": "^0.0.22",
     "joi": "^13.0.1",
     "tempy": "^0.2.1"
   },
