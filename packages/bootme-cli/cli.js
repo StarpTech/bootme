@@ -40,7 +40,7 @@ async function run(argv) {
       return
     }
 
-    jsonRunner.run(jsonConfig)
+    runRunner(jsonConfig)
 
     return
   }
@@ -59,10 +59,12 @@ async function run(argv) {
       if (!taskConfig) {
         return
       }
-    } else if (program.quick) {
+    } else if (typeof program.quick === 'object') {
       taskConfig = {
         config: program.quick
       }
+    } else {
+      return
     }
 
     const task = Object.assign(
@@ -75,7 +77,7 @@ async function run(argv) {
     // Build pipeline with single item
     jsonConfig = [task]
 
-    jsonRunner.run(jsonConfig)
+    runRunner(jsonConfig)
 
     return
   }
@@ -87,7 +89,16 @@ async function run(argv) {
       return
     }
 
-    jsonRunner.run(jsonConfig)
+    runRunner(jsonConfig)
+  }
+}
+
+function runRunner(config) {
+  try {
+    jsonRunner.run(config)
+  } catch (err) {
+    console.log(Chalk.bold.red(`Pipeline could not be excuted`))
+    console.log(Chalk.bold.yellow(`"${err.message}"`))
   }
 }
 

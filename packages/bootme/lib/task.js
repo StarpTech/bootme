@@ -70,11 +70,14 @@ class Task {
       if (result) {
         if (result.error) {
           error(
-            'Task <%s:%s> Invalid config schema',
-            this.constructor.name,
-            this.name
+            `Task <${this.constructor.name}:${this
+              .name}> Invalid config schema. Error: %O`,
+            result.error
           )
-          throw result.error
+          throw new Error(
+            `Task <${this.constructor.name}:${this
+              .name}> has an innvalid config schema. ${result.error.message}`
+          )
         } else if (result.value) {
           this.config = result.value
         } else {

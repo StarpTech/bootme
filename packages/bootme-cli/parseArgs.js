@@ -2,6 +2,7 @@
 
 const program = require('commander')
 const tinysonic = require('tinysonic')
+const Chalk = require('chalk')
 const pkg = require('./package.json')
 
 module.exports = function(argv) {
@@ -23,5 +24,10 @@ module.exports = function(argv) {
 }
 
 function parseAsQuickJson(value) {
-  return tinysonic(value)
+  const parsed = tinysonic(value)
+  if (parsed === null) {
+    console.log(Chalk.bold.red(`Invalid quick JSON syntax error: "${value}"`))
+    return
+  }
+  return parsed
 }
