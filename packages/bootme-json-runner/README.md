@@ -1,6 +1,6 @@
 # bootme-json-runner
 
-Tool to use JSON as pipeline definition
+Tool to use JSON or Javascript as pipeline definition
 
 ## Usage
 
