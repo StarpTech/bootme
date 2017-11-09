@@ -78,7 +78,7 @@ class State {
     this.queue.add(async child => {
       if (this.pipeline.rollbacked) {
         debug(
-          'Task <%s:%s> cancel next Job due to (Job) error',
+          'Task <%s:%s> cancel next Job due to pipeline cancellation',
           this.task.constructor.name,
           this.task.name
         )
