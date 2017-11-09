@@ -18,76 +18,135 @@ const pipeline = new Bootme.Pipeline(registry)
 const jsonRunner = new JsonRunner(pipeline)
 new TaskSpinner(pipeline).attach()
 
+/**
+ *
+ *
+ * @param {any} argv
+ */
 async function run(argv) {
   const program = parseArgs(argv)
 
   let jsonConfig
-  let error
-
   // show wizard when user has no intention to run something
-  if (!program.config && !program.template) {
+  if (program.wizard) {
     await wizard()
     return
   }
 
-  /**
- * Try to load project package
- */
-  try {
-    if (program.template) {
-      jsonConfig = require(program.template)
+  // Load pipeline config for project from NPM package
+  if (program.template) {
+    jsonConfig = loadBootmeModule(program.template)
+    if (!jsonConfig) {
+      return
     }
-  } catch (err) {
-    error = err
 
+    jsonRunner.run(jsonConfig)
+
+    return
+  }
+
+  // Load specific task from NPM package
+  if (program.task) {
+    let taskConfig
+    const Task = loadBootmeModule(program.task)
+    if (!Task) {
+      return
+    }
+
+    // Load config for task or fallback to quick json syntax
+    if (program.config) {
+      taskConfig = loadConfigFile(program.config)
+      if (!taskConfig) {
+        return
+      }
+    } else if (program.quick) {
+      taskConfig = {
+        config: program.quick
+      }
+    }
+
+    const task = Object.assign(
+      {
+        task: program.task
+      },
+      taskConfig
+    )
+
+    // Build pipeline with single item
+    jsonConfig = [task]
+
+    jsonRunner.run(jsonConfig)
+
+    return
+  }
+
+  // Load config only when we try to execute an array of tasks
+  if (program.config && !program.task) {
+    jsonConfig = loadConfigFile(program.config)
+    if (!jsonConfig) {
+      return
+    }
+
+    jsonRunner.run(jsonConfig)
+  }
+}
+
+/**
+ *
+ *
+ * @param {any} name
+ * @returns
+ */
+function loadBootmeModule(name) {
+  let Task
+  try {
+    // Convention
+    Task = require(`bootme-${name}`)
+  } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
       console.log(
-        Chalk.bold.yellow(
-          `Template "${program.template}" could not be found. Please try "npm i -s ${program.template}"`
+        Chalk.bold.red(
+          `Module "bootme-${name}" could not be found. Please install "npm i -s bootme-${name}"`
         )
       )
     } else {
       console.log(Chalk.bold.red(`Fatal error: ${err.message}`))
     }
-
-    return
   }
+  return Task
+}
 
-  /**
- * Try to load bootme json config
+/**
+ *
+ *
+ * @param {any} configFlag
+ * @returns
  */
-  if (!error && !jsonConfig) {
-    try {
-      const configPath = Path.resolve(process.cwd(), program.config)
-      if (Path.extname(configPath) !== '.js') {
-        const content = Fs.readFileSync(
-          Path.resolve(process.cwd(), program.config),
-          'utf8'
+function loadConfigFile(configFlag) {
+  let jsonConfig
+  try {
+    const configPath = Path.resolve(process.cwd(), configFlag)
+    if (Path.extname(configPath) !== '.js') {
+      const content = Fs.readFileSync(
+        Path.resolve(process.cwd(), configFlag),
+        'utf8'
+      )
+      jsonConfig = JSON.parse(content)
+    } else {
+      jsonConfig = require(configPath)
+    }
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log(
+        Chalk.yellow(
+          `Config could not be loaded. Please verify config path "${configFlag}"`
         )
-        jsonConfig = JSON.parse(content)
-      } else {
-        jsonConfig = require(configPath)
-      }
-    } catch (err) {
-      error = err
-
-      if (err.code === 'ENOENT') {
-        console.log(
-          Chalk.yellow(
-            `Config could not be loaded. Please verify config path "${program.config}"`
-          )
-        )
-      } else {
-        console.log(Chalk.bold.red(`Fatal error: ${err.message}`))
-      }
-
-      return
+      )
+    } else {
+      console.log(Chalk.bold.red(`Fatal error: ${err.message}`))
     }
   }
-
-  if (program.runner === 'json') {
-    jsonRunner.run(jsonConfig)
-  }
+  return jsonConfig
 }
 
 run(process.argv)

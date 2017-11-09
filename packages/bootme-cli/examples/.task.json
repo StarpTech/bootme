@@ -1,0 +1,7 @@
+{
+  "info": "Start request against google",
+  "config": {
+    "url": "http://google.de",
+    "contentType": "text"
+  }
+}

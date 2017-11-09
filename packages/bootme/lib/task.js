@@ -20,7 +20,7 @@ class Task {
       throw new TypeError(`Name must be a string`)
     }
 
-    if (typeof info !== 'string') {
+    if (info && typeof info !== 'string') {
       throw new TypeError(`Info must be a string`)
     }
 
