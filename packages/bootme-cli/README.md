@@ -29,6 +29,7 @@ Tool to run Bootme Tasks from the console
 - Load Project template based on NPM package
 - Provide an interactive cli wizard
 - Notify at startup about new version
+- Rollback on SIGTERM Signal
 - Load single Task with JSON configuration or pass JSON in form of a [quick JSON](https://github.com/mcollina/tinysonic) format.
 
 
