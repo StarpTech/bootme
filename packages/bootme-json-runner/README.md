@@ -1,6 +1,6 @@
 # bootme-json-runner
 
-Tool to use JSON or Javascript as pipeline definition
+Tool to use JSON or Javascript as pipeline definition.
 
 ## Usage
 
@@ -49,7 +49,7 @@ jsonRunner.run(config)
 
 ## Usage
 
-- The runner try to load task as `bootme-<task>` NPM module.
+- The runner try to load a NPM module in form `bootme-<task>`.
 - Any value inside the task key `config` property is used for the task configuration and is validated.
 - You can define hooks `onInit`, `onError`, `onBefore`, `onAfter`.
 - The `info` property is used to describe the task and is used for debugging purpose.
