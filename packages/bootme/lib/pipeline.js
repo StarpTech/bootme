@@ -201,9 +201,8 @@ class Pipeline {
       }
 
       this.queue.add(async child => {
-        let state = new State(child, task, this)
-
         try {
+          let state = new State(child, task, this)
           await this.executeTask(task, state)
         } catch (err) {
           error('Task error %O', err)
