@@ -7,7 +7,7 @@
 # BootMe
 
 Configurable and extendable Task pipeline. BootMe help you to run a list of tasks as a transaction and provide an api to hook into lifecycle events.
-We use it to scaffold complete environments, services or other useful parts without fuss. It comes with a minimal API. When size matters _~10KB_.
+We use it to scaffold complete environments, projects or other useful parts without fuss. It comes with a minimal API. When size matters _~10KB_.
 
 ## Installation
 
