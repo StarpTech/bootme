@@ -1,6 +1,6 @@
 {
   "name": "bootme-gitclone",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Task to clone a Git Repository",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme": "^0.0.23",
+    "bootme": "^0.0.24",
     "del": "^3.0.0",
     "joi": "^13.0.1",
     "simple-git": "^1.80.1"
