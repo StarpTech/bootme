@@ -37,6 +37,7 @@
     "update-notifier": "^2.3.0"
   },
   "devDependencies": {
+    "bootme-delay": "^0.0.1",
     "bootme-projectx": "^0.0.12",
     "bootme-request": "^0.0.24",
     "tap": "^10.7.2"

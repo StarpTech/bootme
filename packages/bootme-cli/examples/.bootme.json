@@ -14,6 +14,13 @@
     }
   },
   {
+    "task": "delay",
+    "config": {
+      "value": 2000
+    },
+    "info": "Wait 2 seconds"
+  },
+  {
     "task": "request",
     "info": "Make request",
     "config": {

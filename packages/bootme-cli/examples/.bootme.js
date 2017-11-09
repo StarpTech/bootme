@@ -20,6 +20,10 @@ module.exports = [
     }
   },
   {
+    task: 'delay',
+    info: 'Wait 1 second'
+  },
+  {
     task: 'request',
     info: 'Make request',
     config: {

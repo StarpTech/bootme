@@ -24,6 +24,7 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "devDependencies": {
     "bootme": "^0.0.26",
+    "bootme-delay": "^0.0.1",
     "bootme-request": "^0.0.24",
     "bootme-task-spinner": "^0.0.4",
     "bootme-temp": "^0.0.13",
