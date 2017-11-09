@@ -87,7 +87,7 @@ class Pipeline {
    */
   async rollback(err) {
     if (this.rollbacked) {
-      debug(`Rollback already in progress %O`)
+      debug(`Rollback already in progress`)
       return
     }
 
