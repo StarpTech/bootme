@@ -1,6 +1,6 @@
 {
   "name": "bootme-template",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Task to parse files as mustache templates and replace the original content",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme": "^0.0.19",
+    "bootme": "^0.0.20",
     "del": "^3.0.0",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
