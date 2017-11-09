@@ -1,6 +1,7 @@
 # bootme-task-spinner
 
 Tool to provide an elegant terminal spinner when your Tasks are running.
+No spinners are dispayed when no TTY or when in a CI.
 
 ## Usage
 
