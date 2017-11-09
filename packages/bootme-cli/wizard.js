@@ -21,8 +21,10 @@ module.exports = async function wizard() {
 
   switch (result.cmd) {
     case 'allModules':
-      const searchResult = await execa.shell(
-        'npm search --json --parseable bootme task'
+      const keywords = ['bootme', 'task']
+      const searchResult = await execa(
+        'npm',
+        ['search', '--json', '--parseable'].concat(keywords)
       )
 
       const modules = JSON.parse(searchResult.stdout)
