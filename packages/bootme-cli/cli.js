@@ -53,6 +53,8 @@ async function run(argv) {
       return
     }
 
+    console.log(Task)
+
     // Load config for task or fallback to quick json syntax
     if (program.config) {
       taskConfig = loadConfigFile(program.config)
