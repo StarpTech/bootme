@@ -1,21 +1,24 @@
 [
   {
-    "request": {
+    "task": "request",
+    "info": "Retrieve the IIS position",
+    "config": {
       "url": "http://api.open-notify.org/iss-now.json"
-    },
-    "info": "Retrieve the IIS position"
+    }
   },
   {
-    "temp": {
+    "task": "temp",
+    "info": "Create temp file",
+    "config": {
       "type": "file"
-    },
-    "info": "Create temp file"
+    }
   },
   {
-    "request": {
+    "task": "request",
+    "info": "Start request against google",
+    "config": {
       "url": "http://google.de",
       "contentType": "text"
-    },
-    "info": "Start request against google"
+    }
   }
 ]

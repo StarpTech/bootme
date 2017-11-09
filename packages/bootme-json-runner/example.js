@@ -15,24 +15,29 @@ new TaskSpinner(pipeline).attach()
 
 let config = [
   {
+    task: 'request',
     info: 'Retrieve the IIS position',
-    request: {
+    config: {
       url: 'http://api.open-notify.org/iss-now.json'
     },
-    onInit: async state => {},
-    onBefore: async state => {},
-    onAfter: async state => {},
-    onError: async err => {}
+    hooks: {
+      onInit: async state => {},
+      onBefore: async state => {},
+      onAfter: async state => {},
+      onError: async err => {}
+    }
   },
   {
+    task: 'temp',
     info: 'Create temp file',
-    temp: {
+    config: {
       type: 'file'
     }
   },
   {
+    task: 'request',
     info: 'Start request against google',
-    request: {
+    config: {
       url: 'http://google.de',
       contentType: 'text'
     }
