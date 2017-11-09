@@ -1,6 +1,6 @@
 {
   "name": "bootme-json-runner",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Tool to use JSON as pipeline definition",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "devDependencies": {
     "bootme": "^0.0.22",
-    "bootme-request": "^0.0.19",
+    "bootme-request": "^0.0.20",
     "bootme-task-spinner": "^0.0.2",
     "bootme-temp": "^0.0.9",
     "tap": "^10.7.3"
