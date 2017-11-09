@@ -167,7 +167,7 @@ Yes, we provide great tooling with [bootme-cli](https://github.com/starptech/boo
 
 ### Can I create project templates?
 
-Yes, look at example project [bootme-projectx](https://github.com/starptech/bootme/tree/master/packages/bootme-projectx) there we define the pipeline in Javascript and publish this package to NPM as convention all packages has to started with `bootme-*`. After you have successfully published your package you can execute your pipeline with one command with [bootme-cli](https://github.com/starptech/bootme/tree/master/packages/bootme-cli).
+Yes, look at example project [bootme-projectx](https://github.com/starptech/bootme/tree/master/packages/bootme-projectx) there we defined the pipeline in Javascript and published it to NPM (As convention all packages has to started with `bootme-*`). After you have successfully published your package you can execute your pipeline with one command with [bootme-cli](https://github.com/starptech/bootme/tree/master/packages/bootme-cli).
 
 ## Contributing
 
