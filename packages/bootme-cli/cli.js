@@ -27,7 +27,7 @@ async function run(argv) {
   const program = parseArgs(argv)
 
   let jsonConfig
-  // show wizard when user has no intention to run something
+
   if (program.wizard) {
     await wizard()
     return
