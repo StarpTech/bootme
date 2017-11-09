@@ -157,6 +157,14 @@ class SampleTask extends Task {
 
 BootMe is no replacement for Gulp, we use Gulp e.g in `bootme-template` to manipulate files and replace them with the orginal content.
 
+### Can I define my pipeline in a JSON file?
+
+Yes, we provide a JSON runner [bootme-json-runner](https://github.com/starptech/bootme/tree/master/packages/bootme-json-runner). If you pass a Javascript Object you can even hook into the lifecycle.
+
+### Can I run a single Task with the command-line?
+
+Yes, we provide great tooling with [bootme-cli](https://github.com/starptech/bootme/tree/master/packages/bootme-cli)
+
 ## Contributing
 
 ### Run Tests
