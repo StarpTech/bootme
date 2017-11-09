@@ -68,8 +68,9 @@ class Registry {
    * @memberof Registry
    */
   addTask(task) {
-    if (!(task instanceof Task)) {
-      throw new TypeError('The Task must be a Task instance')
+    console.log(task.constructor.name, task instanceof Task, typeof task)
+    if (typeof task !== 'object') {
+      throw new TypeError('The Task must be an Object instance')
     }
     const t = this.tasks.find(t => t.name === task.name)
 
