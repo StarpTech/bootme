@@ -1,6 +1,6 @@
 {
   "name": "bootme-cli",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Command line for BootMe©",
   "main": "cli.js",
   "bin": {
@@ -26,7 +26,7 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
     "bootme": "^0.0.20",
-    "bootme-json-runner": "^0.0.12",
+    "bootme-json-runner": "^0.0.13",
     "bootme-task-spinner": "^0.0.2",
     "chalk": "^2.3.0",
     "commander": "^2.11.0",
