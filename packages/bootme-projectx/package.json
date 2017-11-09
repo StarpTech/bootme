@@ -1,6 +1,6 @@
 {
   "name": "bootme-projectx",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Example of how to share a JSON pipeline definition",
   "main": "index.js",
   "scripts": {
