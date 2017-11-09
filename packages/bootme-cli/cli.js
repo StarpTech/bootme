@@ -3,14 +3,13 @@
 const Chalk = require('chalk')
 const Bootme = require('bootme')
 const Fs = require('fs')
-const program = require('commander')
 const Path = require('path')
 const TaskSpinner = require('bootme-task-spinner')
 const JsonRunner = require('bootme-json-runner')
 const UpdateNotifier = require('update-notifier')
-const inquirer = require('inquirer')
-const execa = require('execa')
 const pkg = require('./package.json')
+const parseArgs = require('./parseArgs')
+const wizard = require('./wizard')
 
 UpdateNotifier({ pkg }).notify()
 
@@ -19,52 +18,15 @@ const pipeline = new Bootme.Pipeline(registry)
 const jsonRunner = new JsonRunner(pipeline)
 new TaskSpinner(pipeline).attach()
 
-async function run() {
-  program
-    .version(pkg.version)
-    .description(pkg.description)
-    .option('-c, --config <c>', 'Path to config')
-    .option('-t, --template [t]', 'Name of your Template')
-    .option('-r, --runner [r]', 'The runner', /^(json)$/i, 'json')
-    .parse(process.argv)
+async function run(argv) {
+  const program = parseArgs(argv)
 
   let jsonConfig
   let error
 
   // show wizard when user has no intention to run something
   if (!program.config && !program.template) {
-    const result = await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'cmd',
-        message: 'How can I help you?',
-        choices: [
-          {
-            name: 'Show me all available Bootme modules',
-            value: 'allModules'
-          }
-        ]
-      }
-    ])
-
-    switch (result.cmd) {
-      case 'allModules':
-        const searchResult = await execa.shell(
-          'npm search --json --parseable bootme task'
-        )
-
-        const modules = JSON.parse(searchResult.stdout)
-        modules.forEach(m =>
-          console.log(Chalk.blue(m.name) + ' - ' + m.description)
-        )
-        console.log()
-        console.log(Chalk.yellow('Just "npm i -s <name>" to install a package'))
-        break
-
-      default:
-        break
-    }
-
+    await wizard()
     return
   }
 
@@ -87,6 +49,8 @@ async function run() {
     } else {
       console.log(Chalk.bold.red(`Fatal error: ${err.message}`))
     }
+
+    return
   }
 
   /**
@@ -116,14 +80,14 @@ async function run() {
       } else {
         console.log(Chalk.bold.red(`Fatal error: ${err.message}`))
       }
+
+      return
     }
   }
 
-  if (!error) {
-    if (program.runner === 'json') {
-      jsonRunner.run(jsonConfig)
-    }
+  if (program.runner === 'json') {
+    jsonRunner.run(jsonConfig)
   }
 }
 
-run()
+run(process.argv)

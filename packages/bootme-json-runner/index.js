@@ -52,6 +52,7 @@ class JSONRunner {
             `Module "bootme-${task.task}" could not be found. Please try "npm i -s bootme-${task.task}"`
           )
         }
+        return
       }
 
       // create unique suffix
