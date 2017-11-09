@@ -83,7 +83,7 @@ async function run(argv) {
   }
 
   // Load config only when we try to execute an array of tasks
-  if (program.config && !program.task) {
+  if (program.config) {
     jsonConfig = loadConfigFile(program.config)
     if (!jsonConfig) {
       return

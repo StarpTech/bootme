@@ -47,6 +47,4 @@ bootme --task request -C url:http://www.google.de,contentType:text
 npx bootme-cli -h
 // Run specific version of BootMe
 npx bootme-cli@0.0.6 -h
-// Run just a single task without pre steps
-npx -p bootme-request -p bootme-cli -- bootme --task request -C url:http://www.google.de,contentType:text
 ```

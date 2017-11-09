@@ -60,6 +60,10 @@ class State {
       await hook(state)
     }
 
+    // pass share config
+    task.config.bootme = this.pipeline.registry.sharedConfig
+    await this.pipeline.loadConfig(state)
+
     await this.pipeline.executeTask(task, state)
 
     for (let hook of this.pipeline.onTaskEndHooks) {

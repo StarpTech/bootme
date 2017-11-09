@@ -139,23 +139,8 @@ class Pipeline {
    * @memberof Pipeline
    */
   async executeTask(task, state) {
-    // pass share config
-    task.config.bootme = this.registry.sharedConfig
-
-    // lazy evaluation of task config
-    if (typeof task.config === 'function') {
-      let config = await task.config(state)
-      config = Object.assign(
-        config,
-        this.registry.preTaskConfigs.get(task.name, config)
-      )
-      task.setConfig(config)
-    } else {
-      task.config = Object.assign(
-        task.config,
-        this.registry.preTaskConfigs.get(task.name, task.config)
-      )
-      task.setConfig(task.config)
+    for (let hook of this.onTaskStartHooks) {
+      await hook(state)
     }
 
     task.addHook('onInit', async state => task.init(state))
@@ -171,35 +156,9 @@ class Pipeline {
     this.results.set(`${task.name}`, result)
 
     await task.executeHooks('onAfter', state)
-  }
-  /**
-   *
-   *
-   * @param {any} state
-   * @memberof Pipeline
-   */
-  async action(state) {
-    if (this.errored) {
-      return
-    }
-    const task = state.task
 
-    try {
-      const result = await task.start(state)
-
-      if (result && typeof task.validateResult === 'function') {
-        await task.validateResult(result)
-      }
-
-      this.results.set(`${task.name}`, result)
-    } catch (err) {
-      error(
-        'Task <%s:%s> action error %O',
-        task.constructor.name,
-        task.name,
-        err
-      )
-      throw err
+    for (let hook of this.onTaskEndHooks) {
+      await hook(state)
     }
   }
   /**
@@ -208,74 +167,22 @@ class Pipeline {
    * @param {any} state
    * @memberof Pipeline
    */
-  async onBefore(state) {
-    if (this.errored) {
-      return
-    }
+  async loadConfig(state) {
     const task = state.task
 
-    try {
-      await task.executeHooks('onBefore', state)
-    } catch (err) {
-      error(
-        'Task <%s:%s> onBefore error %O',
-        task.constructor.name,
-        task.name,
-        err
+    if (typeof task.config === 'function') {
+      let config = await task.config(state)
+      config = Object.assign(
+        config,
+        this.registry.preTaskConfigs.get(task.name)
       )
-      throw err
-    }
-  }
-  /**
-   *
-   *
-   * @param {any} state
-   * @memberof Pipeline
-   */
-  async onInit(state) {
-    const task = state.task
-    try {
-      // lazy evaluation of task config
-      if (typeof task.config === 'function') {
-        const config = await task.config(state)
-        task.setConfig(config)
-      } else {
-        task.setConfig(task.config)
-      }
-
-      await task.executeHooks('onInit', state)
-    } catch (err) {
-      error(
-        'Task <%s:%s> onInit error %O',
-        task.constructor.name,
-        task.name,
-        err
+      task.setConfig(config)
+    } else {
+      task.config = Object.assign(
+        task.config,
+        this.registry.preTaskConfigs.get(task.name)
       )
-      throw err
-    }
-  }
-  /**
-   *
-   *
-   * @param {any} state
-   * @memberof Pipeline
-   */
-  async onAfter(state) {
-    if (this.errored) {
-      return
-    }
-    const task = state.task
-
-    try {
-      await task.executeHooks('onAfter', state)
-    } catch (err) {
-      error(
-        'Task <%s:%s> onAfter error %O',
-        task.constructor.name,
-        task.name,
-        err
-      )
-      throw err
+      task.setConfig(task.config)
     }
   }
   /**
@@ -295,26 +202,12 @@ class Pipeline {
         let state = new State(child, task, this)
 
         try {
-          for (let hook of this.onTaskStartHooks) {
-            await hook(state)
-          }
-
-          await this.onInit(state)
-          await this.onBefore(state)
-          await this.action(state)
-          await this.onAfter(state)
-
-          for (let hook of this.onTaskEndHooks) {
-            await hook(state)
-          }
+          await this.loadConfig(state)
+          await this.executeTask(task, state)
         } catch (err) {
           error('Task error %O', err)
           this.results.set(`${task.name}:error`, err)
           await this.rollback(err)
-
-          for (let hook of this.onTaskEndHooks) {
-            await hook(state)
-          }
         }
       })
     }
