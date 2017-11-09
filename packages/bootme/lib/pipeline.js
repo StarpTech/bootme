@@ -143,6 +143,8 @@ class Pipeline {
       await hook(state)
     }
 
+    task.config.bootme = this.registry.sharedConfig
+    await this.loadConfig(state)
     task.addHook('onInit', async state => task.init(state))
 
     await task.executeHooks('onInit', state)
@@ -202,7 +204,6 @@ class Pipeline {
         let state = new State(child, task, this)
 
         try {
-          await this.loadConfig(state)
           await this.executeTask(task, state)
         } catch (err) {
           error('Task error %O', err)

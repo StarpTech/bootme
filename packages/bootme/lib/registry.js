@@ -79,9 +79,6 @@ class Registry {
       )
     }
 
-    task.addHook('onInit', async state => task.init(state))
-    task.config.bootme = this.sharedConfig
-
     this.tasks.push(task)
 
     return task
