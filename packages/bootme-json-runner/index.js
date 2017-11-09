@@ -49,7 +49,7 @@ class JSONRunner {
       } catch (err) {
         if (err.code === 'MODULE_NOT_FOUND') {
           console.log(
-            `Module "bootme-${task.task}" could not be found. Please try "npm i -s bootme-${task.task}"`
+            `Module "bootme-${task.task}" could not be found. Please install "npm i -s bootme-${task.task}"`
           )
         }
         return

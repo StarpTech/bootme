@@ -7,7 +7,10 @@ Task to administrate a docker environment
 ```js
 registry.addTask(
   new DockerTask('mongodb').setConfig({
-    docker: {},
+    docker: {
+      host: '127.0.0.1',
+      port: 2375
+    },
     cmd: 'createContainer',
     name: 'testMongodb',
     image: 'tutum/mongodb'
@@ -21,4 +24,5 @@ registry.addTask(
 
 ## Caveats
 
-Don't forget to register your `onError` hook to rollback the operation.
+- Expose your Docker daemon
+- Don't forget to register your `onError` hook to rollback the operation.
