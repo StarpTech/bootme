@@ -2,6 +2,7 @@
 
 const Task = require('bootme').Task
 const Joi = require('joi')
+const Delay = require('delay')
 
 /**
  *
@@ -10,6 +11,13 @@ const Joi = require('joi')
  * @extends {Task}
  */
 class DelayTask extends Task {
+  init(state) {
+    this.addHook('onError', () => {
+      if (this.delay) {
+        this.delay.cancel()
+      }
+    })
+  }
   /**
    *
    *
@@ -33,9 +41,8 @@ class DelayTask extends Task {
  * @memberof DelayTask
  */
   async action() {
-    return new Promise(resolve => {
-      setTimeout(() => resolve(), this.config.value).unref()
-    })
+    this.delay = Delay(this.config.value)
+    return this.delay
   }
 }
 

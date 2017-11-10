@@ -21,7 +21,10 @@ module.exports = [
   },
   {
     task: 'delay',
-    info: 'Wait 1 second'
+    config: {
+      value: 3000
+    },
+    info: 'Wait 3 second'
   },
   {
     task: 'request',

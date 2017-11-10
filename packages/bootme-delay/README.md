@@ -9,3 +9,7 @@ registry.addTask(
   new DelayTask('wait_before_request')
 )
 ```
+
+## Rollback
+
+Canceled the delay

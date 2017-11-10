@@ -80,7 +80,7 @@ class Task {
           )
         } else if (result.value) {
           this.config = result.value
-        } else {
+        } else if (config) {
           this.config = config
         }
       }

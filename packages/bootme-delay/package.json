@@ -23,6 +23,7 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
     "bootme": "^0.0.26",
+    "delay": "^2.0.0",
     "joi": "^13.0.1"
   },
   "devDependencies": {
