@@ -2,6 +2,8 @@
 
 Tool to run Bootme Tasks from the console
 
+![cli](/media/bootme-cli.gif)
+
 ## Usage
 
 ```sh
