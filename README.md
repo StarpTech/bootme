@@ -19,7 +19,7 @@ npm install bootme
 
 ## Core features
 
-- **Hooks**: define `Init`, `Before`, `After`, `Error` Hooks in the Task or with the Registry.
+- **Hooks**: define `Init`, `Before`, `After`, `Rollback` Hooks in the Task or with the Registry.
 - **Rollback**: the pipeline behaves fully transactional. Define rollback routines which are triggered as soon as a `Hook`, `Task` or a `Job` or nested thing fail.
 - **Configuration**: configure your Task with JSON or pass an [inquirer](https://github.com/SBoudrias/Inquirer.js) prompt to setup your config at runtime.
 - **Composable**: work with results of previous Tasks, pass Tasks to Hooks or add Tasks in Tasks.
