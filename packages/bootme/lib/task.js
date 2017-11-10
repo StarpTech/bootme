@@ -3,7 +3,7 @@
 const debug = require('debug')('task')
 const error = require('debug')('task:error')
 
-const supportedHooks = ['onBefore', 'onAfter', 'onError', 'onInit']
+const supportedHooks = ['onBefore', 'onAfter', 'onRollback', 'onInit']
 
 /**
  *
@@ -28,7 +28,7 @@ class Task {
     this.info = info
     this.onAfter = []
     this.onBefore = []
-    this.onError = []
+    this.onRollback = []
     this.onInit = []
     this.config = {}
 
@@ -190,7 +190,7 @@ class Task {
       `Task <${this.constructor.name}:${this.name}> execute rollback routines`
     )
 
-    for (let hook of this.onError) {
+    for (let hook of this.onRollback) {
       await hook(err)
     }
   }

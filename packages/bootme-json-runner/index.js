@@ -9,7 +9,7 @@ class JSONRunner {
   constructor(pipeline) {
     this.pipeline = pipeline
     this.registry = pipeline.registry
-    this.hooks = ['onInit', 'onError', 'onBefore', 'onAfter']
+    this.hooks = ['onInit', 'onRollback', 'onBefore', 'onAfter']
     this.taskCounter = {}
     this.classProxy = {}
   }

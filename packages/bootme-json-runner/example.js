@@ -24,7 +24,7 @@ let config = [
       onInit: async state => {},
       onBefore: async state => {},
       onAfter: async state => {},
-      onError: async err => {}
+      onRollback: async err => {}
     }
   },
   {

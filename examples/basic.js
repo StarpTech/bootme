@@ -19,7 +19,7 @@ task.addHook('onBefore', task2)
 task.addHook('onAfter', async function(state) {
   state.addTask(task3)
 })
-task.addHook('onError', async function(err) {
+task.addHook('onRollback', async function(err) {
   console.log(err)
 })
 

@@ -56,7 +56,7 @@ class GitcloneTask extends Task {
    */
   async init() {
     this.path = Path.join(this.config.bootme.basePath, this.config.path)
-    this.addHook('onError', async () => del([this.path]))
+    this.addHook('onRollback', async () => del([this.path]))
   }
   /**
    *

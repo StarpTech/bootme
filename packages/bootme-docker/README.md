@@ -25,4 +25,4 @@ registry.addTask(
 ## Caveats
 
 - Expose your Docker daemon
-- Don't forget to register your `onError` hook to rollback the operation.
+- Don't forget to register your `onRollback` hook to rollback the operation.

@@ -23,7 +23,7 @@ let config = [
       onInit: async state => {},
       onBefore: async state => {},
       onAfter: async state => {},
-      onError: async err => {}
+      onRollback: async err => {}
     }
   },
   {
@@ -51,5 +51,5 @@ jsonRunner.run(config)
 
 - The runner try to load a NPM module in form `bootme-<task>`.
 - Any value inside the task key `config` property is used for the task configuration and is validated.
-- You can define hooks `onInit`, `onError`, `onBefore`, `onAfter`.
+- You can define hooks `onInit`, `onRollback`, `onBefore`, `onAfter`.
 - The `info` property is used to describe the task and is used for debugging purpose.

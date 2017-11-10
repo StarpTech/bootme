@@ -12,7 +12,7 @@ const Delay = require('delay')
  */
 class DelayTask extends Task {
   init(state) {
-    this.addHook('onError', () => {
+    this.addHook('onRollback', () => {
       if (this.delay) {
         this.delay.cancel()
       }
