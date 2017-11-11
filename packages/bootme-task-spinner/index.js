@@ -54,11 +54,7 @@ class TaskSpinner {
           .fail(`${state.task.name}: Error: ${state.pipeline.error.message}`)
         this.spinners.get(state.task.name).stop()
       } else {
-        if (state.pipeline.restored) {
-          this.spinners.get(state.task.name).warn()
-        } else {
-          this.spinners.get(state.task.name).succeed()
-        }
+        this.spinners.get(state.task.name).succeed()
       }
     })
   }

@@ -81,7 +81,7 @@ async function run(argv) {
     // Build pipeline with single item
     jsonConfig = [task]
 
-    runRunner(jsonConfig, program.restore)
+    await runRunner(jsonConfig, program.restore)
 
     return
   }
@@ -93,12 +93,17 @@ async function run(argv) {
       return
     }
 
-    runRunner(jsonConfig, program.restore)
+    await runRunner(jsonConfig, program.restore)
   }
 
-  function runRunner(config, restore = false) {
+  async function runRunner(config, restore = false) {
     try {
-      jsonRunner.run(config, { restore })
+      if (restore) {
+        console.log(Chalk.bold.green(`Restore ...`))
+      } else {
+        console.log(Chalk.bold.green(`Executing ...`))
+      }
+      await jsonRunner.run(config, { restore })
     } catch (err) {
       if (restore) {
         console.log(Chalk.bold.red(`Pipeline could not be restored`))

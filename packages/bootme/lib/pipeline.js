@@ -128,31 +128,25 @@ class Pipeline {
     this.restored = true
 
     for (let task of this.registry.tasks) {
-      this.queue.add(async child => {
-        try {
-          let state = new State(child, task, this)
-          for (let hook of this.onTaskStartHooks) {
-            await hook.call(task, state)
-          }
-
-          await this.initializeTask(task, state)
-
-          for (let hook of this.onTaskEndHooks) {
-            await hook.call(task, state)
-          }
-        } catch (err) {
-          error('Task error during restore %O', err)
+      try {
+        let state = new State(this.queue, task, this)
+        for (let hook of this.onTaskStartHooks) {
+          await hook.call(task, state)
         }
-      })
+
+        await this.initializeTask(task, state)
+
+        for (let hook of this.onTaskEndHooks) {
+          await hook.call(task, state)
+        }
+      } catch (err) {
+        error('Task error during restore %O', err)
+      }
     }
 
-    this.queue.add(async child => {
-      await this.rollback()
-    })
+    await this.rollback()
 
-    this.queue.add(async child => {
-      this.restored = false
-    })
+    this.restored = false
   }
   /**
    *

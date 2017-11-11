@@ -42,7 +42,7 @@ class JSONRunner {
    * @param {any} [options={}]
    * @memberof JSONRunner
    */
-  run(config, options = {}) {
+  async run(config, options = {}) {
     config.forEach((task, i) => {
       let Task
       try {
@@ -71,9 +71,9 @@ class JSONRunner {
     })
 
     if (options.restore) {
-      this.pipeline.restore()
+      await this.pipeline.restore()
     } else {
-      this.pipeline.execute()
+      await this.pipeline.execute()
     }
   }
 }
