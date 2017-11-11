@@ -27,6 +27,7 @@ class Pipeline {
     this.results = new Map()
     this.errored = false
     this.rollbacked = false
+    this.restored = false
     this.error = null
 
     this.onRollbackHooks = []
@@ -94,6 +95,7 @@ class Pipeline {
     this.rollbacked = true
     this.errored = !!err
     this.error = err
+
     for (let task of this.registry.tasks.reverse()) {
       // errors are suppressed so that each task can try to recover
       try {
@@ -110,6 +112,38 @@ class Pipeline {
         )
       }
     }
+
+    this.rollbacked = false
+  }
+  /**
+   *
+   *
+   * @memberof Pipeline
+   */
+  async restore() {
+    if (this.restored) {
+      debug(`Restore already in progress`)
+      return
+    }
+
+    this.restored = true
+
+    for (let task of this.registry.tasks) {
+      this.queue.add(async child => {
+        try {
+          let state = new State(child, task, this)
+          await this.initializeTask(task, state)
+        } catch (err) {
+          error('Task error during restore %O', err)
+        }
+      })
+    }
+
+    this.queue.add(async child => {
+      await this.rollback()
+    })
+
+    this.restored = false
   }
   /**
    *
@@ -145,16 +179,26 @@ class Pipeline {
    * @param {any} state
    * @memberof Pipeline
    */
+  async initializeTask(task, state) {
+    task.config.bootme = this.registry.sharedConfig
+    await this.loadConfig(state)
+
+    task.addHook('onInit', async state => task.init(state))
+    await task.executeHooks('onInit', state)
+  }
+  /**
+   *
+   *
+   * @param {any} task
+   * @param {any} state
+   * @memberof Pipeline
+   */
   async executeTask(task, state) {
     for (let hook of this.onTaskStartHooks) {
       await hook(state)
     }
 
-    task.config.bootme = this.registry.sharedConfig
-    await this.loadConfig(state)
-    task.addHook('onInit', async state => task.init(state))
-
-    await task.executeHooks('onInit', state)
+    await this.initializeTask(task, state)
     await task.executeHooks('onBefore', state)
 
     const result = await task.action(state)

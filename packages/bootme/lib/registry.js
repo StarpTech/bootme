@@ -60,6 +60,8 @@ class Registry {
     } else {
       task.config.refs = { [key]: value }
     }
+    // add package as dependency
+    task.deps.push(value)
   }
   /**
    *

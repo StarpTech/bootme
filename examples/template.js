@@ -21,7 +21,7 @@ registry.addTask(
 registry.addTask(
   new TemplateTask('replace').setConfig({
     refs: {
-      url: 'gitclone' // Poiint to result of previous task
+      url: 'gitclone' // Point to result of previous task
     },
     templateData: {
       project: 'Hello BootMe!'

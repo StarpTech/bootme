@@ -31,6 +31,7 @@ class Task {
     this.onRollback = []
     this.onInit = []
     this.config = {}
+    this.deps = []
 
     return this
   }
@@ -86,7 +87,22 @@ class Task {
       }
     }
 
+    this.setRefs()
+
     return this
+  }
+  /**
+   *
+   *
+   * @memberof Task
+   */
+  setRefs() {
+    for (var key in this.config.refs) {
+      const taskName = this.config.refs[key]
+      if (taskName) {
+        this.deps.push(taskName)
+      }
+    }
   }
   /**
    *
@@ -191,7 +207,7 @@ class Task {
     )
 
     for (let hook of this.onRollback) {
-      await hook(err)
+      await hook.call(this, err)
     }
   }
 }
