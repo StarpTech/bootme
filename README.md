@@ -80,7 +80,19 @@ class SampleTask extends Task {
 - <code>bootme.Task#<b>validateResult()</b></code>
 - Fire `onAfter` hooks
 
-**An error in the cycle will abort the complete pipeline and execute the `onError` routines of all Tasks.**
+  _An error in the cycle will abort the complete pipeline and execute the `onRollback` handlers of all Tasks._
+
+### Rollback Lifecycle
+
+- Fire global `onRollback` hooks
+- Fire all `onRollback` hooks from all Tasks in **reverse order**
+
+### Restore Lifecycle
+
+- Fire `onTaskStart` hooks
+- Fire `onInit` hooks (`init` is also a hook)
+- Fire `onTaskEnd` hooks
+- Execute [Rollback lifecycle](#rollback_lifecycle)
 
 ## Examples
 
