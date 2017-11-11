@@ -9,19 +9,19 @@ module.exports = function(argv) {
   program.version(pkg.version).description(pkg.description)
 
   program
-    .option('-c, --config <path>', 'Path to config')
-    .option('-t, --template [name]', 'Name of your Template')
-    .option('-r, --restore', 'Restore a pipeline')
-    .option('-r, --runner [name]', 'The runner', /^(json)$/i, 'json')
+    .option('-c, --config <path>', 'path to config')
+    .option('-t, --template [name]', 'name of your Template')
+    .option('-r, --restore', 'restore a pipeline')
+    .option('-r, --runner [name]', 'the runner', /^(json)$/i, 'json')
 
-  program.option('-w, --wizard', 'Start interactive cli mode')
+  program.option('-w, --wizard', 'start interactive cli mode')
 
   program
-    .option('-T, --task <name>', 'Execute a single Task')
-    .option('-c, --config <path>', 'Path to config')
+    .option('-T, --task <name>', 'execute a single Task')
+    .option('-c, --config <path>', 'path to config')
     .option(
       '-C, --quick <json>',
-      'Config as quick JSON syntax',
+      'config as quick JSON syntax',
       parseAsQuickJson
     )
 

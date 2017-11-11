@@ -15,14 +15,14 @@ Tool to run Bootme Tasks from the console
   Options:
 
     -V, --version          output the version number
-    -c, --config <path>    Path to config
-    -t, --template [name]  Name of your Template
-    -r, --restore          Restore a pipeline
-    -r, --runner [name]    The runner
-    -w, --wizard           Start interactive cli mode
-    -T, --task <name>      Execute a single Task
-    -c, --config <path>    Path to config
-    -C, --quick <json>     Config as quick JSON syntax
+    -c, --config <path>    path to config
+    -t, --template [name]  name of your Template
+    -r, --restore          restore a pipeline
+    -r, --runner [name]    the runner
+    -w, --wizard           start interactive cli mode
+    -T, --task <name>      execute a single Task
+    -c, --config <path>    path to config
+    -C, --quick <json>     config as quick JSON syntax
     -h, --help             output usage information
 ```
 
