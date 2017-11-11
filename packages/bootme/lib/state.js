@@ -36,8 +36,8 @@ class State {
     const res = this.pipeline.results.get(name)
 
     if (res === undefined) {
-      for (var key in this.task.config) {
-        if (this.task.config[key]) {
+      for (var key in this.task.config.refs) {
+        if (this.task.config.refs[key] === name) {
           return this.task.config[key]
         }
       }

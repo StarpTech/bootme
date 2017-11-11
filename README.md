@@ -66,6 +66,7 @@ class SampleTask extends Task {
   async action(state) {}
   async validateResult(value) {}
   validateConfig(value) {}
+  async rollback(state) {}
 }
 ```
 
@@ -80,7 +81,7 @@ class SampleTask extends Task {
 - <code>bootme.Task#<b>validateResult()</b></code>
 - Fire `onAfter` hooks
 
-  _An error in the cycle will abort the complete pipeline and execute the `onRollback` handlers of all Tasks._
+  _An error in the cycle will abort the complete pipeline and execute the `onRollback` (`rollback` is also a hook) handlers of all Tasks._
 
 ### Rollback Lifecycle
 

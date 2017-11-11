@@ -12,16 +12,13 @@ class SampleTask extends Bootme.Task {
     // try to get value from previous task or fallback to config
     this.flag = await state.getValue(this.config.refs.flag)
   }
+  async rollback() {}
   validateConfig(value) {
     return Joi.object()
       .keys({
         bootme: Joi.object(),
         flag: Joi.string(),
-        refs: Joi.object()
-          .keys({
-            url: Joi.string()
-          })
-          .default({}),
+        refs: Joi.object(),
         cmd: Joi.string()
           .lowercase()
           .allow(['hello'])
@@ -39,7 +36,10 @@ class SampleTask extends Bootme.Task {
 
 const task = new SampleTask('helloWorld').setConfig({
   cmd: 'hello',
-  flag: 'foo'
+  flag: 'default',
+  refs: {
+    flag: 'foo' // task with name 'foo'
+  }
 })
 
 const registry = new Bootme.Registry()
@@ -47,12 +47,9 @@ const pipeline = new Bootme.Pipeline(registry)
 
 registry.addTask(task)
 
-registry.addHook('helloWorld', 'onInit', async function() {
-  console.log(`Flag:${this.flag}`)
-})
-
 registry.addHook('helloWorld', 'onBefore', async function() {
   console.log(`Before ${this.name}`)
+  console.log(`Flag:${this.flag}`)
 })
 
 registry.addHook('helloWorld', 'onAfter', async function() {

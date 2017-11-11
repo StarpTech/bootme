@@ -108,6 +108,17 @@ async function run(argv) {
       console.log(Chalk.bold.yellow(`"${err.message}"`))
     }
   }
+
+  // rollback when user cancel it with CTRL+C
+  process.on('SIGINT', async () => {
+    await pipeline.rollback()
+    process.exit(0)
+  })
+
+  process.on('SIGTERM', async () => {
+    await pipeline.rollback()
+    process.exit(0)
+  })
 }
 
 /**
@@ -167,16 +178,5 @@ function loadConfigFile(configFlag) {
   }
   return jsonConfig
 }
-
-// rollback when user cancel it with CTRL+C
-process.on('SIGINT', async () => {
-  await pipeline.rollback()
-  process.exit(0)
-})
-
-process.on('SIGTERM', async () => {
-  await pipeline.rollback()
-  process.exit(0)
-})
 
 run(process.argv)

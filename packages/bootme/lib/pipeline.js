@@ -86,23 +86,22 @@ class Pipeline {
    *
    * @memberof Pipeline
    */
-  async rollback(err) {
+  async rollback() {
     if (this.rollbacked) {
       debug(`Rollback already in progress`)
       return
     }
 
     this.rollbacked = true
-    this.errored = !!err
-    this.error = err
 
-    for (let task of this.registry.tasks.reverse()) {
-      // errors are suppressed so that each task can try to recover
+    for (let task of this.registry.tasks.filter(x => x.run).reverse()) {
+      // errors are swallowed so that each task can try to recover
       try {
+        let state = new State(this.queue, task, this)
         for (let hook of this.onRollbackHooks) {
-          await hook(task)
+          await hook(state)
         }
-        await task.rollback(err)
+        await task.executeRollback(state)
       } catch (err) {
         error(
           `Task <%s:%s> Error during rollback process %O`,
@@ -194,6 +193,8 @@ class Pipeline {
     await this.loadConfig(state)
 
     task.addHook('onInit', async state => task.init(state))
+    task.addHook('onRollback', async state => task.rollback(state))
+
     await task.executeHooks('onInit', state)
   }
   /**
@@ -210,6 +211,9 @@ class Pipeline {
 
     await this.initializeTask(task, state)
     await task.executeHooks('onBefore', state)
+
+    // mark task as run so it can be filtered for rollback
+    task.run = true
 
     const result = await task.action(state)
     if (result && typeof task.validateResult === 'function') {
@@ -262,13 +266,15 @@ class Pipeline {
       }
 
       this.queue.add(async child => {
+        let state
         try {
-          let state = new State(child, task, this)
+          state = new State(child, task, this)
           await this.executeTask(task, state)
         } catch (err) {
           error('Task error %O', err)
+          this.error = err
           this.results.set(`${task.name}:error`, err)
-          await this.rollback(err)
+          await this.rollback(state)
         }
       })
     }

@@ -12,10 +12,14 @@ const Joi = require('joi')
  * @extends {Task}
  */
 class GitHookTask extends Task {
-  async init() {
-    this.addHook('onRollback', async () =>
-      this.unlink(this.config.bootme.basePath, this.config.hookDir)
-    )
+  /**
+   *
+   *
+   * @returns
+   * @memberof GitHookTask
+   */
+  async rollback() {
+    return this.unlink(this.config.bootme.basePath, this.config.hookDir)
   }
   /**
    *

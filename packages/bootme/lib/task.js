@@ -32,6 +32,7 @@ class Task {
     this.onInit = []
     this.config = {}
     this.deps = []
+    this.run = false
 
     return this
   }
@@ -55,6 +56,12 @@ class Task {
    * @memberof Task
    */
   async init() {}
+  /**
+   *
+   *
+   * @memberof Task
+   */
+  async rollback() {}
   /**
    *
    *
@@ -196,18 +203,18 @@ class Task {
     }
   }
   /**
-   *
-   *
-   * @param {any} err
-   * @memberof Task
-   */
-  async rollback(err) {
+ *
+ *
+ * @param {any} state
+ * @memberof Task
+ */
+  async executeRollback(state) {
     debug(
       `Task <${this.constructor.name}:${this.name}> execute rollback routines`
     )
 
     for (let hook of this.onRollback) {
-      await hook.call(this, err)
+      await hook.call(this, state)
     }
   }
 }
