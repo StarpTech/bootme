@@ -11,6 +11,7 @@ module.exports = function(argv) {
   program
     .option('-c, --config <path>', 'Path to config')
     .option('-t, --template [name]', 'Name of your Template')
+    .option('-r, --restore', 'Restore a pipeline')
     .option('-r, --runner [name]', 'The runner', /^(json)$/i, 'json')
 
   program.option('-w, --wizard', 'Start interactive cli mode')
@@ -18,7 +19,11 @@ module.exports = function(argv) {
   program
     .option('-T, --task <name>', 'Execute a single Task')
     .option('-c, --config <path>', 'Path to config')
-    .option('-C, --quick <json>', 'Config as quick JSON syntax', parseAsQuickJson)
+    .option(
+      '-C, --quick <json>',
+      'Config as quick JSON syntax',
+      parseAsQuickJson
+    )
 
   return program.parse(argv)
 }

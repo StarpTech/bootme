@@ -132,7 +132,15 @@ class Pipeline {
       this.queue.add(async child => {
         try {
           let state = new State(child, task, this)
+          for (let hook of this.onTaskStartHooks) {
+            await hook.call(task, state)
+          }
+
           await this.initializeTask(task, state)
+
+          for (let hook of this.onTaskEndHooks) {
+            await hook.call(task, state)
+          }
         } catch (err) {
           error('Task error during restore %O', err)
         }
@@ -143,7 +151,9 @@ class Pipeline {
       await this.rollback()
     })
 
-    this.restored = false
+    this.queue.add(async child => {
+      this.restored = false
+    })
   }
   /**
    *
@@ -195,7 +205,7 @@ class Pipeline {
    */
   async executeTask(task, state) {
     for (let hook of this.onTaskStartHooks) {
-      await hook(state)
+      await hook.call(task, state)
     }
 
     await this.initializeTask(task, state)
@@ -211,7 +221,7 @@ class Pipeline {
     await task.executeHooks('onAfter', state)
 
     for (let hook of this.onTaskEndHooks) {
-      await hook(state)
+      await hook.call(task, state)
     }
   }
   /**

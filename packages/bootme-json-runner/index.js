@@ -39,9 +39,10 @@ class JSONRunner {
    *
    *
    * @param {any} config
+   * @param {any} [options={}]
    * @memberof JSONRunner
    */
-  run(config) {
+  run(config, options = {}) {
     config.forEach((task, i) => {
       let Task
       try {
@@ -69,7 +70,11 @@ class JSONRunner {
       this.registry.addTask(this.loadTask(task, name))
     })
 
-    this.pipeline.execute()
+    if (options.restore) {
+      this.pipeline.restore()
+    } else {
+      this.pipeline.execute()
+    }
   }
 }
 

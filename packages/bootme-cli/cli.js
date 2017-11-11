@@ -40,7 +40,7 @@ async function run(argv) {
       return
     }
 
-    runRunner(jsonConfig)
+    runRunner(jsonConfig, program.restore)
 
     return
   }
@@ -77,7 +77,7 @@ async function run(argv) {
     // Build pipeline with single item
     jsonConfig = [task]
 
-    runRunner(jsonConfig)
+    runRunner(jsonConfig, program.restore)
 
     return
   }
@@ -89,15 +89,19 @@ async function run(argv) {
       return
     }
 
-    runRunner(jsonConfig)
+    runRunner(jsonConfig, program.restore)
   }
 }
 
-function runRunner(config) {
+function runRunner(config, restore = false) {
   try {
-    jsonRunner.run(config)
+    jsonRunner.run(config, { restore })
   } catch (err) {
-    console.log(Chalk.bold.red(`Pipeline could not be excuted`))
+    if (restore) {
+      console.log(Chalk.bold.red(`Pipeline could not be restored`))
+    } else {
+      console.log(Chalk.bold.red(`Pipeline could not be excuted`))
+    }
     console.log(Chalk.bold.yellow(`"${err.message}"`))
   }
 }

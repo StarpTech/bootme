@@ -30,10 +30,13 @@ class TaskSpinner {
       if (state.task.info) {
         spinnerMsg += `: ${state.task.info}`
       }
-      this.spinners.set(state.task.name, new Ora({
-        text: spinnerMsg,
-        stream: process.stdout
-      }).start())
+      this.spinners.set(
+        state.task.name,
+        new Ora({
+          text: spinnerMsg,
+          stream: process.stdout
+        }).start()
+      )
     })
 
     this.pipeline.onRollback(task => {
@@ -51,7 +54,11 @@ class TaskSpinner {
           .fail(`${state.task.name}: Error: ${state.pipeline.error.message}`)
         this.spinners.get(state.task.name).stop()
       } else {
-        this.spinners.get(state.task.name).succeed()
+        if (state.pipeline.restored) {
+          this.spinners.get(state.task.name).warn()
+        } else {
+          this.spinners.get(state.task.name).succeed()
+        }
       }
     })
   }
