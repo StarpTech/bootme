@@ -124,12 +124,12 @@ class SampleTask extends Task {
   * <a href="#execute"><code>bootme.Pipeline#<b>execute()</b></code></a>
   * <a href="#getValue"><code>bootme.Pipeline#<b>getValue()</b></code></a>
   * <a href="#rollback"><code>bootme.Pipeline#<b>rollback()</b></code></a>
-  * <a href="#hasError"><code>bootme.Pipeline#<b>restore()</b></code></a>
+  * <a href="#restore"><code>bootme.Pipeline#<b>restore()</b></code></a>
   * <a href="#hasError"><code>bootme.Pipeline#<b>hasError()</b></code></a>
-  * <a href="#hasError"><code>bootme.Pipeline#<b>hasResult()</b></code></a>
-  * <a href="#hasError"><code>bootme.Pipeline#<b>onTaskStart()</b></code></a>
-  * <a href="#hasError"><code>bootme.Pipeline#<b>onTaskEnd()</b></code></a>
-  * <a href="#hasError"><code>bootme.Pipeline#<b>onRollback()</b></code></a>
+  * <a href="#hasResult"><code>bootme.Pipeline#<b>hasResult()</b></code></a>
+  * <a href="#onTaskStart"><code>bootme.Pipeline#<b>onTaskStart()</b></code></a>
+  * <a href="#onTaskEnd"><code>bootme.Pipeline#<b>onTaskEnd()</b></code></a>
+  * <a href="#onRollback"><code>bootme.Pipeline#<b>onRollback()</b></code></a>
 
   * <a href="#State"><code>bootme.<b>State()</b></code></a>
   * <a href="#addJob"><code>bootme.State#<b>addJob()</b></code></a>
