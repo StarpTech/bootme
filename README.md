@@ -171,7 +171,7 @@ class SampleTask extends Task {
 BootMe is no replacement for Gulp, we use Gulp e.g in `bootme-template` to manipulate files and replace them with the orginal content.
 
 ### What's the difference between BootMe and Grunt ?
-[Grunt](https://gruntjs.com) is more similiar to BootMe as Gulp because in Grunt you have a sequential execution order of you tasks. Grunt don't rely on streams you can do everything inside a task but Grunt don't respect transactionality, a task can fail or another task can succeed. Therefore grunt don't provide an easy way to handle errors or hooks into specific lifecycle events. Another big difference in related to the technology is that BootMe is written in ES7. You can have fun!
+[Grunt](https://gruntjs.com) is more similiar to BootMe as Gulp because in Grunt you have a sequential execution order of you tasks. Grunt don't rely on streams you can do everything inside a task but Grunt don't respect transactionality, a task can fail or another task can succeed. Therefore grunt don't provide an easy way to handle errors or hooks into specific lifecycle events. Another big difference related to the technology is that BootMe is written in ES7. You can have fun!
 
 ### Can I define my pipeline in a JSON file?
 
