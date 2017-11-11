@@ -1,7 +1,6 @@
 #! /usr/bin/env node
 
 const Chalk = require('chalk')
-const Bootme = require('bootme')
 const Fs = require('fs')
 const Path = require('path')
 const TaskSpinner = require('bootme-task-spinner')
@@ -13,11 +12,6 @@ const wizard = require('./wizard')
 
 UpdateNotifier({ pkg }).notify()
 
-const registry = new Bootme.Registry()
-const pipeline = new Bootme.Pipeline(registry)
-const jsonRunner = new JsonRunner(pipeline)
-new TaskSpinner(pipeline).attach()
-
 /**
  *
  *
@@ -25,6 +19,16 @@ new TaskSpinner(pipeline).attach()
  */
 async function run(argv) {
   const program = parseArgs(argv)
+
+  if (program.debug) {
+    process.env.DEBUG = '*'
+  }
+
+  const Bootme = require('bootme')
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+  const jsonRunner = new JsonRunner(pipeline)
+  new TaskSpinner(pipeline).attach()
 
   let jsonConfig
 
@@ -91,18 +95,18 @@ async function run(argv) {
 
     runRunner(jsonConfig, program.restore)
   }
-}
 
-function runRunner(config, restore = false) {
-  try {
-    jsonRunner.run(config, { restore })
-  } catch (err) {
-    if (restore) {
-      console.log(Chalk.bold.red(`Pipeline could not be restored`))
-    } else {
-      console.log(Chalk.bold.red(`Pipeline could not be excuted`))
+  function runRunner(config, restore = false) {
+    try {
+      jsonRunner.run(config, { restore })
+    } catch (err) {
+      if (restore) {
+        console.log(Chalk.bold.red(`Pipeline could not be restored`))
+      } else {
+        console.log(Chalk.bold.red(`Pipeline could not be excuted`))
+      }
+      console.log(Chalk.bold.yellow(`"${err.message}"`))
     }
-    console.log(Chalk.bold.yellow(`"${err.message}"`))
   }
 }
 

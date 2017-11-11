@@ -12,6 +12,7 @@ module.exports = function(argv) {
     .option('-c, --config <path>', 'path to config')
     .option('-t, --template [name]', 'name of your Template')
     .option('-r, --restore', 'restore a pipeline')
+    .option('-d, --debug', 'enable debug mode')
     .option('-r, --runner [name]', 'the runner', /^(json)$/i, 'json')
 
   program.option('-w, --wizard', 'start interactive cli mode')

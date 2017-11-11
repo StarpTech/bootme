@@ -18,6 +18,7 @@ Tool to run Bootme Tasks from the console
     -c, --config <path>    path to config
     -t, --template [name]  name of your Template
     -r, --restore          restore a pipeline
+    -d, --debug            enable debug mode
     -r, --runner [name]    the runner
     -w, --wizard           start interactive cli mode
     -T, --task <name>      execute a single Task
