@@ -214,7 +214,12 @@ class Task {
     )
 
     for (let hook of this.onRollback) {
-      await hook.call(this, state)
+      // allow passing tasks as hook handlers
+      if (hook instanceof Task) {
+        await state.addTask(hook, state)
+      } else {
+        await hook.call(this, state)
+      }
     }
   }
 }

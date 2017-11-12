@@ -11,7 +11,7 @@ module.exports = [
       onInit: async state => {},
       onBefore: async state => {},
       onAfter: async state => {},
-      onRollback: async err => {}
+      onRollback: async state => {}
     }
   },
   {

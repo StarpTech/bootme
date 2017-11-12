@@ -4,6 +4,7 @@ const q = require('workq')
 const debug = require('debug')('bootme:pipeline')
 const error = require('debug')('bootme:pipeline:error')
 const State = require('./state')
+const Task = require('./task')
 const Registry = require('./registry')
 
 /**
@@ -99,7 +100,11 @@ class Pipeline {
       try {
         let state = new State(this.queue, task, this)
         for (let hook of this.onRollbackHooks) {
-          await hook(state)
+          if (hook instanceof Task) {
+            await state.addTask(hook, state)
+          } else {
+            await hook.call(task, state)
+          }
         }
         await task.executeRollback(state)
       } catch (err) {

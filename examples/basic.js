@@ -19,8 +19,8 @@ task.addHook('onBefore', task2)
 task.addHook('onAfter', async function(state) {
   state.addTask(task3)
 })
-task.addHook('onRollback', async function(err) {
-  console.log(err)
+task.addHook('onRollback', async function(state) {
+  console.log('onRollback')
 })
 
 task.action(async function(state) {
@@ -56,5 +56,5 @@ registry.addHook('foo', 'onAfter', async function() {
 // Global
 pipeline.onTaskStart(async (state) => console.log('Task Start', state.task.name))
 pipeline.onTaskEnd(async (state) => console.log('Task End', state.task.name))
-pipeline.onRollback(async (task) => console.log('Task Rollback', task.name))
+pipeline.onRollback(async (state) => console.log('Task Rollback', state.task.name))
 pipeline.execute()

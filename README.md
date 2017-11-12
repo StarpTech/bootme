@@ -42,12 +42,12 @@ registry.shareConfig({
 registry.addTask(
   new Task('sample')
   .setConfig({})
-  .addHook('onRollback', async (err) => ...)
+  .addHook('onRollback', async (state) => ...)
   .addHook('onBefore', async (state) => ...)
   .addHook('onAfter', async (state) => ...)
 )
 
-registry.addHook('sample', 'onRollback', async (err) => ...)
+registry.addHook('sample', 'onRollback', async (state) => ...)
 registry.addHook('sample', 'onAfter', new Task('bar'))
 
 pipeline.execute()

@@ -55,11 +55,6 @@ class State {
   async addTask(task) {
     const state = this
 
-    if (this.pipeline.rollbacked) {
-      error('Abort Pipeline error %O', this.error)
-      return
-    }
-
     this.pipeline.registry.addTask(task)
 
     await this.pipeline.executeTask(task, state)
