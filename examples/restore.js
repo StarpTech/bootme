@@ -7,7 +7,7 @@
 const Bootme = require('./../packages/bootme')
 
 const task1 = new Bootme.Task('foo1')
-  .action(async function() {
+  .setAction(async function() {
     console.log(this.name, ' executed')
   })
   .addHook('onInit', function() {
@@ -18,7 +18,7 @@ const task1 = new Bootme.Task('foo1')
   })
 
 const task2 = new Bootme.Task('foo2')
-  .action(async function() {
+  .setAction(async function() {
     console.log(this.name, ' executed')
   })
   .addHook('onInit', function() {

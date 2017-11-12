@@ -102,17 +102,13 @@ class SampleTask extends Task {
 ## API
 
   * <a href="#task"><code>bootme.<b>Task()</b></code></a>
-  * <a href="#init"><code>bootme.Task#<b>init()</b></code></a>
-  * <a href="#setConfig"><code>bootme.Task#<b>setConfig()</b></code></a>
-  * <a href="#validateResult"><code>bootme.Task#<b>validateResult()</b></code></a>
-  * <a href="#validateConfig"><code>bootme.Task#<b>validateConfig()</b></code></a>
+  * <a href="#config"><code>bootme.Task#<b>config</b></code></a>
   * <a href="#setName"><code>bootme.Task#<b>setName()</b></code></a>
   * <a href="#addHook"><code>bootme.Task#<b>addHook()</b></code></a>
-  * <a href="#action"><code>bootme.Task#<b>action()</b></code></a>
-  * <a href="#config"><code>bootme.Task#<b>config</b></code></a>
-  * <a href="#executeHooks"><code>bootme.Task#<b>executeHooks()</b></code></a>
-  * <a href="#start"><code>bootme.Task#<b>start()</b></code></a>
-  * <a href="#rollback"><code>bootme.Task#<b>rollback()</b></code></a>
+  * <a href="#setAction"><code>bootme.Task#<b>setAction()</b></code></a>
+  * <a href="#setConfig"><code>bootme.Task#<b>setConfig()</b></code></a>
+  * <a href="#setInit"><code>bootme.Task#<b>setInit()</b></code></a>
+  * <a href="#setRollback"><code>bootme.Task#<b>setRollback()</b></code></a>
 
   * <a href="#registry"><code>bootme.<b>Registry()</b></code></a>
   * <a href="#addTask"><code>bootme.Registry#<b>addTask()</b></code></a>

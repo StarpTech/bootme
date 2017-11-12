@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\""
+    "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\" --coverage",
+    "coverage": "npm run test -- --cov --coverage-report=html"
   },
   "keywords": [
     "bootme",
@@ -25,6 +26,7 @@
     "workq": "^1.1.1"
   },
   "devDependencies": {
+    "delay": "^2.0.0",
     "tap": "^10.7.2"
   }
 }

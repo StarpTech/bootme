@@ -55,6 +55,12 @@ class Task {
    *
    * @memberof Task
    */
+  async action() {}
+  /**
+   *
+   *
+   * @memberof Task
+   */
   async init() {}
   /**
    *
@@ -117,7 +123,7 @@ class Task {
    * @param {any} fn
    * @memberof Task
    */
-  action(fn) {
+  setAction(fn) {
     if (typeof fn !== 'function') {
       throw new TypeError(
         `Task <${this.constructor.name}:${this
@@ -126,6 +132,42 @@ class Task {
     }
 
     this.action = fn
+
+    return this
+  }
+  /**
+   *
+   *
+   * @param {any} fn
+   * @memberof Task
+   */
+  setInit(fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError(
+        `Task <${this.constructor.name}:${this
+          .name}> Init handler must be a function`
+      )
+    }
+
+    this.init = fn
+
+    return this
+  }
+  /**
+   *
+   *
+   * @param {any} fn
+   * @memberof Task
+   */
+  setRollback(fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError(
+        `Task <${this.constructor.name}:${this
+          .name}> Rollback handler must be a function`
+      )
+    }
+
+    this.rollback = fn
 
     return this
   }
@@ -154,25 +196,6 @@ class Task {
     this[name].push(fn)
 
     return this
-  }
-  /**
-   *
-   *
-   * @param {any} queue
-   * @returns
-   * @memberof Task
-   */
-  async start(queue) {
-    if (typeof this.action !== 'function') {
-      throw new TypeError(
-        `Task <${this.constructor.name}:${this
-          .name}> Action must be a function. Actual ${typeof this.action}`
-      )
-    }
-
-    const result = await this.action(queue)
-
-    return result
   }
   /**
    *

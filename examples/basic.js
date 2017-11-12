@@ -7,10 +7,10 @@
 const Bootme = require('./../packages/bootme')
 
 const task = new Bootme.Task('foo')
-const task2 = new Bootme.Task('foo2').action(async function() {
+const task2 = new Bootme.Task('foo2').setAction(async function() {
   console.log(this.name, ' executed')
 })
-const task3 = new Bootme.Task('foo3').action(async function() {
+const task3 = new Bootme.Task('foo3').setAction(async function() {
   console.log(this.name, ' executed')
   console.log(this.config, 'Bootme global')
 })
@@ -23,7 +23,7 @@ task.addHook('onRollback', async function(state) {
   console.log('onRollback')
 })
 
-task.action(async function(state) {
+task.setAction(async function(state) {
   console.log('Before Job in', this.name)
   state.addJob(async function(state) {
     console.log('Before Job 2 in', state.task.name)

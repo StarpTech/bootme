@@ -47,7 +47,7 @@ task.setConfig(async () => {
   return result
 })
 
-task.action(async function(state) {
+task.setAction(async function(state) {
   console.log('Do something!')
   console.log('Config', this.config)
 })
