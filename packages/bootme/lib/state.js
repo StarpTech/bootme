@@ -1,7 +1,7 @@
 'use strict'
 
-const debug = require('debug')('job')
-const error = require('debug')('job:error')
+const debug = require('debug')('bootme:job')
+const error = require('debug')('bootme:job:error')
 const Task = require('./task')
 
 /**

@@ -1,8 +1,8 @@
 'use strict'
 
 const q = require('workq')
-const debug = require('debug')('pipeline')
-const error = require('debug')('pipeline:error')
+const debug = require('debug')('bootme:pipeline')
+const error = require('debug')('bootme:pipeline:error')
 const State = require('./state')
 const Registry = require('./registry')
 

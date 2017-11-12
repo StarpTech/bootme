@@ -21,7 +21,7 @@ async function run(argv) {
   const program = parseArgs(argv)
 
   if (program.debug) {
-    process.env.DEBUG = '*'
+    process.env.DEBUG = 'bootme:*'
   }
 
   const Bootme = require('bootme')

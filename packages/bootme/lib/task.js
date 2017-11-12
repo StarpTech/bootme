@@ -1,7 +1,7 @@
 'use strict'
 
-const debug = require('debug')('task')
-const error = require('debug')('task:error')
+const debug = require('debug')('bootme:task')
+const error = require('debug')('bootme:task:error')
 
 const supportedHooks = ['onBefore', 'onAfter', 'onRollback', 'onInit']
 
