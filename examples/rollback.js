@@ -7,14 +7,6 @@
 const Bootme = require('./../packages/bootme')
 
 const task = new Bootme.Task('foo')
-const task2 = new Bootme.Task('foo2').setAction(async function() {
-  console.log(this.name, ' executed')
-})
-const task3 = new Bootme.Task('foo3').setAction(async function() {
-  console.log(this.name, ' executed')
-})
-
-task.addHook('onRollback', task2)
 
 task.setAction(async function(state) {
   console.log('Job 1 in', state.task.name)
@@ -33,6 +25,8 @@ const pipeline = new Bootme.Pipeline(registry)
 
 registry.addTask(task)
 
-pipeline.onRollback(task3)
+pipeline.onRollback(async function() {
+  console.log('Rollback')
+})
 
 pipeline.execute()
