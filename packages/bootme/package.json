@@ -20,6 +20,9 @@
   "bugs": {
     "url": "https://github.com/StarpTech/bootme/issues"
   },
+  "engines": {
+    "node": ">=8"
+  },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
     "debug": "^3.1.0",
