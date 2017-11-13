@@ -222,7 +222,7 @@ The whole pipeline is rollbacked and all `onRollback` hooks from all tasks are c
 
 ### restore() : __Promise__
 
-The whole pipeline is restored and all `onRollback` hooks from all tasks are called. The difference between a `rollback` and `restore` is that a restore is intentional and therefore no `onBefore`, `onAfter` hooks are called ony `onInit`.
+The whole pipeline is restored and all `onRollback` hooks from all tasks are called. The difference between a `rollback` and `restore` is that a restore is intentional and therefore no `onBefore`, `onAfter` hooks are called only `onInit`.
 
 ### hasError(__String:__ taskName) : __Boolean__
 
