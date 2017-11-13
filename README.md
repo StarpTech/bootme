@@ -185,7 +185,7 @@ Merge the value to the task config
 
 ### shareConfig(__Object:__ value)
 
-Configure a shared config from which all tasks config inherit
+Configure a shared config from which all tasks inherit
 
 ### addHook(__String:__ taskName, __string:__ ['onInit', 'onBefore', 'onAfter'], __async function:__ handler) : __Task__
 
@@ -258,7 +258,7 @@ Execute a task. The task is excuted in creation order. The parent task is waitin
 
 ### getValue(__String:__ taskName)
 
-This is shortcut for `Pipeline.getValue`
+This is shortcut for `getValue(String: taskName)`
 
 ## Tools
 
