@@ -97,7 +97,13 @@ class SampleTask extends Task {
 
 ## Examples
 
-[Here](examples)
+* [Simple](/examples/simple.js)
+* [Config](/examples/config.js)
+* [Restore](/examples/restore.js)
+* [Rollback](/examples/rollback.js)
+* [Hooks](/examples/hooks.js)
+* [Task template](/examples/task-template.js)
+* [Advanced](/examples/template.js)
 
 ## API
 
