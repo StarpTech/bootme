@@ -90,9 +90,9 @@ class SampleTask extends Task {
 
 ### Restore Lifecycle
 
-- Fire `onTaskStart` hooks
+- Fire global `onTaskStart` hooks
 - Fire `onInit` hooks (`init` is also a hook)
-- Fire `onTaskEnd` hooks
+- Fire global `onTaskEnd` hooks
 - Execute [Rollback lifecycle](#rollback_lifecycle)
 
 ## Examples
@@ -134,6 +134,131 @@ class SampleTask extends Task {
   * <a href="#StateGetValue"><code>bootme.State#<b>getValue()</b></code></a>
 
 -------------------------------------------------------
+
+## Task
+
+Represent a task object
+
+### Config : __Object__
+
+Return the current task config
+
+### setName(__string:__ name) : __Task__
+
+Set the task name
+
+### addHook(__string:__ ['onInit', 'onBefore', 'onAfter'], __async function:__ handler) : __Task__
+
+Create a new hook
+
+### setAction(__async function:__ handler) : __Task__
+
+Set the main task action
+
+### setConfig(__Object:__ config) : __Task__
+
+Set the task config
+
+### setInit(__async function:__ handler) : __Task__
+
+Set the initialization function. It's one-time shortcut for `addHook('onInit', fn)`
+
+### setRollback(__async function:__ handler) : __Task__
+
+Set the initialization function. It's one-time shortcut for `addHook('onRollback', fn)`
+
+## Registry
+
+Represent the centric task registry
+
+### addTask(__Task:__ task): void
+
+Add a new task to the registry.
+
+### setRef(__String:__ taskName, __String:__ key, __Any:__ value): void
+
+Set the `refs` property of the task config to configure task dependencies
+
+### setConfig(__String:__ taskName, __Object:__ value)
+
+Merge the value to the task config
+
+### shareConfig(__Object:__ value)
+
+Configure a shared config from which all tasks config inherit
+
+### addHook(__String:__ taskName, __string:__ ['onInit', 'onBefore', 'onAfter'], __async function:__ handler) : __Task__
+
+Add a hook to the task
+
+## Pipeline
+
+Represent pipeline to execute all tasks
+
+### Config : __Object__
+
+Return the current task config
+
+### execute()
+
+Run the pipeline
+
+### getValue(__String:__ taskName)
+
+Try to get the value from the result of this task, otherwise the value is taken from the task config. That's the reason to provide always a default value in the task config.
+
+```json
+{
+  "a": 1,
+  "refs": {
+    "a": "previousTaskName"
+  }
+}
+```
+
+### rollback() : __Promise__
+
+The whole pipeline is rollbacked and all `onRollback` hooks from all tasks are called.
+
+### restore() : __Promise__
+
+The whole pipeline is restored and all `onRollback` hooks from all tasks are called. The difference between a `rollback` and `restore` is that a restore is intentional and therefore no `onBefore`, `onAfter` hooks are called ony `onInit`.
+
+### hasError(__String:__ taskName) : __Boolean__
+
+Check if a task has thrown an error
+
+### hasResult(__String:__ taskName) : __Boolean__
+
+Check if a task has respond with a truthy value
+
+### onTaskStart(__async function:__ handler)
+
+Add a global `onTaskStart` hook. This hook is executed before a task is executed.
+
+### onTaskEnd(__async function:__ handler)
+
+Add a global `onTaskEnd` hook. This hook is executed after a task was executed.
+
+### onRollback(__async function:__ handler)
+
+Add a global `onRollback` hook. This hook is executed after a task has thrown an error.
+
+## State
+
+State provide an api to add additional tasks and access to the current pipeline instance.
+
+### addJob(__async function:__ handler)
+
+Execute a job. A job is a single function and is excuted in creation order. The parent task is waiting before all sub-jobs are done.
+
+### addTask(__Task:__ handler)
+
+Execute a task. The task is excuted in creation order. The parent task is waiting before all sub-tasks are done.
+
+### getValue(__String:__ taskName)
+
+This is shortcut for `Pipeline.getValue`
 
 ## Tools
 
