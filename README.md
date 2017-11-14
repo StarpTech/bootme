@@ -172,10 +172,6 @@ Add a hook to the task
 
 Represent pipeline to execute all tasks
 
-### Config : __Object__
-
-Return the current task config
-
 ### execute()
 
 Run the pipeline
