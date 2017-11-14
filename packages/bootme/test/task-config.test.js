@@ -6,7 +6,7 @@ const test = t.test
 const Bootme = require('./..')
 
 test('Task config as object', async t => {
-  t.plan(2)
+  t.plan(3)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -28,11 +28,13 @@ test('Task config as object', async t => {
 
   await delay(20)
 
+  t.ok(!pipeline.error)
+
   t.pass()
 })
 
 test('Task config as function', async t => {
-  t.plan(2)
+  t.plan(3)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -53,6 +55,8 @@ test('Task config as function', async t => {
   await pipeline.execute()
 
   await delay(20)
+
+  t.ok(!pipeline.error)
 
   t.pass()
 })

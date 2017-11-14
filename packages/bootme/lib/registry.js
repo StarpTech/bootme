@@ -73,6 +73,7 @@ class Registry {
     if (!(task instanceof Task)) {
       throw new TypeError('The Task must be a Task instance')
     }
+
     const t = this.tasks.find(t => t.name === task.name)
 
     if (t) {

@@ -32,7 +32,7 @@ class Task {
     this.onInit = []
     this.config = {}
     this.deps = []
-    this.run = false
+    this.initialized = false
 
     return this
   }
@@ -142,10 +142,10 @@ class Task {
    * @memberof Task
    */
   setInit(fn) {
-    if (typeof fn !== 'function') {
+    if (typeof fn !== 'function' && !(fn instanceof Task)) {
       throw new TypeError(
         `Task <${this.constructor.name}:${this
-          .name}> Init handler must be a function`
+          .name}> Init handler must be a function or Task instance`
       )
     }
 
@@ -160,10 +160,10 @@ class Task {
    * @memberof Task
    */
   setRollback(fn) {
-    if (typeof fn !== 'function') {
+    if (typeof fn !== 'function' && !(fn instanceof Task)) {
       throw new TypeError(
         `Task <${this.constructor.name}:${this
-          .name}> Rollback handler must be a function`
+          .name}> Rollback handler must be a function or Task instance`
       )
     }
 
@@ -182,7 +182,7 @@ class Task {
     if (typeof fn !== 'function' && !(fn instanceof Task)) {
       throw new TypeError(
         `Task <${this.constructor.name}:${this
-          .name}> Hook handler of must be a function or Task instance`
+          .name}> Hook handler must be a function or Task instance`
       )
     }
 

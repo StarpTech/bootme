@@ -28,9 +28,13 @@ test('addTask should only support tasks objects', async t => {
 
   const task = new Bootme.Task('foo')
 
-  t.throws(function() {
-    registry.addTask('string')
-  }, Error, 'The Task must be a Task instance')
+  t.throws(
+    function() {
+      registry.addTask('string')
+    },
+    Error,
+    'The Task must be a Task instance'
+  )
 
   t.strictEqual(registry.tasks.length, 0)
 
@@ -38,7 +42,7 @@ test('addTask should only support tasks objects', async t => {
 })
 
 test('addHook', async t => {
-  t.plan(5)
+  t.plan(6)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -46,15 +50,102 @@ test('addHook', async t => {
   const task = new Bootme.Task('foo')
 
   registry.addTask(task)
-  registry.addHook('foo', 'onInit', async (state) => t.type(state, 'State'))
-  registry.addHook('foo', 'onBefore', async (state) => t.type(state, 'State'))
-  registry.addHook('foo', 'onAfter', async (state) => t.type(state, 'State'))
+  registry.addHook('foo', 'onInit', async state => t.type(state, Bootme.State))
+  registry.addHook('foo', 'onBefore', async state =>
+    t.type(state, Bootme.State)
+  )
+  registry.addHook('foo', 'onAfter', async state => t.type(state, Bootme.State))
 
   t.strictEqual(registry.tasks.length, 1)
 
   pipeline.execute()
 
   await delay(20)
+
+  t.ok(!pipeline.error)
+
+  t.pass()
+})
+
+test('shareConfig', async t => {
+  t.plan(4)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  const task = new Bootme.Task('foo')
+  task.setAction(async function() {
+    t.strictEqual(this.config.bootme.foo, 'bar')
+  })
+
+  registry.addTask(task)
+
+  registry.shareConfig({
+    foo: 'bar'
+  })
+
+  t.strictEqual(registry.tasks.length, 1)
+
+  pipeline.execute()
+
+  await delay(20)
+
+  t.ok(!pipeline.error)
+
+  t.pass()
+})
+
+test('setRef', async t => {
+  t.plan(4)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  const task = new Bootme.Task('foo')
+  task.setAction(async function() {
+    t.strictEqual(this.config.refs.a, 1)
+  })
+
+  registry.addTask(task)
+
+  registry.setRef('foo', 'a', 1)
+
+  t.strictEqual(registry.tasks.length, 1)
+
+  pipeline.execute()
+
+  await delay(20)
+
+  t.ok(!pipeline.error)
+
+  t.pass()
+})
+
+test('setRef manipulate existing refs', async t => {
+  t.plan(4)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  const task = new Bootme.Task('foo')
+  task.setConfig({
+    refs: {}
+  })
+  task.setAction(async function() {
+    t.strictEqual(this.config.refs.a, 1)
+  })
+
+  registry.addTask(task)
+
+  registry.setRef('foo', 'a', 1)
+
+  t.strictEqual(registry.tasks.length, 1)
+
+  pipeline.execute()
+
+  await delay(20)
+
+  t.ok(!pipeline.error)
 
   t.pass()
 })

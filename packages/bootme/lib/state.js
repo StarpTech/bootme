@@ -55,9 +55,20 @@ class State {
   async addTask(task) {
     const state = this
 
-    this.pipeline.registry.addTask(task)
+    try {
+      this.pipeline.registry.addTask(task)
+      await this.pipeline.executeTask(task, state)
+    } catch (err) {
+      debug(
+        'Task <%s:%s> execute rollback routines due to (Task) error %O',
+        this.task.constructor.name,
+        this.task.name,
+        err
+      )
 
-    await this.pipeline.executeTask(task, state)
+      this.pipeline.error = err
+      await this.pipeline.rollback()
+    }
   }
   /**
    *
@@ -71,34 +82,18 @@ class State {
     }
 
     this.queue.add(async child => {
-      if (this.pipeline.rollbacked) {
-        debug(
-          'Task <%s:%s> cancel next Job due to pipeline cancellation',
-          this.task.constructor.name,
-          this.task.name
-        )
-        return
-      }
-
       try {
         await fn(new State(child, this.task, this.pipeline))
       } catch (err) {
         debug(
-          'Task <%s:%s> execute rollback routines due to (Job) error',
+          'Task <%s:%s> execute rollback routines due to (Job) error %O',
           this.task.constructor.name,
-          this.task.name
+          this.task.name,
+          err
         )
 
-        // avoid error bubbling otherwise we rollback a second time
-        try {
-          await this.pipeline.rollback(err)
-        } catch (err) {
-          error(
-            'Task <%s:%s> error during (Job) rollback routine',
-            this.task.constructor.name,
-            this.task.name
-          )
-        }
+        this.pipeline.error = err
+        await this.pipeline.rollback()
       }
     })
   }

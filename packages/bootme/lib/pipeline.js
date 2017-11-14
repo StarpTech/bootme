@@ -27,8 +27,8 @@ class Pipeline {
     this.queue = q()
     this.results = new Map()
     this.errored = false
-    this.rollbacked = false
-    this.restored = false
+    this.rollbacking = false
+    this.restoring = false
     this.error = null
 
     this.onRollbackHooks = []
@@ -51,7 +51,7 @@ class Pipeline {
    * @param {any} name
    * @memberof Pipeline
    */
-  async get(name) {
+  get(name) {
     if (Array.isArray(name)) {
       let results = new Map()
       for (let task of name) {
@@ -88,14 +88,14 @@ class Pipeline {
    * @memberof Pipeline
    */
   async rollback() {
-    if (this.rollbacked) {
+    if (this.rollbacking) {
       debug(`Rollback already in progress`)
       return
     }
 
-    this.rollbacked = true
+    this.rollbacking = true
 
-    for (let task of this.registry.tasks.filter(x => x.run).reverse()) {
+    for (let task of this.registry.tasks.filter(x => x.initialized).reverse()) {
       // errors are swallowed so that each task can try to recover
       try {
         let state = new State(this.queue, task, this)
@@ -117,7 +117,7 @@ class Pipeline {
       }
     }
 
-    this.rollbacked = false
+    this.rollbacking = false
   }
   /**
    *
@@ -125,12 +125,12 @@ class Pipeline {
    * @memberof Pipeline
    */
   async restore() {
-    if (this.restored) {
+    if (this.restoring) {
       debug(`Restore already in progress`)
       return
     }
 
-    this.restored = true
+    this.restoring = true
 
     for (let task of this.registry.tasks) {
       try {
@@ -151,7 +151,7 @@ class Pipeline {
 
     await this.rollback()
 
-    this.restored = false
+    this.restoring = false
   }
   /**
    *
@@ -191,9 +191,11 @@ class Pipeline {
     task.config.bootme = this.registry.sharedConfig
     await this.loadConfig(state)
 
-    task.addHook('onInit', async state => task.init(state))
-    task.addHook('onRollback', async state => task.rollback(state))
+    task.addHook('onInit', task.init)
+    task.addHook('onRollback', task.rollback)
 
+    // mark task as initialized so it can be filtered for rollback and restore
+    task.initialized = true
     await task.executeHooks('onInit', state)
   }
   /**
@@ -208,11 +210,9 @@ class Pipeline {
       await hook.call(task, state)
     }
 
-    await this.initializeTask(task, state)
     await task.executeHooks('onBefore', state)
 
-    // mark task as run so it can be filtered for rollback
-    task.run = true
+    await this.initializeTask(task, state)
 
     const result = await task.action(state)
     if (result && typeof task.validateResult === 'function') {
@@ -259,7 +259,7 @@ class Pipeline {
    */
   async execute() {
     for (let task of this.registry.tasks) {
-      if (this.rollbacked) {
+      if (this.rollbacking) {
         error('Abort Pipeline error %O', this.error)
         break
       }
