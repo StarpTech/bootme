@@ -132,7 +132,7 @@ Create a new hook
 
 Set the main task action
 
-### setConfig(__Object:__ config) : __Task__
+### setConfig(__[Object, async function]:__ config) : __Task__
 
 Set the task config
 
