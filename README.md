@@ -79,36 +79,36 @@ class SampleTask extends Task {
 ## API
 
   * <a href="#task"><code>bootme.<b>Task()</b></code></a>
-  * <a href="#config"><code>bootme.Task#<b>config</b></code></a>
-  * <a href="#setName"><code>bootme.Task#<b>setName()</b></code></a>
-  * <a href="#addHook"><code>bootme.Task#<b>addHook()</b></code></a>
-  * <a href="#setAction"><code>bootme.Task#<b>setAction()</b></code></a>
-  * <a href="#setConfig"><code>bootme.Task#<b>setConfig()</b></code></a>
-  * <a href="#setInit"><code>bootme.Task#<b>setInit()</b></code></a>
-  * <a href="#setRollback"><code>bootme.Task#<b>setRollback()</b></code></a>
+  * <a href="#config--object"><code>bootme.Task#<b>config</b></code></a>
+  * <a href="#setnamestring-name--task"><code>bootme.Task#<b>setName()</b></code></a>
+  * <a href="#addhookstring-oninit-onbefore-onafter-async-function-handler--task"><code>bootme.Task#<b>addHook()</b></code></a>
+  * <a href="#setactionasync-function-handler--task"><code>bootme.Task#<b>setAction()</b></code></a>
+  * <a href="#setconfigobject-async-function-config--task"><code>bootme.Task#<b>setConfig()</b></code></a>
+  * <a href="#setinitasync-function-handler--task"><code>bootme.Task#<b>setInit()</b></code></a>
+  * <a href="#setrollbackasync-function-handler--task"><code>bootme.Task#<b>setRollback()</b></code></a>
 
   * <a href="#registry"><code>bootme.<b>Registry()</b></code></a>
-  * <a href="#addTask"><code>bootme.Registry#<b>addTask()</b></code></a>
-  * <a href="#setRef"><code>bootme.Registry#<b>setRef()</b></code></a>
-  * <a href="#registrySetConfig"><code>bootme.Registry#<b>setConfig()</b></code></a>
-  * <a href="#shareConfig"><code>bootme.Registry#<b>shareConfig()</b></code></a>
-  * <a href="#addHookRegistry"><code>bootme.Registry#<b>addHook()</b></code></a>
+  * <a href="#addtasktask-task-void"><code>bootme.Registry#<b>addTask()</b></code></a>
+  * <a href="#setrefstring-taskname-string-key-any-value"><code>bootme.Registry#<b>setRef()</b></code></a>
+  * <a href="#setconfigstring-taskname-object-value"><code>bootme.Registry#<b>setConfig()</b></code></a>
+  * <a href="#shareconfigobject-value"><code>bootme.Registry#<b>shareConfig()</b></code></a>
+  * <a href="#addhookstring-taskname-string-oninit-onbefore-onafter-async-function-handler--task"><code>bootme.Registry#<b>addHook()</b></code></a>
 
   * <a href="#Pipeline"><code>bootme.<b>Pipeline()</b></code></a>
   * <a href="#execute"><code>bootme.Pipeline#<b>execute()</b></code></a>
-  * <a href="#getValue"><code>bootme.Pipeline#<b>getValue()</b></code></a>
+  * <a href="#getvaluestring-taskname"><code>bootme.Pipeline#<b>getValue()</b></code></a>
   * <a href="#rollback"><code>bootme.Pipeline#<b>rollback()</b></code></a>
   * <a href="#restore"><code>bootme.Pipeline#<b>restore()</b></code></a>
-  * <a href="#hasError"><code>bootme.Pipeline#<b>hasError()</b></code></a>
-  * <a href="#hasResult"><code>bootme.Pipeline#<b>hasResult()</b></code></a>
-  * <a href="#onTaskStart"><code>bootme.Pipeline#<b>onTaskStart()</b></code></a>
-  * <a href="#onTaskEnd"><code>bootme.Pipeline#<b>onTaskEnd()</b></code></a>
-  * <a href="#onRollback"><code>bootme.Pipeline#<b>onRollback()</b></code></a>
+  * <a href="#haserrorstring-taskname--boolean"><code>bootme.Pipeline#<b>hasError()</b></code></a>
+  * <a href="#hasresultstring-taskname--boolean"><code>bootme.Pipeline#<b>hasResult()</b></code></a>
+  * <a href="#ontaskstartasync-function-handler"><code>bootme.Pipeline#<b>onTaskStart()</b></code></a>
+  * <a href="#ontaskendasync-function-handler"><code>bootme.Pipeline#<b>onTaskEnd()</b></code></a>
+  * <a href="#onrollbackasync-function-handler"><code>bootme.Pipeline#<b>onRollback()</b></code></a>
 
   * <a href="#State"><code>bootme.<b>State()</b></code></a>
-  * <a href="#addJob"><code>bootme.State#<b>addJob()</b></code></a>
-  * <a href="#addTask"><code>bootme.State#<b>addTask()</b></code></a>
-  * <a href="#StateGetValue"><code>bootme.State#<b>getValue()</b></code></a>
+  * <a href="#addjobasync-function-handler"><code>bootme.State#<b>addJob()</b></code></a>
+  * <a href="#addtasktask-handler"><code>bootme.State#<b>addTask()</b></code></a>
+  * <a href="#getvaluestring-taskname-1"><code>bootme.State#<b>getValue()</b></code></a>
 
 -------------------------------------------------------
 
@@ -152,7 +152,7 @@ Represent the centric task registry
 
 Add a new task to the registry.
 
-### setRef(__String:__ taskName, __String:__ key, __Any:__ value): void
+### setRef(__String:__ taskName, __String:__ key, __Any:__ value)
 
 Set the `refs` property of the task config to configure task dependencies
 
