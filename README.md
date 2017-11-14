@@ -293,5 +293,5 @@ lerna run test
 ### Debugging
 We use the excellent [Debug](https://github.com/visionmedia/debug) package.
 ```
-$env:DEBUG = "*,-not_this" // Windows
+$env:DEBUG = "bootme:*" // Windows
 ```
