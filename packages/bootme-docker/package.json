@@ -1,6 +1,6 @@
 {
   "name": "bootme-docker",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Task to administrate a docker environment",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme": "^0.0.28",
+    "bootme": "^0.0.29",
     "dockerode": "^2.5.3",
     "joi": "^13.0.1"
   },
