@@ -16,7 +16,7 @@ test('Execute pipeline', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
   await delay(delayMs)
 
