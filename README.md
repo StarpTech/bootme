@@ -39,15 +39,23 @@ registry.shareConfig({
 registry.addTask(
   new Task('sample')
   .setConfig({})
-  .addHook('onRollback', async (state) => ...)
-  .addHook('onBefore', async (state) => ...)
-  .addHook('onAfter', async (state) => ...)
+  .setInit(async state => ...)
+  .setRollback(async state => ...)
+  .setAction(async state => {
+    state.addTask(...)
+    state.addJob(...)
+    return true
+  })
+  .addHook('onRollback', async state => ...)
+  .addHook('onBefore', async state => ...)
+  .addHook('onAfter', async state => ...)
 )
 
 registry.addHook('sample', 'onRollback', async (state) => ...)
 registry.addHook('sample', 'onAfter', new Task('bar'))
 
 pipeline.execute()
+pipeline.restore()
 ```
 
 ### Task Template
