@@ -4,7 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 20
+const delayMs = 50
 
 test('Execute pipeline', async t => {
   t.plan(2)

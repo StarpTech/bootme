@@ -4,7 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 20
+const delayMs = 50
 
 test('Task config as object', async t => {
   t.plan(3)
