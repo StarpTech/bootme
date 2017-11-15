@@ -149,6 +149,7 @@ class Pipeline {
       }
     }
 
+    debug(`Starting rollback after restore`)
     await this.rollback()
 
     this.restoring = false
