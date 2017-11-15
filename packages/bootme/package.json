@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\" --coverage",
+    "test": "tap -j4 \"test/*.test.js\" \"test/*/*.test.js\"",
+    "coveralls": "npm run test -- --cov",
     "coverage": "npm run test -- --cov --coverage-report=html"
   },
   "keywords": [
@@ -29,6 +30,7 @@
     "workq": "^1.1.1"
   },
   "devDependencies": {
+    "coveralls": "^3.0.0",
     "delay": "^2.0.0",
     "tap": "^10.7.2"
   }
