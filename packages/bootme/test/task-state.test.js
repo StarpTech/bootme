@@ -224,3 +224,36 @@ test('getValue fallback to config', async t => {
 
   t.pass()
 })
+
+test('getValue throw error when config could not be found', async t => {
+  t.plan(2)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  const task2 = new Bootme.Task('foo2')
+  task2.setConfig({
+    a: undefined,
+    refs: {
+      a: 'foo1'
+    }
+  })
+
+  task2.setAction(async function(state) {
+    t.throws(
+      function() {
+        state.getValue(this.config.refs.a)
+      },
+      Error,
+      'Config property "a" in Task <Task:foo2> not available. Provide a default value or check the previous tasks'
+    )
+  })
+
+  registry.addTask(task2)
+
+  pipeline.execute()
+
+  await delay(delayMs)
+
+  t.pass()
+})

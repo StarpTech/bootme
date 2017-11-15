@@ -43,6 +43,13 @@ class State {
       }
     }
 
+    if (res === undefined) {
+      throw new Error(
+        `Config property "${name}" in Task <${this.task.constructor.name}:${this
+          .task.name}> not available. Provide a default value or check the previous tasks`
+      )
+    }
+
     return res
   }
   /**
