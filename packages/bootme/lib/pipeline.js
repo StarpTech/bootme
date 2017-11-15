@@ -257,7 +257,7 @@ class Pipeline {
    * @param {any} task
    * @memberof Pipeline
    */
-  async execute() {
+  execute() {
     for (let task of this.registry.tasks) {
       if (this.rollbacking) {
         error('Abort Pipeline error %O', this.error)

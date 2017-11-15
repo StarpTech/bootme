@@ -4,6 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
+const delayMs = 40
 
 test('Create job inside task', async t => {
   t.plan(2)
@@ -21,9 +22,9 @@ test('Create job inside task', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.pass()
 })
@@ -47,9 +48,9 @@ test('Create job inside job', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.pass()
 })
@@ -72,11 +73,11 @@ test('Create task inside task', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
   t.ok(!pipeline.error)
 
-  await delay(20)
+  await delay(delayMs)
 
   t.pass()
 })
@@ -104,11 +105,11 @@ test('Create task inside task inside task', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
   t.ok(!pipeline.error)
 
-  await delay(20)
+  await delay(delayMs)
 
   t.pass()
 })
@@ -127,9 +128,9 @@ test('addJob accepts only functions', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(pipeline.error)
   t.equal(pipeline.error.message, 'The Job handler must be a function')
@@ -151,9 +152,9 @@ test('addTask accepts only a task instance', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(pipeline.error)
   t.equal(pipeline.error.message, 'The Task must be a Task instance')
@@ -188,9 +189,9 @@ test('getValue', async t => {
   registry.addTask(task1)
   registry.addTask(task2)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.pass()
 })
@@ -217,9 +218,9 @@ test('getValue fallback to config', async t => {
 
   registry.addTask(task2)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.pass()
 })

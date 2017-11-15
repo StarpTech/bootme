@@ -4,6 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
+const delayMs = 20
 
 test('Task config as object', async t => {
   t.plan(3)
@@ -24,9 +25,9 @@ test('Task config as object', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
 
@@ -52,9 +53,9 @@ test('Task config as function', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
 

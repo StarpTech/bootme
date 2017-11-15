@@ -4,6 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
+const delayMs = 20
 
 test('add task', async t => {
   t.plan(2)
@@ -60,7 +61,7 @@ test('addHook', async t => {
 
   pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
 
@@ -88,7 +89,7 @@ test('shareConfig', async t => {
 
   pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
 
@@ -114,7 +115,7 @@ test('setRef', async t => {
 
   pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
 
@@ -143,7 +144,7 @@ test('setRef manipulate existing refs', async t => {
 
   pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
 

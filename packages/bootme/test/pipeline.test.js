@@ -4,6 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
+const delayMs = 20
 
 test('Execute pipeline', async t => {
   t.plan(2)
@@ -17,7 +18,7 @@ test('Execute pipeline', async t => {
 
   await pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
 
@@ -37,9 +38,9 @@ test('Hooks', async t => {
   pipeline.onTaskStart(async state => t.type(state, Bootme.State))
   pipeline.onTaskEnd(async state => t.type(state, Bootme.State))
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
 
@@ -67,7 +68,7 @@ test('Rollback hook', async t => {
 
   pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(pipeline.error)
 
@@ -90,7 +91,7 @@ test('hasError()', async t => {
 
   pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(pipeline.hasError('foo'))
 
@@ -113,7 +114,7 @@ test('hasResult()', async t => {
 
   pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(pipeline.hasResult('foo'))
 
@@ -136,7 +137,7 @@ test('get()', async t => {
 
   pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.strictEqual(pipeline.get('foo'), true)
 
@@ -159,7 +160,7 @@ test('get() with array of task names', async t => {
 
   pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.same(pipeline.get(['foo']).get('foo'), true)
 

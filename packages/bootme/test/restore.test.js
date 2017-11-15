@@ -4,6 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
+const delayMs = 20
 
 test('Restore', async t => {
   t.plan(6)
@@ -33,7 +34,7 @@ test('Restore', async t => {
 
   await pipeline.restore()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
   t.ok(initCalled)

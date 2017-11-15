@@ -4,6 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
+const delayMs = 20
 
 test('Create task', async t => {
   t.plan(3)
@@ -20,9 +21,9 @@ test('Create task', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.pass()
 })
@@ -49,9 +50,9 @@ test('Task hooks', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.pass()
 })
@@ -70,9 +71,9 @@ test('Use Tasks as hooks', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.pass()
 })
@@ -92,9 +93,9 @@ test('Use Task as init handler', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(!pipeline.error)
 

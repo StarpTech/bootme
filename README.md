@@ -174,7 +174,7 @@ Represent pipeline to execute all tasks
 
 ### execute()
 
-Run the pipeline
+Run the pipeline. We don't provide a finish callback because it's a queue and is changed at runtime.
 
 ### getValue(__String:__ taskName)
 

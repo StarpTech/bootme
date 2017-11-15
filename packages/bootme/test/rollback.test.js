@@ -4,6 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
+const delayMs = 20
 
 test('Rollback', async t => {
   t.plan(3)
@@ -22,9 +23,9 @@ test('Rollback', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.equal(pipeline.error.message, 'test')
 
@@ -53,9 +54,9 @@ test('Cant run execute() during rollback', async t => {
   registry.addTask(task1)
   registry.addTask(task2)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.equal(pipeline.error.message, 'test')
 
@@ -87,9 +88,9 @@ test('Rollback multiple tasks', async t => {
   registry.addTask(task)
   registry.addTask(task2)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.same(callOrder, ['foo'])
   t.equal(pipeline.error.message, 'test')
@@ -125,9 +126,9 @@ test('Error abort the pipeline', async t => {
   registry.addTask(task)
   registry.addTask(task2)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.same(callOrder, ['foo'])
   t.equal(pipeline.error.message, 'test')
@@ -161,7 +162,7 @@ test('Thrown error in rollback handler does not abort rollback', async t => {
   registry.addTask(task)
   registry.addTask(task2)
 
-  await pipeline.execute()
+  pipeline.execute()
 
   await delay(30)
 
@@ -201,9 +202,9 @@ test('Error in rollback cause nested job error is swallowed', async t => {
   registry.addTask(task1)
   registry.addTask(task2)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.ok(pipeline.error)
   t.ok(rollbackTask1Called)
@@ -249,7 +250,7 @@ test('Error in rollback cause nested task error is swallowed', async t => {
   registry.addTask(task1)
   registry.addTask(task2)
 
-  await pipeline.execute()
+  pipeline.execute()
 
   await delay(30)
 
@@ -279,9 +280,9 @@ test('Use Task as Rollback handler', async t => {
 
   registry.addTask(task)
 
-  await pipeline.execute()
+  pipeline.execute()
 
-  await delay(20)
+  await delay(delayMs)
 
   t.equal(pipeline.error.message, 'test')
 
