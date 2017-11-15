@@ -194,9 +194,9 @@ class Pipeline {
     task.addHook('onInit', task.init)
     task.addHook('onRollback', task.rollback)
 
+    await task.executeHooks('onInit', state)
     // mark task as initialized so it can be filtered for rollback and restore
     task.initialized = true
-    await task.executeHooks('onInit', state)
   }
   /**
    *
@@ -215,6 +215,8 @@ class Pipeline {
     await this.initializeTask(task, state)
 
     const result = await task.action(state)
+    // mark task as initialized so it can be filtered for rollback and restore
+    task.run = true
     if (result && typeof task.validateResult === 'function') {
       await task.validateResult(result)
     }
