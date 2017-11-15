@@ -4,7 +4,7 @@ const t = require('tap')
 const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 50
+const delayMs = 100
 
 test('Restore', async t => {
   t.plan(6)
