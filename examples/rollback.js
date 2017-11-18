@@ -25,7 +25,7 @@ const pipeline = new Bootme.Pipeline(registry)
 
 registry.addTask(task)
 
-pipeline.onRollback(async function() {
+pipeline.onTaskRollback(async function() {
   console.log('Rollback')
 })
 

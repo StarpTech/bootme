@@ -7,7 +7,7 @@
   * <a href="#setnamestring-name--task"><code>bootme.Task#<b>setName()</b></code></a>
   * <a href="#addhookstring-oninit-onbefore-onafter-async-function-handler--task"><code>bootme.Task#<b>addHook()</b></code></a>
   * <a href="#setactionasync-function-handler--task"><code>bootme.Task#<b>setAction()</b></code></a>
-  * <a href="#setconfigobject-async-function-config--task"><code>bootme.Task#<b>setConfig()</b></code></a>
+  * <a href="#setconfigobject-async-function--function-config--task"><code>bootme.Task#<b>setConfig()</b></code></a>
   * <a href="#setinitasync-function-handler--task"><code>bootme.Task#<b>setInit()</b></code></a>
   * <a href="#setrollbackasync-function-handler--task"><code>bootme.Task#<b>setRollback()</b></code></a>
 
@@ -27,7 +27,7 @@
   * <a href="#hasresultstring-taskname--boolean"><code>bootme.Pipeline#<b>hasResult()</b></code></a>
   * <a href="#ontaskstartasync-function-handler"><code>bootme.Pipeline#<b>onTaskStart()</b></code></a>
   * <a href="#ontaskendasync-function-handler"><code>bootme.Pipeline#<b>onTaskEnd()</b></code></a>
-  * <a href="#onrollbackasync-function-handler"><code>bootme.Pipeline#<b>onRollback()</b></code></a>
+  * <a href="#ontaskrollbackasync-function-handler"><code>bootme.Pipeline#<b>onTaskRollback()</b></code></a>
 
   * <a href="#State"><code>bootme.<b>State()</b></code></a>
   * <a href="#addjobasync-function-handler"><code>bootme.State#<b>addJob()</b></code></a>
@@ -56,7 +56,7 @@ Create a new hook
 
 Set the main task action
 
-### setConfig(__[Object, async function]:__ config) : __Task__
+### setConfig(__[Object, async function, function]:__ config) : [__Task__, Promise]
 
 Set the task config
 
@@ -137,9 +137,9 @@ Add a global `onTaskStart` hook. This hook is executed before a task is executed
 
 Add a global `onTaskEnd` hook. This hook is executed after a task was executed.
 
-### onRollback(__async function:__ handler)
+### onTaskRollback(__async function:__ handler)
 
-Add a global `onRollback` hook. This hook is executed after a task has thrown an error.
+Add a global `onTaskRollback` hook. This hook is executed after a complete rollback was proceed.
 
 ## State
 

@@ -25,6 +25,6 @@ registry.addHook('foo', 'onAfter', async state => console.log('onAfter Registry'
 // Global hooks
 pipeline.onTaskStart(async state => console.log('Task Start', state.task.name))
 pipeline.onTaskEnd(async state => console.log('Task End', state.task.name))
-pipeline.onRollback(async state => console.log('Task Rollback', state.task.name))
+pipeline.onTaskRollback(async state => console.log('Task Rollback', state.task.name))
 
 pipeline.execute()

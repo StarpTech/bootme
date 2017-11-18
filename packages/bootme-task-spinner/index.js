@@ -39,7 +39,7 @@ class TaskSpinner {
       )
     })
 
-    this.pipeline.onRollback(state => {
+    this.pipeline.onTaskRollback(state => {
       const spinner = this.spinners.get(state.task.name)
       if (spinner) {
         spinner.info(`Rollback ${state.task.name}`)

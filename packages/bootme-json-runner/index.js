@@ -22,9 +22,8 @@ class JSONRunner {
    * @memberof JSONRunner
    */
   loadTask(task, name) {
-    const newTask = new this.classProxy[task.task](name, task.info).setConfig(
-      task.config
-    )
+    const newTask = new this.classProxy[task.task](name, task.info)
+    newTask.setConfig(task.config)
     this.hooks.forEach(hook => {
       if (task.hooks && task.hooks[hook] && Array.isArray(task.hooks[hook])) {
         task.hooks[hook].forEach(h => newTask.addhook(hook, h))

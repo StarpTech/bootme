@@ -15,6 +15,7 @@ const pipeline = new Bootme.Pipeline(registry)
 const listTask = new DockerTask('list').setConfig({ cmd: 'listContainers' })
 
 const inspectTask = new DockerTask('inspect')
+inspectTask
   .setConfig(async state => {
     const result = await inquirer.prompt([
       {
@@ -39,7 +40,7 @@ const inspectTask = new DockerTask('inspect')
       cmd: 'inspectContainer'
     }
   })
-  .addHook('onAfter', async (state) => {
+  .addHook('onAfter', async state => {
     const infos = await state.getValue('inspect')
     console.log(infos.State)
   })

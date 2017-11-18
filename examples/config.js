@@ -12,7 +12,8 @@ const task = new Bootme.Task('foo').setConfig({
 })
 
 // config is loaded at runtime
-const task2 = new Bootme.Task('foo2').setConfig(async function(state) {
+const task2 = new Bootme.Task('foo2')
+task2.setConfig(async function(state) {
   return { foo: 'bar' }
 })
 
