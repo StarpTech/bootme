@@ -282,7 +282,7 @@ class Pipeline {
           error('Task error %O', err)
           this.error = err
           this.results.set(`${task.name}:error`, err)
-          await this.rollback(state)
+          await this.rollback()
         }
       })
     }

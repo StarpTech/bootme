@@ -246,7 +246,7 @@ test('Error in rollback cause nested task error is swallowed', async t => {
 
   pipeline.execute()
 
-  await delay(30)
+  await delay(delayMs)
 
   t.ok(pipeline.error)
   t.ok(rollbackTask1Called)
