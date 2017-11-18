@@ -47,7 +47,7 @@ class Task {
    *
    * @memberof Task
    */
-  validateConfig(value) {
+  async validateConfig(value) {
     return value
   }
   /**
@@ -81,22 +81,16 @@ class Task {
     } else {
       const result = this.validateConfig(config)
 
-      if (result) {
-        if (result.error) {
-          error(
-            `Task <${this.constructor.name}:${this
-              .name}> Invalid config schema. Error: %O`,
-            result.error
-          )
-          throw new Error(
-            `Task <${this.constructor.name}:${this
-              .name}> has an innvalid config schema. ${result.error.message}`
-          )
-        } else if (result.value) {
-          this.config = result.value
-        } else if (config) {
-          this.config = config
-        }
+      if (result && typeof result.then === 'function') {
+        return result.then(c => {
+          this.config = Object.assign(c, this.config)
+        })
+      } else if (typeof result === 'object') {
+        this.config = Object.assign(result, config, this.config)
+      } else {
+        throw new Error(
+          'Respond with an invalid config construct'
+        )
       }
     }
 

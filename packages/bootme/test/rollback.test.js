@@ -1,10 +1,8 @@
 'use strict'
 
 const t = require('tap')
-const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 100
 
 test('Rollback', t => {
   t.plan(2)
@@ -23,9 +21,8 @@ test('Rollback', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.equal(pipeline.error.message, 'test')
-    done()
   })
 
   pipeline.execute()
@@ -53,9 +50,8 @@ test('Can not run execute() during rollback', t => {
   registry.addTask(task1)
   registry.addTask(task2)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.equal(pipeline.error.message, 'test')
-    done()
   })
 
   pipeline.execute()
@@ -85,10 +81,9 @@ test('Do not execute tasks after an error in a previous task', t => {
   registry.addTask(task)
   registry.addTask(task2)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.same(callOrder, ['foo'])
     t.equal(pipeline.error.message, 'test')
-    done()
   })
 
   pipeline.execute()
@@ -123,10 +118,9 @@ test('Error abort the pipeline', t => {
   registry.addTask(task)
   registry.addTask(task2)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.same(callOrder, ['foo'])
     t.equal(pipeline.error.message, 'test')
-    done()
   })
 
   pipeline.execute()
@@ -158,10 +152,9 @@ test('Thrown error in rollback handler does not abort rollback', t => {
   registry.addTask(task)
   registry.addTask(task2)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.same(callOrder, ['foo2', 'foo'])
     t.equal(pipeline.error.message, 'test')
-    done()
   })
 
   pipeline.execute()
@@ -197,18 +190,17 @@ test('Error in rollback cause nested job error is swallowed', t => {
   registry.addTask(task1)
   registry.addTask(task2)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(pipeline.error)
     t.ok(rollbackTask1Called)
     t.ok(rollbackTask2Called)
-    done()
   })
 
   pipeline.execute()
 })
 
-test('Error in rollback cause nested task error is swallowed', async t => {
-  t.plan(5)
+test('Error in rollback cause nested task error is swallowed', t => {
+  t.plan(4)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -244,16 +236,14 @@ test('Error in rollback cause nested task error is swallowed', async t => {
   registry.addTask(task1)
   registry.addTask(task2)
 
+  pipeline.onRollbackFinish(async () => {
+    t.ok(pipeline.error)
+    t.ok(rollbackTask1Called)
+    t.ok(rollbackTask2Called)
+    t.ok(rollbackTask3Called)
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(pipeline.error)
-  t.ok(rollbackTask1Called)
-  t.ok(rollbackTask2Called)
-  t.ok(rollbackTask3Called)
-
-  t.pass()
 })
 
 test('Use Task as Rollback handler', t => {
@@ -274,9 +264,8 @@ test('Use Task as Rollback handler', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.equal(pipeline.error.message, 'test')
-    done()
   })
 
   pipeline.execute()

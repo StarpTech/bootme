@@ -20,9 +20,8 @@ test('Create job inside task', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(!pipeline.error)
-    done()
   })
 
   pipeline.execute()
@@ -47,9 +46,8 @@ test('Create job inside job', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(!pipeline.error)
-    done()
   })
 
   pipeline.execute()
@@ -73,9 +71,8 @@ test('Create task inside task', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(!pipeline.error)
-    done()
   })
 
   pipeline.execute()
@@ -104,9 +101,8 @@ test('Create task inside task inside task', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(!pipeline.error)
-    done()
   })
 
   pipeline.execute()
@@ -127,10 +123,9 @@ test('addJob accepts only functions', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(pipeline.error)
     t.equal(pipeline.error.message, 'The Job handler must be a function')
-    done()
   })
 
   pipeline.execute()
@@ -151,10 +146,9 @@ test('addTask accepts only a task instance', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(pipeline.error)
     t.equal(pipeline.error.message, 'The Task must be a Task instance')
-    done()
   })
 
   pipeline.execute()
@@ -187,9 +181,8 @@ test('getValue', t => {
   registry.addTask(task1)
   registry.addTask(task2)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.pass()
-    done()
   })
 
   pipeline.execute()
@@ -217,9 +210,8 @@ test('getValue fallback to config', t => {
 
   registry.addTask(task2)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.pass()
-    done()
   })
 
   pipeline.execute()
@@ -251,9 +243,8 @@ test('getValue throw error when config could not be found', t => {
 
   registry.addTask(task2)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.pass()
-    done()
   })
 
   pipeline.execute()

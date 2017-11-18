@@ -1,10 +1,8 @@
 'use strict'
 
 const t = require('tap')
-const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 100
 
 test('add task', async t => {
   t.plan(2)
@@ -19,6 +17,23 @@ test('add task', async t => {
   t.strictEqual(registry.tasks.length, 1)
 
   t.pass()
+})
+
+test('check for duplicate tasks', async t => {
+  t.plan(1)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  const task = new Bootme.Task('foo')
+
+  registry.addTask(task)
+
+  try {
+    registry.addTask(task)
+  } catch (err) {
+    t.strictEqual(err.message, 'The Task <Task:foo> already exists')
+  }
 })
 
 test('addTask should only support tasks objects', async t => {
@@ -59,16 +74,15 @@ test('addHook', t => {
 
   t.strictEqual(registry.tasks.length, 1)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(!pipeline.error)
-    done()
   })
 
   pipeline.execute()
 })
 
-test('shareConfig', async t => {
-  t.plan(4)
+test('shareConfig', t => {
+  t.plan(3)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -86,17 +100,15 @@ test('shareConfig', async t => {
 
   t.strictEqual(registry.tasks.length, 1)
 
+  pipeline.onDrain(async => {
+    t.ok(!pipeline.error)
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(!pipeline.error)
-
-  t.pass()
 })
 
-test('setRef', async t => {
-  t.plan(4)
+test('setRef', t => {
+  t.plan(3)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -112,17 +124,45 @@ test('setRef', async t => {
 
   t.strictEqual(registry.tasks.length, 1)
 
+  pipeline.onDrain(async => {
+    t.ok(!pipeline.error)
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(!pipeline.error)
-
-  t.pass()
 })
 
-test('setRef manipulate existing refs', async t => {
+test('set preConfig', t => {
   t.plan(4)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  const task = new Bootme.Task('foo')
+  task.setConfig({
+    a: 1
+  })
+  task.setAction(async function() {
+    t.strictEqual(this.config.a, 1)
+    t.strictEqual(this.config.b, 2)
+  })
+
+  registry.addTask(task)
+
+  registry.setConfig('foo', {
+    b: 2
+  })
+
+  t.strictEqual(registry.tasks.length, 1)
+
+  pipeline.onDrain(async => {
+    t.ok(!pipeline.error)
+  })
+
+  pipeline.execute()
+})
+
+test('setRef manipulate existing refs', t => {
+  t.plan(3)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -141,11 +181,9 @@ test('setRef manipulate existing refs', async t => {
 
   t.strictEqual(registry.tasks.length, 1)
 
+  pipeline.onDrain(async => {
+    t.ok(!pipeline.error)
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(!pipeline.error)
-
-  t.pass()
 })

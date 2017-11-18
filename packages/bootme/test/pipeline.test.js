@@ -14,9 +14,8 @@ test('Execute pipeline', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(!pipeline.error)
-    done()
   })
 
   pipeline.execute()
@@ -35,9 +34,8 @@ test('Hooks', t => {
   pipeline.onTaskStart(async state => t.type(state, Bootme.State))
   pipeline.onTaskEnd(async state => t.type(state, Bootme.State))
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(!pipeline.error)
-    done()
   })
 
   pipeline.execute()
@@ -57,14 +55,13 @@ test('Rollback hook', t => {
 
   registry.addTask(task)
 
-  pipeline.onRollback(async state => {
+  pipeline.onTaskRollback(async state => {
     t.type(state, Bootme.State)
     t.type(state.pipeline.error, Error)
   })
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(pipeline.error)
-    done()
   })
 
   pipeline.execute()
@@ -84,9 +81,8 @@ test('hasError()', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(pipeline.hasError('foo'))
-    done()
   })
 
   pipeline.execute()
@@ -106,9 +102,8 @@ test('hasResult()', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.ok(pipeline.hasResult('foo'))
-    done()
   })
 
   pipeline.execute()
@@ -128,9 +123,8 @@ test('get()', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.strictEqual(pipeline.get('foo'), true)
-    done()
   })
 
   pipeline.execute()
@@ -150,9 +144,8 @@ test('get() with array of task names', t => {
 
   registry.addTask(task)
 
-  pipeline.queue.drain(done => {
+  pipeline.onDrain(async () => {
     t.same(pipeline.get(['foo']).get('foo'), true)
-    done()
   })
 
   pipeline.execute()

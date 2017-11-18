@@ -31,9 +31,10 @@ class Pipeline {
     this.restoring = false
     this.error = null
 
-    this.onRollbackHooks = []
+    this.onTaskRollbackHooks = []
     this.onTaskEndHooks = []
     this.onTaskStartHooks = []
+    this.onRollbackFinishHooks = []
   }
   /**
    *
@@ -85,6 +86,71 @@ class Pipeline {
   /**
    *
    *
+   * @param {any} fn
+   * @memberof Pipeline
+   */
+  onDrain(fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError('The Hook handler must be a function')
+    }
+
+    this.queue.drain(fn)
+  }
+  /**
+   *
+   *
+   * @param {any} fn
+   * @memberof Pipeline
+   */
+  onTaskStart(fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError('The Hook handler must be a function')
+    }
+
+    this.onTaskStartHooks.push(fn)
+  }
+  /**
+   *
+   *
+   * @param {any} fn
+   * @memberof Pipeline
+   */
+  onTaskEnd(fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError('The Hook handler must be a function')
+    }
+
+    this.onTaskEndHooks.push(fn)
+  }
+  /**
+   *
+   *
+   * @param {any} fn
+   * @memberof Pipeline
+   */
+  onTaskRollback(fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError('The Hook handler must be a function')
+    }
+
+    this.onTaskRollbackHooks.push(fn)
+  }
+  /**
+   *
+   *
+   * @param {any} fn
+   * @memberof Pipeline
+   */
+  onRollbackFinish(fn) {
+    if (typeof fn !== 'function') {
+      throw new TypeError('The Hook handler must be a function')
+    }
+
+    this.onRollbackFinishHooks.push(fn)
+  }
+  /**
+   *
+   *
    * @memberof Pipeline
    */
   async rollback() {
@@ -99,13 +165,14 @@ class Pipeline {
       // errors are swallowed so that each task can try to recover
       try {
         let state = new State(this.queue, task, this)
-        for (let hook of this.onRollbackHooks) {
+        for (let hook of this.onTaskRollbackHooks) {
           if (hook instanceof Task) {
             await state.addTask(hook, state)
           } else {
             await hook.call(task, state)
           }
         }
+
         await task.executeRollback(state)
       } catch (err) {
         error(
@@ -115,6 +182,10 @@ class Pipeline {
           err
         )
       }
+    }
+
+    for (let hook of this.onRollbackFinishHooks) {
+      await hook()
     }
 
     this.rollbacking = false
@@ -153,33 +224,6 @@ class Pipeline {
     await this.rollback()
 
     this.restoring = false
-  }
-  /**
-   *
-   *
-   * @param {any} fn
-   * @memberof Pipeline
-   */
-  onTaskStart(fn) {
-    this.onTaskStartHooks.push(fn)
-  }
-  /**
-   *
-   *
-   * @param {any} fn
-   * @memberof Pipeline
-   */
-  onTaskEnd(fn) {
-    this.onTaskEndHooks.push(fn)
-  }
-  /**
-   *
-   *
-   * @param {any} fn
-   * @memberof Pipeline
-   */
-  onRollback(fn) {
-    this.onRollbackHooks.push(fn)
   }
   /**
    *

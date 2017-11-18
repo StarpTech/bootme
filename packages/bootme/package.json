@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
-    "delay": "^2.0.0",
     "tap": "^10.7.3"
   }
 }
