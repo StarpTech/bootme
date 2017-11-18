@@ -1,6 +1,6 @@
 {
   "name": "bootme-delay",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Task to delay for specific amount of time",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "bootme": "^0.0.30",
+    "bootme": "^0.0.31",
     "delay": "^2.0.0",
     "joi": "^13.0.1"
   },
