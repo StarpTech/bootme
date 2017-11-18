@@ -1,12 +1,10 @@
 'use strict'
 
 const t = require('tap')
-const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 100
 
-test('Create task', async t => {
+test('Create task', t => {
   t.plan(3)
 
   const registry = new Bootme.Registry()
@@ -21,14 +19,15 @@ test('Create task', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.pass()
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.pass()
 })
 
-test('Task hooks', async t => {
+test('Task hooks', t => {
   t.plan(5)
 
   const registry = new Bootme.Registry()
@@ -50,36 +49,53 @@ test('Task hooks', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.pass()
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.pass()
 })
 
-test('Use Tasks as hooks', async t => {
+test('Use Tasks as hooks', t => {
   t.plan(5)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
 
   const task = new Bootme.Task('foo')
-  task.addHook('onBefore', new Bootme.Task('foo1').setAction(async state => t.type(state, Bootme.State)))
-  task.addHook('onInit', new Bootme.Task('foo2').setAction(async state => t.type(state, Bootme.State)))
-  task.addHook('onAfter', new Bootme.Task('foo3').setAction(async state => t.type(state, Bootme.State)))
+  task.addHook(
+    'onBefore',
+    new Bootme.Task('foo1').setAction(async state =>
+      t.type(state, Bootme.State)
+    )
+  )
+  task.addHook(
+    'onInit',
+    new Bootme.Task('foo2').setAction(async state =>
+      t.type(state, Bootme.State)
+    )
+  )
+  task.addHook(
+    'onAfter',
+    new Bootme.Task('foo3').setAction(async state =>
+      t.type(state, Bootme.State)
+    )
+  )
   task.setAction(async state => t.type(state, Bootme.State))
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.pass()
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.pass()
 })
 
-test('Use Task as init handler', async t => {
-  t.plan(3)
+test('Use Task as init handler', t => {
+  t.plan(2)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -93,11 +109,10 @@ test('Use Task as init handler', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(!pipeline.error)
-
-  t.pass()
 })

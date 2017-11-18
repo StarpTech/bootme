@@ -42,8 +42,8 @@ test('addTask should only support tasks objects', async t => {
   t.pass()
 })
 
-test('addHook', async t => {
-  t.plan(6)
+test('addHook', t => {
+  t.plan(5)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -59,13 +59,12 @@ test('addHook', async t => {
 
   t.strictEqual(registry.tasks.length, 1)
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(!pipeline.error)
-
-  t.pass()
 })
 
 test('shareConfig', async t => {

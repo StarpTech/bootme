@@ -1,13 +1,11 @@
 'use strict'
 
 const t = require('tap')
-const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 100
 
-test('Task config as object', async t => {
-  t.plan(3)
+test('Task config as object', t => {
+  t.plan(2)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -25,17 +23,16 @@ test('Task config as object', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(!pipeline.error)
-
-  t.pass()
 })
 
-test('Task config as function', async t => {
-  t.plan(3)
+test('Task config as function', t => {
+  t.plan(2)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -53,11 +50,10 @@ test('Task config as function', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(!pipeline.error)
-
-  t.pass()
 })

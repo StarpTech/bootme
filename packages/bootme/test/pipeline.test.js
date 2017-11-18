@@ -1,13 +1,11 @@
 'use strict'
 
 const t = require('tap')
-const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 100
 
-test('Execute pipeline', async t => {
-  t.plan(2)
+test('Execute pipeline', t => {
+  t.plan(1)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -16,17 +14,16 @@ test('Execute pipeline', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(!pipeline.error)
-
-  t.pass()
 })
 
-test('Hooks', async t => {
-  t.plan(4)
+test('Hooks', t => {
+  t.plan(3)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -38,17 +35,16 @@ test('Hooks', async t => {
   pipeline.onTaskStart(async state => t.type(state, Bootme.State))
   pipeline.onTaskEnd(async state => t.type(state, Bootme.State))
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(!pipeline.error)
-
-  t.pass()
 })
 
-test('Rollback hook', async t => {
-  t.plan(4)
+test('Rollback hook', t => {
+  t.plan(3)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -61,22 +57,21 @@ test('Rollback hook', async t => {
 
   registry.addTask(task)
 
-  pipeline.onRollback(async (state) => {
+  pipeline.onRollback(async state => {
     t.type(state, Bootme.State)
     t.type(state.pipeline.error, Error)
   })
 
+  pipeline.queue.drain(done => {
+    t.ok(pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(pipeline.error)
-
-  t.pass()
 })
 
-test('hasError()', async t => {
-  t.plan(2)
+test('hasError()', t => {
+  t.plan(1)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -89,17 +84,16 @@ test('hasError()', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(pipeline.hasError('foo'))
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(pipeline.hasError('foo'))
-
-  t.pass()
 })
 
-test('hasResult()', async t => {
-  t.plan(2)
+test('hasResult()', t => {
+  t.plan(1)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -112,17 +106,16 @@ test('hasResult()', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(pipeline.hasResult('foo'))
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(pipeline.hasResult('foo'))
-
-  t.pass()
 })
 
-test('get()', async t => {
-  t.plan(2)
+test('get()', t => {
+  t.plan(1)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -135,17 +128,16 @@ test('get()', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.strictEqual(pipeline.get('foo'), true)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.strictEqual(pipeline.get('foo'), true)
-
-  t.pass()
 })
 
-test('get() with array of task names', async t => {
-  t.plan(2)
+test('get() with array of task names', t => {
+  t.plan(1)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -158,11 +150,10 @@ test('get() with array of task names', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.same(pipeline.get(['foo']).get('foo'), true)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.same(pipeline.get(['foo']).get('foo'), true)
-
-  t.pass()
 })

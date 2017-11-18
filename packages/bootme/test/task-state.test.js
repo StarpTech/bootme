@@ -1,12 +1,10 @@
 'use strict'
 
 const t = require('tap')
-const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 100
 
-test('Create job inside task', async t => {
+test('Create job inside task', t => {
   t.plan(2)
 
   const registry = new Bootme.Registry()
@@ -22,14 +20,15 @@ test('Create job inside task', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.pass()
 })
 
-test('Create job inside job', async t => {
+test('Create job inside job', t => {
   t.plan(3)
 
   const registry = new Bootme.Registry()
@@ -48,15 +47,16 @@ test('Create job inside job', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.pass()
 })
 
-test('Create task inside task', async t => {
-  t.plan(3)
+test('Create task inside task', t => {
+  t.plan(2)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -73,17 +73,16 @@ test('Create task inside task', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  t.ok(!pipeline.error)
-
-  await delay(delayMs)
-
-  t.pass()
 })
 
-test('Create task inside task inside task', async t => {
-  t.plan(4)
+test('Create task inside task inside task', t => {
+  t.plan(3)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -105,16 +104,15 @@ test('Create task inside task inside task', async t => {
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(!pipeline.error)
+    done()
+  })
+
   pipeline.execute()
-
-  t.ok(!pipeline.error)
-
-  await delay(delayMs)
-
-  t.pass()
 })
 
-test('addJob accepts only functions', async t => {
+test('addJob accepts only functions', t => {
   t.plan(3)
 
   const registry = new Bootme.Registry()
@@ -122,23 +120,23 @@ test('addJob accepts only functions', async t => {
 
   const task = new Bootme.Task('foo')
   task.setAction(async function(state) {
+    t.pass()
     state.addJob('no fn')
     return true
   })
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(pipeline.error)
+    t.equal(pipeline.error.message, 'The Job handler must be a function')
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(pipeline.error)
-  t.equal(pipeline.error.message, 'The Job handler must be a function')
-
-  t.pass()
 })
 
-test('addTask accepts only a task instance', async t => {
+test('addTask accepts only a task instance', t => {
   t.plan(3)
 
   const registry = new Bootme.Registry()
@@ -146,23 +144,23 @@ test('addTask accepts only a task instance', async t => {
 
   const task = new Bootme.Task('foo')
   task.setAction(async function(state) {
+    t.pass()
     state.addTask('no task')
     return true
   })
 
   registry.addTask(task)
 
+  pipeline.queue.drain(done => {
+    t.ok(pipeline.error)
+    t.equal(pipeline.error.message, 'The Task must be a Task instance')
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.ok(pipeline.error)
-  t.equal(pipeline.error.message, 'The Task must be a Task instance')
-
-  t.pass()
 })
 
-test('getValue', async t => {
+test('getValue', t => {
   t.plan(2)
 
   const registry = new Bootme.Registry()
@@ -189,14 +187,15 @@ test('getValue', async t => {
   registry.addTask(task1)
   registry.addTask(task2)
 
+  pipeline.queue.drain(done => {
+    t.pass()
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.pass()
 })
 
-test('getValue fallback to config', async t => {
+test('getValue fallback to config', t => {
   t.plan(2)
 
   const registry = new Bootme.Registry()
@@ -218,14 +217,15 @@ test('getValue fallback to config', async t => {
 
   registry.addTask(task2)
 
+  pipeline.queue.drain(done => {
+    t.pass()
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.pass()
 })
 
-test('getValue throw error when config could not be found', async t => {
+test('getValue throw error when config could not be found', t => {
   t.plan(2)
 
   const registry = new Bootme.Registry()
@@ -251,9 +251,10 @@ test('getValue throw error when config could not be found', async t => {
 
   registry.addTask(task2)
 
+  pipeline.queue.drain(done => {
+    t.pass()
+    done()
+  })
+
   pipeline.execute()
-
-  await delay(delayMs)
-
-  t.pass()
 })

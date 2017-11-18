@@ -1,13 +1,11 @@
 'use strict'
 
 const t = require('tap')
-const delay = require('delay')
 const test = t.test
 const Bootme = require('./..')
-const delayMs = 100
 
 test('Restore', async t => {
-  t.plan(6)
+  t.plan(5)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -34,12 +32,8 @@ test('Restore', async t => {
 
   await pipeline.restore()
 
-  await delay(delayMs)
-
   t.ok(!pipeline.error)
   t.ok(initCalled)
   t.ok(!onBeforeCalled)
   t.ok(!onAfterCalled)
-
-  t.pass()
 })

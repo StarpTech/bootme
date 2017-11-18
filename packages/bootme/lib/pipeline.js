@@ -207,6 +207,12 @@ class Pipeline {
    * @memberof Pipeline
    */
   async executeTask(task, state) {
+    // execute task only when we are in rollback mode or no error was occured
+    if (this.error && !this.rollbacking) {
+      debug(`Abort task due to pipeline error`)
+      return
+    }
+
     for (let hook of this.onTaskStartHooks) {
       await hook.call(task, state)
     }
@@ -262,8 +268,8 @@ class Pipeline {
    */
   execute() {
     for (let task of this.registry.tasks) {
-      if (this.rollbacking) {
-        error('Abort Pipeline error %O', this.error)
+      if (this.error) {
+        error('Abort task due to pipeline error %O', this.error)
         break
       }
 
