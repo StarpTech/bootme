@@ -54,9 +54,11 @@ task.setConfig({ a: 1 })
 // Add task
 registry.addTask(task)
 
-// Add hooks after registration
+// Add hooks after registration "onInit", "onAfter", "onBefore"
 registry.addHook('sample', 'onRollback', async (state) => ...)
-registry.addHook('sample', 'onAfter', new Task('bar'))
+
+// Add Global pipeline hooks "onTaskStart", "onTaskEnd", "onTaskRollback"
+pipeline.onRollbackFinish(async () => ...)
 
 // Execute or restore pipeline
 pipeline.execute()
