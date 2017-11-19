@@ -36,20 +36,20 @@ registry.shareConfig({
   TOKEN: process.env.TOKEN
 })
 
-registry.addTask(
-  new Task('sample')
-  .setConfig({})
-  .setInit(async state => ...)
-  .setRollback(async state => ...)
-  .setAction(async state => {
-    state.addTask(...)
-    state.addJob(...)
-    return true
-  })
-  .addHook('onRollback', async state => ...)
-  .addHook('onBefore', async state => ...)
-  .addHook('onAfter', async state => ...)
-)
+const task = new Task('sample')
+task.setConfig({ a: 1 })
+task.setInit(async state => ...)
+task.setRollback(async state => ...)
+task.setAction(async state => {
+  state.addTask(...)
+  state.addJob(...)
+  return true
+})
+
+task.addHook('onRollback', async state => ...)
+task.addHook('onRollback',  new Task('foo'))
+
+registry.addTask(task)
 
 registry.addHook('sample', 'onRollback', async (state) => ...)
 registry.addHook('sample', 'onAfter', new Task('bar'))
@@ -70,7 +70,7 @@ class SampleTask extends Task {
   async init(state) {}
   async action(state) {}
   async validateResult(value) {}
-  validateConfig(value) {}
+  async validateConfig(value) {}
   async rollback(state) {}
 }
 ```
