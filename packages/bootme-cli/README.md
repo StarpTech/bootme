@@ -35,7 +35,7 @@ Tool to run Bootme Tasks from the console
 - Notify at startup about new version
 - Rollback on SIGTERM Signal
 - Restore a pipeline
-- Load single Task with JSON configuration or pass JSON in form of a [quick JSON](https://github.com/mcollina/tinysonic) format.
+- Load single Task and pass the configuration as file or in form of a [quick JSON](https://github.com/mcollina/tinysonic) format.
 
 
 ## Examples
