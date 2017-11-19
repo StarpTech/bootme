@@ -1,5 +1,7 @@
 'use strict'
 
+const Bootme = require('bootme')
+
 /**
  *
  *
@@ -43,6 +45,11 @@ class JSONRunner {
    */
   async run(config, options = {}) {
     config.forEach((task, i) => {
+      if (task.task instanceof Bootme.Task) {
+        this.registry.addTask(task.task)
+        return
+      }
+
       let Task
       try {
         // Convention

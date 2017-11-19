@@ -41,6 +41,9 @@ let config = [
       url: 'http://google.de',
       contentType: 'text'
     }
+  },
+  {
+    task: new Bootme.Task('test', 'Use task instance')
   }
 ]
 

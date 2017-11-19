@@ -40,6 +40,9 @@ let config = [
       url: 'http://google.de',
       contentType: 'text'
     }
+  },
+  {
+    task: new Bootme.Task('test', 'Use task instance')
   }
 ]
 
@@ -49,7 +52,7 @@ jsonRunner.run(config)
 
 ## Usage
 
-- The runner try to load a NPM module in form `bootme-<task>`.
-- Any value inside the task key `config` property is used for the task configuration and is validated.
-- You can define hooks `onInit`, `onRollback`, `onBefore`, `onAfter`.
-- The `info` property is used to describe the task and is used for debugging purpose.
+- The runner is trying to load a NPM module in form `bootme-<task>`.
+- You can define any Task hook like `onInit`, `onRollback`, `onBefore`, `onAfter`.
+- The `info` property is used to describe the task and is used only for debugging purpose.
+- You can pass a Task instance or declare your task with Javascript.
