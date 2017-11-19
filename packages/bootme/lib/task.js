@@ -88,9 +88,7 @@ class Task {
       } else if (typeof result === 'object') {
         this.config = Object.assign(result, config, this.config)
       } else {
-        throw new Error(
-          'Respond with an invalid config construct'
-        )
+        throw new Error('Respond with an invalid config construct')
       }
     }
 
@@ -199,13 +197,6 @@ class Task {
    * @memberof Task
    */
   async executeHooks(name, state) {
-    if (supportedHooks.indexOf(name) === -1) {
-      throw new Error(
-        `Task <${this.constructor.name}:${this
-          .name}> Hook "${name}" not supported!`
-      )
-    }
-
     debug(
       `Task <${this.constructor.name}:${this.name}> execute "${name}" hooks`
     )

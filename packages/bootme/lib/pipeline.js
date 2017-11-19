@@ -166,11 +166,7 @@ class Pipeline {
       try {
         let state = new State(this.queue, task, this)
         for (let hook of this.onTaskRollbackHooks) {
-          if (hook instanceof Task) {
-            await state.addTask(hook, state)
-          } else {
-            await hook.call(task, state)
-          }
+          await hook.call(task, state)
         }
 
         await task.executeRollback(state)
@@ -198,7 +194,7 @@ class Pipeline {
   async restore() {
     if (this.restoring) {
       debug(`Restore already in progress`)
-      return
+      throw new Error('Restore is already in progress')
     }
 
     this.restoring = true

@@ -34,6 +34,50 @@ test('Task name mus be from type string', t => {
   )
 })
 
+test('Hook name check', t => {
+  t.plan(1)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  try {
+    const task = new Bootme.Task('foo')
+    task.addHook('invalid', () => {})
+  } catch (err) {
+    t.strictEqual(err.message, 'Task <Task:foo> Hook "invalid" not supported!')
+  }
+})
+
+test('Hook handler check', t => {
+  t.plan(1)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  try {
+    const task = new Bootme.Task('foo')
+    task.addHook('onInit', 'string')
+  } catch (err) {
+    t.strictEqual(err.message, 'Task <Task:foo> Hook handler must be a function or Task instance')
+  }
+})
+
+test('setRefs()', async t => {
+  t.plan(1)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  const task = new Bootme.Task('foo')
+  await task.setConfig({
+    refs: {
+      a: 'test'
+    }
+  })
+  task.setRefs()
+  t.same(task.deps, ['test'])
+})
+
 test('Task info mus be from type string', t => {
   t.plan(1)
 

@@ -4,6 +4,16 @@ const t = require('tap')
 const test = t.test
 const Bootme = require('./..')
 
+test('Pipeline expect a registry instance', t => {
+  t.plan(1)
+
+  try {
+    const pipeline = new Bootme.Pipeline()
+  } catch (err) {
+    t.strictEqual(err.message, 'The Registry must be a Registry instance')
+  }
+})
+
 test('Execute pipeline', t => {
   t.plan(1)
 
@@ -42,7 +52,7 @@ test('Hooks', t => {
 })
 
 test('Rollback hook', t => {
-  t.plan(3)
+  t.plan(4)
 
   const registry = new Bootme.Registry()
   const pipeline = new Bootme.Pipeline(registry)
@@ -58,6 +68,10 @@ test('Rollback hook', t => {
   pipeline.onTaskRollback(async state => {
     t.type(state, Bootme.State)
     t.type(state.pipeline.error, Error)
+  })
+
+  pipeline.onRollbackFinish(async () => {
+    t.pass()
   })
 
   pipeline.onDrain(async () => {
@@ -125,6 +139,28 @@ test('get()', t => {
 
   pipeline.onDrain(async () => {
     t.strictEqual(pipeline.get('foo'), true)
+  })
+
+  pipeline.execute()
+})
+
+test('onDrain()', t => {
+  t.plan(2)
+
+  const registry = new Bootme.Registry()
+  const pipeline = new Bootme.Pipeline(registry)
+
+  const task = new Bootme.Task('foo')
+
+  task.setAction(async function() {
+    t.pass()
+    return true
+  })
+
+  registry.addTask(task)
+
+  pipeline.onDrain(async () => {
+    t.pass()
   })
 
   pipeline.execute()
