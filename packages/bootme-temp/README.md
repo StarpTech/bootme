@@ -9,7 +9,6 @@ const task = new TempTask('cacheFolder')
 task.setConfig({
   type: 'directory'
 })
-registry.addTask(task)
 ```
 
 ## Result

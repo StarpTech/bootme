@@ -16,7 +16,6 @@ task.setConfig({
   },
   files: ['README.md']
 })
-registry.addTask(task)
 ```
 
 ## Result
