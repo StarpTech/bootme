@@ -5,8 +5,8 @@
 - <code>bootme.Task<b>()</b></code>
 - Load configuration
 - <code>bootme.Task#<b>validateConfig()</b></code>
-- Fire `onInit` hooks (`init` is also a hook)
 - Fire `onBefore` hooks
+- Fire `onInit` hooks (`init` is also a hook)
 - Fire `action`
 - <code>bootme.Task#<b>validateResult()</b></code>
 - Fire `onAfter` hooks
