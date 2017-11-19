@@ -5,12 +5,11 @@ Task to execute portable Unix shell commands
 ## Usage
 
 ```js
-registry.addTask(
-  new ShellTask('echo').setConfig({
-    cmd: 'echo',
-    args: ['BootMe']
-  })
-)
+const task = new TaskShell('shell')
+task.setConfig({
+  cmd: 'echo',
+  args: ['BootMe']
+})
 ```
 
 ## Result

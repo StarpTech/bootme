@@ -10,14 +10,14 @@ const TempTask = require('./../packages/bootme-temp')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-registry.addTask(
-  new TempTask('cacheDir')
-    .setConfig({
-      type: 'directory'
-    })
-    .addHook('onAfter', async function(state) {
-      console.log(await state.getValue(this.name))
-    })
-)
+const task = new TempTask('cacheDir')
+task.setConfig({
+  type: 'directory'
+})
+task.addHook('onAfter', async function(state) {
+  console.log(await state.getValue(this.name))
+})
+
+registry.addTask(task)
 
 pipeline.execute()

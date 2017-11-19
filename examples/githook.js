@@ -10,13 +10,14 @@ const GitHookTask = require('./../packages/bootme-githook')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-registry.addTask(
-  new GitHookTask('precommit').setConfig({
-    hooks: ['pre-commit'],
-    cmd: 'unlink',
-    hookDir: 'git_hooks'
-  })
-)
+const hookTask = new GitHookTask('precommit')
+hookTask.setConfig({
+  hooks: ['pre-commit'],
+  cmd: 'unlink',
+  hookDir: 'git_hooks'
+})
+
+registry.addTask(hookTask)
 
 registry.addHook('precommit', 'onBefore', async function() {
   console.log(`Before ${this.name}`)

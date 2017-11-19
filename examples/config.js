@@ -7,7 +7,8 @@
 const Bootme = require('./../packages/bootme')
 
 // config is set immediatly
-const task = new Bootme.Task('foo').setConfig({
+const task = new Bootme.Task('foo')
+task.setConfig({
   foo: 'bar'
 })
 

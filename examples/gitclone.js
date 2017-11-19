@@ -10,12 +10,13 @@ const GitcloneTask = require('./../packages/bootme-gitclone')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-registry.addTask(
-  new GitcloneTask('gitclone').setConfig({
-    url: 'https://github.com/netzkern/eslint-config-netzkern-base',
-    path: '/test-checkout'
-  })
-)
+const gitCloneTask = new GitcloneTask('gitclone')
+gitCloneTask.setConfig({
+  url: 'https://github.com/netzkern/eslint-config-netzkern-base',
+  path: '/test-checkout'
+})
+
+registry.addTask(gitCloneTask)
 
 registry.addHook('gitclone', 'onBefore', async function() {
   console.log(`Before ${this.name}`)

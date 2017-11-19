@@ -5,12 +5,11 @@ Task to clone a Git Repository
 ## Usage
 
 ```js
-registry.addTask(
-  new GitcloneTask('gitclone').setConfig({
-    url: 'https://github.com/netzkern/eslint-config-netzkern-base',
-    path: '/test-checkout'
-  })
-)
+const task = new GitcloneTask('gitclone')
+task.setConfig({
+  url: 'https://github.com/netzkern/eslint-config-netzkern-base',
+  path: '/test-checkout'
+})
 ```
 
 ## Result

@@ -11,23 +11,25 @@ const TemplateTask = require('./../packages/bootme-template')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-registry.addTask(
-  new GitcloneTask('gitclone').setConfig({
-    url: 'https://github.com/netzkern/eslint-config-netzkern-base',
-    path: '/test-checkout'
-  })
-)
+const cloneTask = new GitcloneTask('gitclone')
+cloneTask.setConfig({
+  url: 'https://github.com/netzkern/eslint-config-netzkern-base',
+  path: '/test-checkout'
+})
 
-registry.addTask(
-  new TemplateTask('replace').setConfig({
-    refs: {
-      url: 'gitclone' // Point to result of previous task
-    },
-    templateData: {
-      project: 'Hello BootMe!'
-    },
-    files: ['README.md']
-  })
-)
+registry.addTask(cloneTask)
+
+const replaceTask = new TemplateTask('replace')
+replaceTask.setConfig({
+  refs: {
+    url: 'gitclone' // Point to result of previous task
+  },
+  templateData: {
+    project: 'Hello BootMe!'
+  },
+  files: ['README.md']
+})
+
+registry.addTask(replaceTask)
 
 pipeline.execute()

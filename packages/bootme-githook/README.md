@@ -6,12 +6,11 @@ It will create a sym link from `./git_hooks/<name>` to `./git/hooks/<name>` and 
 ## Usage
 
 ```js
-registry.addTask(
-  new GitHookTask('hookme').setConfig({
-    name: ['precommit'],
-    hookDir: 'git_hooks'
-  })
-)
+const task = new GitHookTask('hookme')
+task.setConfig({
+  name: ['precommit'],
+  hookDir: 'git_hooks'
+})
 ```
 
 1. Remove the suffix `.sample` from default hook files in `.git/hooks`

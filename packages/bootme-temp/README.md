@@ -5,11 +5,11 @@ Task to get a random temporary file or directory path
 ## Usage
 
 ```js
-registry.addTask(
-  new TempTask('cacheFolder').setConfig({
-    type: 'directory'
-  })
-)
+const task = new TempTask('cacheFolder')
+task.setConfig({
+  type: 'directory'
+})
+registry.addTask(task)
 ```
 
 ## Result

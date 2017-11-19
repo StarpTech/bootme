@@ -5,17 +5,16 @@ Task to administrate a docker environment
 ## Usage
 
 ```js
-registry.addTask(
-  new DockerTask('mongodb').setConfig({
-    docker: {
-      host: '127.0.0.1',
-      port: 2375
-    },
-    cmd: 'createContainer',
-    name: 'testMongodb',
-    image: 'tutum/mongodb'
-  })
-)
+const task = new DockerTask('mongodb')
+task.setConfig({
+  docker: {
+    host: '127.0.0.1',
+    port: 2375
+  },
+  cmd: 'createContainer',
+  name: 'testMongodb',
+  image: 'tutum/mongodb'
+})
 ```
 
 ## Result

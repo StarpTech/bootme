@@ -12,7 +12,8 @@ const DockerTask = require('./../packages/bootme-docker')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-const listTask = new DockerTask('list').setConfig({ cmd: 'listContainers' })
+const listTask = new DockerTask('list')
+listTask.setConfig({ cmd: 'listContainers' })
 
 const inspectTask = new DockerTask('inspect')
 inspectTask

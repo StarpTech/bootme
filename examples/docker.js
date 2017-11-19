@@ -11,19 +11,21 @@ const DockerTask = require('./../packages/bootme-docker')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
-registry.addTask(
-  new DockerTask('mongodb').setConfig({
-    cmd: 'createContainer',
-    name: 'testMongodb',
-    image: 'tutum/mongodb'
-  })
-)
+const createContainerTask = new DockerTask('mongodb')
+createContainerTask.setConfig({
+  cmd: 'createContainer',
+  name: 'testMongodb',
+  image: 'tutum/mongodb'
+})
 
-registry.addTask(
-  new DockerTask('listContainers').setConfig({
-    cmd: 'listContainers'
-  })
-)
+registry.addTask(createContainerTask)
+
+const listContainerTask = new DockerTask('listContainers')
+listContainerTask.setConfig({
+  cmd: 'listContainers'
+})
+
+registry.addTask(listContainerTask)
 
 registry.addHook('listContainers', 'onAfter', async function(state) {
   console.log(`After ${this.name} result`)
