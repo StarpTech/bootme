@@ -32,38 +32,12 @@ const Bootme = require('bootme')
 const registry = new Bootme.Registry()
 const pipeline = new Bootme.Pipeline(registry)
 
+// Share configuration across all tasks
 registry.shareConfig({
   TOKEN: process.env.TOKEN
 })
 
-const task = new Task('sample')
-task.setConfig({ a: 1 })
-task.setInit(async state => ...)
-task.setRollback(async state => ...)
-task.setAction(async state => {
-  state.addTask(...)
-  state.addJob(...)
-  return true
-})
-
-task.addHook('onRollback', async state => ...)
-task.addHook('onRollback',  new Task('foo'))
-
-registry.addTask(task)
-
-registry.addHook('sample', 'onRollback', async (state) => ...)
-registry.addHook('sample', 'onAfter', new Task('bar'))
-
-pipeline.execute()
-pipeline.restore()
-```
-
-### Task Template
-
-```js
-const Task = require('bootme').Task
-
-class SampleTask extends Task {
+class SampleTask extends Bootme.Task {
   constructor(name) {
     super(name)
   }
@@ -73,6 +47,20 @@ class SampleTask extends Task {
   async validateConfig(value) {}
   async rollback(state) {}
 }
+
+const task = new SampleTask('sample')
+task.setConfig({ a: 1 })
+
+// Add task
+registry.addTask(task)
+
+// Add hooks after registration
+registry.addHook('sample', 'onRollback', async (state) => ...)
+registry.addHook('sample', 'onAfter', new Task('bar'))
+
+// Execute or restore pipeline
+pipeline.execute()
+pipeline.restore()
 ```
 
 ## Examples
