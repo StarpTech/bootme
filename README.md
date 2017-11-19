@@ -5,10 +5,7 @@
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![NPM version](https://img.shields.io/npm/v/bootme.svg?style=flat)](https://www.npmjs.com/package/bootme)
 
-# BootMe
-
-Configurable and extendable Task pipeline. BootMe help you to run a list of tasks as a transaction and provide an api to hook into lifecycle events.
-We use it to scaffold complete environments, projects or other useful parts without fuss. It comes with a minimal API. When size matters _~10KB_.
+![bootme](/media/bootme-intro.png)
 
 ```
 npm install bootme
