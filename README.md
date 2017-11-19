@@ -1,15 +1,15 @@
+![bootme](/media/bootme-intro.png)
+
+```
+npm install bootme
+```
+
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](#badge)
 [![Build Status](https://travis-ci.org/StarpTech/bootme.svg?branch=master)](https://travis-ci.org/StarpTech/bootme)
 [![Build status](https://ci.appveyor.com/api/projects/status/58ldk1x962nviv03?svg=true)](https://ci.appveyor.com/project/StarpTech/bootme)
 [![Coverage Status](https://coveralls.io/repos/github/StarpTech/bootme/badge.svg?branch=master)](https://coveralls.io/github/StarpTech/bootme?branch=master)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![NPM version](https://img.shields.io/npm/v/bootme.svg?style=flat)](https://www.npmjs.com/package/bootme)
-
-![bootme](/media/bootme-intro.png)
-
-```
-npm install bootme
-```
 
 ## Core features
 
