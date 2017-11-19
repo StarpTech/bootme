@@ -13,9 +13,10 @@ class SampleTask extends Bootme.Task {
     this.flag = await state.getValue(this.config.refs.flag)
   }
   async rollback() {}
-  validateConfig(value) {
-    return Joi.object()
-      .keys({
+  async validateConfig(value) {
+    return Joi.validate(
+      value,
+      Joi.object().keys({
         bootme: Joi.object(),
         flag: Joi.string(),
         refs: Joi.object(),
@@ -24,17 +25,19 @@ class SampleTask extends Bootme.Task {
           .allow(['hello'])
           .required()
       })
-      .validate(value)
+    )
   }
   async validateResult(value) {
     return Joi.validate(value, Joi.string().required())
   }
   async action() {
+    console.log('Flag: ', this.flag)
     return this.validateConfig.method + ' world'
   }
 }
 
-const task = new SampleTask('helloWorld').setConfig({
+const task = new SampleTask('helloWorld')
+task.setConfig({
   cmd: 'hello',
   flag: 'default',
   refs: {
@@ -49,7 +52,6 @@ registry.addTask(task)
 
 registry.addHook('helloWorld', 'onBefore', async function() {
   console.log(`Before ${this.name}`)
-  console.log(`Flag:${this.flag}`)
 })
 
 registry.addHook('helloWorld', 'onAfter', async function() {

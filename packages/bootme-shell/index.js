@@ -18,9 +18,10 @@ class TaskShell extends Task {
    * @returns
    * @memberof TaskShell
    */
-  validateConfig(value) {
-    return Joi.object()
-      .keys({
+  async validateConfig(value) {
+    return Joi.validate(
+      value,
+      Joi.object().keys({
         bootme: Joi.object(),
         refs: Joi.object(),
         cmd: Joi.string()
@@ -51,7 +52,7 @@ class TaskShell extends Task {
           .items(Joi.string(), Joi.number(), Joi.object())
           .optional()
       })
-      .validate(value)
+    )
   }
   /**
    *

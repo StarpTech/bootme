@@ -28,14 +28,15 @@ class DelayTask extends Task {
    * @returns
    * @memberof DelayTask
    */
-  validateConfig(value) {
-    return Joi.object()
-      .keys({
+  async validateConfig(value) {
+    return Joi.validate(
+      value,
+      Joi.object().keys({
         bootme: Joi.object(),
         refs: Joi.object(),
         value: Joi.number().default(1000)
       })
-      .validate(value)
+    )
   }
   /**
  *

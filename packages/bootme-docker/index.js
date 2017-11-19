@@ -25,9 +25,10 @@ class TaskDocker extends Task {
    * @returns
    * @memberof TaskDocker
    */
-  validateConfig(value) {
-    return Joi.object()
-      .keys({
+  async validateConfig(value) {
+    return Joi.validate(
+      value,
+      Joi.object().keys({
         bootme: Joi.object(),
         refs: Joi.object(),
         host: Joi.string().default('127.0.0.1'),
@@ -45,7 +46,7 @@ class TaskDocker extends Task {
           ])
           .required()
       })
-      .validate(value)
+    )
   }
   /**
    *

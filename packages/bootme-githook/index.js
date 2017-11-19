@@ -27,9 +27,10 @@ class GitHookTask extends Task {
    * @readonly
    * @memberof GitHookTask
    */
-  validateConfig(value) {
-    return Joi.object()
-      .keys({
+  async validateConfig(value) {
+    return Joi.validate(
+      value,
+      Joi.object().keys({
         bootme: Joi.object(),
         refs: Joi.object(),
         cmd: Joi.string()
@@ -55,7 +56,7 @@ class GitHookTask extends Task {
           )
           .required()
       })
-      .validate(value)
+    )
   }
   /**
    *

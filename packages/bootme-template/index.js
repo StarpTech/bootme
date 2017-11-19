@@ -28,9 +28,10 @@ class TemplateTask extends Task {
    * @returns
    * @memberof TemplateTask
    */
-  validateConfig(value) {
-    return Joi.object()
-      .keys({
+  async validateConfig(value) {
+    return Joi.validate(
+      value,
+      Joi.object().keys({
         bootme: Joi.object(),
         url: Joi.string().optional(),
         templateData: Joi.object().required(),
@@ -43,7 +44,7 @@ class TemplateTask extends Task {
           .items(Joi.string())
           .required()
       })
-      .validate(value)
+    )
   }
   /**
    *

@@ -23,9 +23,10 @@ class JSONRunner {
    * @returns
    * @memberof JSONRunner
    */
-  loadTask(task, name) {
+  async loadTask(task, name) {
     const newTask = new this.classProxy[task.task](name, task.info)
-    newTask.setConfig(task.config)
+    await newTask.setConfig(task.config)
+
     this.hooks.forEach(hook => {
       if (task.hooks && task.hooks[hook] && Array.isArray(task.hooks[hook])) {
         task.hooks[hook].forEach(h => newTask.addhook(hook, h))
@@ -44,7 +45,7 @@ class JSONRunner {
    * @memberof JSONRunner
    */
   async run(config, options = {}) {
-    config.forEach((task, i) => {
+    for (const task of config) {
       if (task.task instanceof Bootme.Task) {
         this.registry.addTask(task.task)
         return
@@ -72,9 +73,19 @@ class JSONRunner {
         this.taskCounter[task.task] = 1
       }
 
-      const name = task.task + '-' + this.taskCounter[task.task]
-      this.registry.addTask(this.loadTask(task, name))
-    })
+      try {
+        const name = task.task + '-' + this.taskCounter[task.task]
+        const t = await this.loadTask(task, name)
+        this.registry.addTask(t)
+      } catch (err) {
+        // add task context to error
+        throw new Error(
+          `Error in Task "${task.task instanceof Bootme.Task
+            ? task.task.name
+            : task.task}". Reason: ${err.name} -> ${err.message}`
+        )
+      }
+    }
 
     if (options.restore) {
       await this.pipeline.restore()

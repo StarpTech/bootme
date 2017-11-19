@@ -17,9 +17,10 @@ class HttpRequestTask extends Task {
  * @readonly
  * @memberof HttpRequestTask
  */
-  validateConfig(value) {
-    return Joi.object()
-      .keys({
+  async validateConfig(value) {
+    return Joi.validate(
+      value,
+      Joi.object().keys({
         bootme: Joi.object(),
         refs: Joi.object(),
         method: Joi.string()
@@ -39,7 +40,7 @@ class HttpRequestTask extends Task {
           })
           .optional()
       })
-      .validate(value)
+    )
   }
   /**
    *
