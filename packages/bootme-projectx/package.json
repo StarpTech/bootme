@@ -29,6 +29,6 @@
     "bootme-temp": "^0.0.18"
   },
   "devDependencies": {
-    "tap": "^10.7.3"
+    "tap": "^12.0.1"
   }
 }

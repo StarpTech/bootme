@@ -26,9 +26,9 @@
   },
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
-    "ora": "^1.3.0"
+    "ora": "^2.1.0"
   },
   "devDependencies": {
-    "tap": "^10.7.2"
+    "tap": "^12.0.1"
   }
 }

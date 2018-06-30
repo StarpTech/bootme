@@ -31,6 +31,6 @@
     "bootme-request": "^0.0.29",
     "bootme-task-spinner": "^0.0.7",
     "bootme-temp": "^0.0.18",
-    "tap": "^10.7.3"
+    "tap": "^12.0.1"
   }
 }

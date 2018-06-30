@@ -27,10 +27,10 @@
   "homepage": "https://github.com/StarpTech/bootme#readme",
   "dependencies": {
     "bootme": "^0.0.31",
-    "joi": "^13.0.1",
-    "r2": "^2.0.0"
+    "joi": "^13.4.0",
+    "r2": "^2.0.1"
   },
   "devDependencies": {
-    "tap": "^10.7.2"
+    "tap": "^12.0.1"
   }
 }

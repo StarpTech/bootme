@@ -30,12 +30,12 @@
     "del": "^3.0.0",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
-    "gulp-mustache": "^3.0.0",
+    "gulp-mustache": "^3.0.1",
     "handlebars": "^4.0.11",
-    "joi": "^13.0.1",
-    "make-dir": "^1.1.0"
+    "joi": "^13.4.0",
+    "make-dir": "^1.3.0"
   },
   "devDependencies": {
-    "tap": "^10.7.2"
+    "tap": "^12.0.1"
   }
 }
